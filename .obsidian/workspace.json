@@ -4,14 +4,14 @@
     "type": "split",
     "children": [
       {
-        "id": "3ab50570aa0c40ee",
+        "id": "4cc1c92123e42b4d",
         "type": "tabs",
         "children": [
           {
-            "id": "2445ac26252a8e31",
+            "id": "b7c14a3eeb311919",
             "type": "leaf",
             "state": {
-              "type": "empty",
+              "type": "graph",
               "state": {}
             }
           }
@@ -130,11 +130,12 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -148,8 +149,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "6bf0bc847171f756",
+  "active": "b7c14a3eeb311919",
   "lastOpenFiles": [
+    "tma4101-matematikk-1/1-1.pdf",
+    "tdt4160-datamaskiner/Computer Organization and Design RISC-V Edition_ The -- Patterson, David A_, Hennessy, John L_ -- The Morgan Kaufmann Series in Computer Architecture -- 0128203315 -- b15ca0be6a6cd047010ec53685d4fdb5 -- Anna’s Archive.pdf",
     "gaming.xopp",
     "/gaming.xopp",
     "/ttt4203-analog-og-digital-elektronikk/ert/buh.xopp",
@@ -158,8 +161,6 @@
     "/ttt4203-analog-og-digital-elektronikk",
     "bruh.xopp",
     "/bruh.xopp",
-    "bhu.xopp",
-    "/bhu.xopp",
-    "ferg.xopp"
+    "bhu.xopp"
   ]
 }
