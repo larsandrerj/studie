@@ -11,8 +11,10 @@
             "id": "b7c14a3eeb311919",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "pdf",
+              "state": {
+                "file": "tma4101-matematikk-1/1-1.pdf"
+              }
             }
           }
         ]
@@ -81,6 +83,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "tma4101-matematikk-1/1-1.pdf",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -97,6 +100,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "tma4101-matematikk-1/1-1.pdf",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -118,7 +122,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {}
+              "state": {
+                "file": "tma4101-matematikk-1/1-1.pdf"
+              }
             }
           },
           {
@@ -139,28 +145,28 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "xournalpp:Create new Xournal++ note": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "xournalpp:Create new Xournal++ note": false
     }
   },
   "active": "b7c14a3eeb311919",
   "lastOpenFiles": [
     "tma4101-matematikk-1/1-1.pdf",
+    "tma4101-matematikk-1/ovinger/1-3 differensiallikninger 3.pdf",
     "tdt4160-datamaskiner/Computer Organization and Design RISC-V Edition_ The -- Patterson, David A_, Hennessy, John L_ -- The Morgan Kaufmann Series in Computer Architecture -- 0128203315 -- b15ca0be6a6cd047010ec53685d4fdb5 -- Anna’s Archive.pdf",
+    "tma4101-matematikk-1/ovinger/1-3 differensiallikninger 3.xopp~",
     "gaming.xopp",
     "/gaming.xopp",
     "/ttt4203-analog-og-digital-elektronikk/ert/buh.xopp",
     "ttt4203-analog-og-digital-elektronikk/ert/buh.xopp",
     "/ttt4203-analog-og-digital-elektronikk/ert",
     "/ttt4203-analog-og-digital-elektronikk",
-    "bruh.xopp",
-    "/bruh.xopp",
-    "bhu.xopp"
+    "bruh.xopp"
   ]
 }
