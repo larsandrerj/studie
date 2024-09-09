@@ -31,11 +31,6 @@ def calc_complex_data(f, x):
 
     return re, im
 
-
-
-
-
-
 def f(x):
     return x**2
 
@@ -49,7 +44,13 @@ def i(x):
     return np.emath.sqrt(x)
 
 
-plot_func(f, -10, 10)
-plot_func(g, -10, 10)
-plot_func(h, -10, 10)
-plot_func(i, -10, 10, True)
+def oppg9():
+    x = np.linspace(0, 1, 6)
+    exp_lambda_t = np.array([1.00, 1.105, 1.22, 1.35, 1.49, 1.65])
+    log_exp_lambda_t = np.array(np.log(exp_lambda_t))
+
+    plt.plot(x, log_exp_lambda_t)
+    plt.grid()
+    plt.show()
+
+oppg9()
