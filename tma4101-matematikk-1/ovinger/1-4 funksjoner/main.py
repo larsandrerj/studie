@@ -53,4 +53,16 @@ def oppg9():
     plt.grid()
     plt.show()
 
-oppg9()
+def oppg13_x(y):
+    return y * np.sin(y)
+
+def oppg13():
+    y = np.linspace(0, 10, 100)
+    x = np.zeros(len(y))
+
+    for i in range(len(y)):
+        x[i] = oppg13_x(y[i])
+
+    plt.plot(x, y)
+    plt.grid()
+    plt.show()
