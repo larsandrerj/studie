@@ -17,5 +17,6 @@ v_values = np.zeros(len(t_values))
 for i in range(len(t_values)):
     v_values[i] = v(i)
 
-print(v_values)
-
+plt.plot(t_values, v_values)
+plt.grid()
+plt.show()
