@@ -11,9 +11,11 @@
             "id": "b7c14a3eeb311919",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "ttk4100-kybintro/KybintroKompendium.pdf"
+                "file": "ttk4100-kybintro/ovinger/oving3/oving3.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -83,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "ttk4100-kybintro/KybintroKompendium.pdf",
+                "file": "ttk4100-kybintro/ovinger/oving3/oving3.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -100,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "ttk4100-kybintro/KybintroKompendium.pdf",
+                "file": "ttk4100-kybintro/ovinger/oving3/oving3.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -123,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "ttk4100-kybintro/KybintroKompendium.pdf"
+                "file": "ttk4100-kybintro/ovinger/oving3/oving3.md"
               }
             }
           },
@@ -155,8 +157,10 @@
       "xournalpp:Create new Xournal++ note": false
     }
   },
-  "active": "6bf0bc847171f756",
+  "active": "b7c14a3eeb311919",
   "lastOpenFiles": [
+    "ttk4100-kybintro/KybintroKompendium.pdf",
+    "ttk4100-kybintro/ovinger/oving3/oving3.md",
     "ttk4100-kybintro/laboppgaver/legolab/stahjulingdiagram.xopp",
     "ttk4100-kybintro/laboppgaver/legolab",
     "ttk4100-kybintro/laboppgaver",
@@ -167,7 +171,6 @@
     "ttk4100-kybintro/ovinger/oving2/oppg1f/oppg1j.py",
     "ttk4100-kybintro/ovinger/oving2.xopp~",
     "ttk4100-kybintro/ovinger/oving2/oppg1f/main.py~",
-    "ttk4100-kybintro/ovinger/oving2/oppg1f/main.py",
     "episk spilling.md"
   ]
 }

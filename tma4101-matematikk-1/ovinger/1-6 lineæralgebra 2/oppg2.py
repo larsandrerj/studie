@@ -10,3 +10,4 @@ print(A)
 print(np.linalg.det(A))
 
 
+
