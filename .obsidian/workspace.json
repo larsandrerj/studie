@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "4cc1c92123e42b4d",
+        "id": "5033decbe8f6ff62",
         "type": "tabs",
         "children": [
           {
-            "id": "b7c14a3eeb311919",
+            "id": "d85f323124708a45",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -138,7 +138,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -157,20 +157,23 @@
       "xournalpp:Create new Xournal++ note": false
     }
   },
-  "active": "b7c14a3eeb311919",
+  "active": "d85f323124708a45",
   "lastOpenFiles": [
-    "ttk4100-kybintro/KybintroKompendium.pdf",
+    "ttk4100-kybintro/ovinger/oving3/oving3.pdf",
     "ttk4100-kybintro/ovinger/oving3/oving3.md",
+    "ttk4100-kybintro/ovinger/oving3/img/oppg1e.png",
+    "ttk4100-kybintro/ovinger/oving3/py/oppg1e.py",
+    "ttk4100-kybintro/ovinger/oving3/img/oppg1d.png",
+    "ttk4100-kybintro/ovinger/oving3/img/oppg1a.png",
+    "ttk4100-kybintro/KybintroKompendium.pdf",
+    "2024-09-28.md",
+    "ttk4100-kybintro/ovinger/oving3/py/oppg1d.py",
+    "ttk4100-kybintro/ovinger/oving3/py/oppgd.py",
+    "ttk4100-kybintro/ovinger/oving3/py",
+    "ttk4100-kybintro/ovinger/oving3/utregning.xopp~",
+    "ttk4100-kybintro/ovinger/oving3/test.pdf",
+    "ttk4100-kybintro/ovinger/oving3/img",
     "ttk4100-kybintro/laboppgaver/legolab/stahjulingdiagram.xopp",
-    "ttk4100-kybintro/laboppgaver/legolab",
-    "ttk4100-kybintro/laboppgaver",
-    "ttk4100-kybintro/ovinger/oving2/oving2.xopp~",
-    "ttk4100-kybintro/ovinger/oving2/oppg1f/oppg2d.py~",
-    "ttk4100-kybintro/ovinger/oving2/oppg1f/oppg2d.py",
-    "ttk4100-kybintro/ovinger/oving2/oppg1f/oppg1j.py~",
-    "ttk4100-kybintro/ovinger/oving2/oppg1f/oppg1j.py",
-    "ttk4100-kybintro/ovinger/oving2.xopp~",
-    "ttk4100-kybintro/ovinger/oving2/oppg1f/main.py~",
     "episk spilling.md"
   ]
 }
