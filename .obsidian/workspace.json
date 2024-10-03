@@ -14,8 +14,18 @@
               "type": "markdown",
               "state": {
                 "file": "ttk4100-kybintro/ovinger/oving3/oving3.md",
-                "mode": "source",
-                "source": false
+                "mode": "preview",
+                "source": true
+              }
+            }
+          },
+          {
+            "id": "10e517e04e015822",
+            "type": "leaf",
+            "state": {
+              "type": "pdf",
+              "state": {
+                "file": "ttk4100-kybintro/KybintroKompendium.pdf"
               }
             }
           }
@@ -69,7 +79,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 335.5086555480957
   },
   "right": {
     "id": "99641fc8d2a81e9b",
@@ -159,9 +169,12 @@
   },
   "active": "d85f323124708a45",
   "lastOpenFiles": [
-    "ttk4100-kybintro/ovinger/oving3/oving3.pdf",
+    "ttk4100-kybintro/ovinger/oving3/img/oppg2bmodell.png",
     "ttk4100-kybintro/KybintroKompendium.pdf",
     "ttk4100-kybintro/ovinger/oving3/oving3.md",
+    "ttk4100-kybintro/ovinger/oving3/img/oppg1fmodell.png",
+    "ttk4100-kybintro/ovinger/oving3/img/oppg1frun.PNG",
+    "ttk4100-kybintro/ovinger/oving3/oving3.pdf",
     "ttk4100-kybintro/ovinger/oving3/img/oppg1e.png",
     "ttk4100-kybintro/ovinger/oving3/py/oppg1e.py",
     "ttk4100-kybintro/ovinger/oving3/img/oppg1d.png",

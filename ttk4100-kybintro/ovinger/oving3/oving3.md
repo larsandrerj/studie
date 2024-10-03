@@ -125,3 +125,25 @@ main()
 ![[oppg1e.png]]
 
 ### f)
+![[oppg1fmodell.png]]
+
+![[oppg1frun.PNG]]
+
+## Oppgave 2
+### a)
+
+$$\\\sum{M_{t}}= J \ddot{\theta}$$
+$$M_{d} = k_{2} \dot{\theta}$$
+$$M_{T} = k_{3} \theta$$
+$$u = k_{4} \delta$$
+
+$$\sum{M_t} = -k_{2} \dot{\theta} - k_{3} \theta + k_{4} \delta$$
+$$J \ddot{\theta} +k_{2} \dot{\theta} + k_{3} \theta = k_{4} \delta$$
+
+Systemet er av andre orden.
+
+### b)
+![[oppg2bmodell.png]]
+
+
+
