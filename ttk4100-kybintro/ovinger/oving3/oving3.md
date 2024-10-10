@@ -137,7 +137,7 @@ $$M_{d} = k_{2} \dot{\theta}$$
 $$M_{T} = k_{3} \theta$$
 $$u = k_{4} \delta$$
 
-$$\sum{M_t} = -k_{2} \dot{\theta} - k_{3} \theta + k_{4} \delta$$
+$$\sum{M_t} = -k_{2} \dot{\theta} - k_{3} \theta - k_{4} \delta$$
 $$J \ddot{\theta} +k_{2} \dot{\theta} + k_{3} \theta = k_{4} \delta$$
 
 Systemet er av andre orden.
@@ -145,5 +145,37 @@ Systemet er av andre orden.
 ### b)
 ![[oppg2bmodell.png]]
 
+![[oppg2bsimulink.PNG]]
+
+
+## Oppgave 3
+### a)
+$$x = \cos{\theta} * \int v \, dt$$
+$$\dot{x} = - \sin{\theta} * v$$
+	
+### b)
+$$z = -\sin{\theta} * \int v \, dt$$
+$$\dot{z} = -\cos{\theta} * v$$
+
+### c)
+$$J \ddot{\theta} +k_{2} \dot{\theta} + k_{3} \theta = k_{4} \delta$$
+
+$$
+\begin{bmatrix}
+x\\
+z
+\end{bmatrix}
+=
+\begin{bmatrix}
+\cos{\theta} * \int v \, dt \\ \\
+-\sin{\theta} * \int v \, dt
+\end{bmatrix}
+$$
+
+$$
+v = e^{- \frac{k}{m} t} (v_0 - \frac{u}{k} ) + \frac{u}{k}
+$$
+
+### d)
 
 
