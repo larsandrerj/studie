@@ -4,7 +4,7 @@ h = 5; %høyde
 d = 0.4; %diameter
 g = 9.81; %tyngdekraft
 
-r = [0 10000]; %referanseverdi
+r = [0 5000]; %referanseverdi
 
 x_ddot = [0 0]; %Startakselerasjon på 0 i x og y retning
 
