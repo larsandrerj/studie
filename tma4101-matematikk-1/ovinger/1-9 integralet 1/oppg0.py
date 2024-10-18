@@ -25,6 +25,10 @@ def main():
 
     y = N * f(sigma, mu, x)
 
+
+    plt.hist(data, bins = np.linspace(151.5,159.5,9))
+    plt.axis([150, 160, 0, 12])
+
     plt.plot(x, y)
     plt.grid()
     plt.show()
