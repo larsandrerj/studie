@@ -177,7 +177,11 @@ v = e^{- \frac{k}{m} t} (v_0 - \frac{u}{k} ) + \frac{u}{k}
 $$
 
 ### d)
+![[oppg3d1.PNG]]
 
+![[oppg3d2x.PNG]]
+
+![[oppg3d3.PNG]]
 
 
 

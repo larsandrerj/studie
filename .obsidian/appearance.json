@@ -2,6 +2,6 @@
   "theme": "moonstone",
   "cssTheme": "Minimal",
   "baseFontSize": 12,
-  "textFontFamily": "Times New Roman",
+  "textFontFamily": "Times New Roman,Noto Serif",
   "accentColor": "#ae00ff"
 }
