@@ -16,7 +16,7 @@ xy_k_d = 10; %0.0549
 z_k_p = 1;
 z_k_i = 1 / 80;
 z_k_d = 15;
-z_u_max = 1500; %FINN REALISTISK TALL F = 8000N fra propulse :)
+z_u_max = 8000; %FINN REALISTISK TALL F = 8000N fra propulse :)
 
 t_k_p = 0;
 t_k_i = 0;
@@ -60,7 +60,7 @@ z = UT.z.Data;
 
 for i=0:dt:T
     plot3(x,y,z); grid on;
-    xlim([-100 100]); ylim([-100 100]); zlim([0 5000])
+    xlim([-100 100]); ylim([-100 100]); zlim([0 2000])
     drawnow
     pause(dt)
 end
