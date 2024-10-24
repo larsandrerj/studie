@@ -9,13 +9,14 @@ r = [0 0 2000]; %referanseverdi
 ref_theta = 0; %referanseverdi for vinkel
 
 %REGULATORPARAMETERE
-xy_k_p = 40; %0.48
-xy_k_i = 2; %0.0137
-xy_k_d = 10; %0.0549
+xy_k_p = 400; % 400
+xy_k_i = 20 ; % 20
+xy_k_d = 800; % 800
+xy_u_max = 100; % max pådrag !!
 
-z_k_p = 1;
-z_k_i = 1 / 80;
-z_k_d = 15;
+z_k_p = 1; % 1
+z_k_i = 1 / 80; % 1 / 80
+z_k_d = 15; % 15
 z_u_max = 8000; %FINN REALISTISK TALL F = 8000N fra propulse :)
 
 t_k_p = 0;
@@ -35,8 +36,8 @@ A = pi * (d / 2) ^ 2; %Tversnittsareal for raketten oppover aka sirkel
 k_l = (1/2) * ro * C_d * A; %luftmotstandkonstant
 
 % FORSTYRRELSE
-vind_sample_time = 10;
-vind_varians = 100;
+vind_sample_time = 100; % 10
+vind_varians = 30;
 C_d_side = 1.2;
 A_side = d*h + d*d/2; %areal på siden: rektangel + trekant (nese: høyde=diameter)
 
@@ -60,7 +61,7 @@ z = UT.z.Data;
 
 for i=0:dt:T
     plot3(x,y,z); grid on;
-    xlim([-100 100]); ylim([-100 100]); zlim([0 2000])
+    xlim([-10 10]); ylim([-10 10]); zlim([0 2000])
     drawnow
     pause(dt)
 end
