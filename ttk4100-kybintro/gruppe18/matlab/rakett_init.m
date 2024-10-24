@@ -36,7 +36,7 @@ A = pi * (d / 2) ^ 2; %Tversnittsareal for raketten oppover aka sirkel
 k_l = (1/2) * ro * C_d * A; %luftmotstandkonstant
 
 % FORSTYRRELSE
-vind_sample_time = 100; % 10
+vind_sample_time = 10; % 10
 vind_varians = 30;
 C_d_side = 1.2;
 A_side = d*h + d*d/2; %areal på siden: rektangel + trekant (nese: høyde=diameter)
