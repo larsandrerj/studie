@@ -12,7 +12,7 @@ ref_theta = 0; %referanseverdi for vinkel
 xy_k_p = 400; % 400
 xy_k_i = 20 ; % 20
 xy_k_d = 800; % 800
-xy_u_max = 100; % max pådrag !!
+xy_u_max = 1000; % max pådrag !!
 
 z_k_p = 1; % 1
 z_k_i = 1 / 80; % 1 / 80
