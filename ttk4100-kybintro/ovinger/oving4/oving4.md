@@ -1,3 +1,5 @@
+# Kybintro øving 4 - Lars André Roda Jansen
+
 Oppgave 1)
 
 a)
@@ -30,4 +32,46 @@ Om vi hadde hatt en positiv tilbakekobling i systemet så hadde dette innebært 
 Modellen hadde derfor vært ustabil fordi den aldri når en stasjonærverdi, men vil heller forevig øke.
 
 Oppgave 2)
+a)
+![[oppg2a.PNG]]
 
+b)
+![[oppg2b_1.png]]![[oppg2b_2.png]]
+
+c)
+![[oppg2c.PNG]]
+Den er lik og tilsvarer $0.05$
+
+d)
+Man kan unngå problemer med standardavvik med å legge til ett I-ledd i regulatoren.
+
+e)
+![[oppg2e.PNG]]
+Stasjonæravviket vårt nå blir på ca $-0.95$
+
+f)
+$$
+u = K_p (r - x) + K_i \int{r - x} \,dt
+$$
+g)
+![[oppg2g_script.PNG]]
+![[oppg2g_simulink.PNG]]
+
+h)
+![[oppg2h_ki_1.PNG]]
+![[oppg2h_ki_10.PNG]]
+![[oppg2h_ki_100.PNG]]
+![[oppg2h_ki_1000.PNG]]
+
+Vi kan se att ved høyere $K_i$, så vil antall svingninger til systemet før den når stasjonærverdi øke
+
+i)
+![[oppg2i.PNG]]
+
+j)
+![[oppg2j_tau0.PNG]]
+![[oppg2j_tau3.PNG]]
+![[oppg2j_tau6.PNG]]
+![[oppg2j_tau9.PNG]]
+
+Vi kan se att den slutter å bli stabil når $\tau = 9$, for alle verdier før det så er systemet stabilt. 
