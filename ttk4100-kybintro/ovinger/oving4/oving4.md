@@ -30,3 +30,4 @@ Om vi hadde hatt en positiv tilbakekobling i systemet så hadde dette innebært 
 Modellen hadde derfor vært ustabil fordi den aldri når en stasjonærverdi, men vil heller forevig øke.
 
 Oppgave 2)
+
