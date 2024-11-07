@@ -11,11 +11,13 @@
             "id": "ca5499b885141c3c",
             "type": "leaf",
             "state": {
-              "type": "pdf",
+              "type": "markdown",
               "state": {
-                "file": "ttk4100-kybintro/ovinger/oving4/oving4.pdf"
+                "file": "ttk4100-kybintro/ovinger/oving4/oving4.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-file-text",
+              "icon": "lucide-file",
               "title": "oving4"
             }
           }
@@ -175,8 +177,8 @@
   },
   "active": "ca5499b885141c3c",
   "lastOpenFiles": [
-    "ttk4100-kybintro/ovinger/oving4/oving4.md",
     "ttk4100-kybintro/ovinger/oving4/oving4.pdf",
+    "ttk4100-kybintro/ovinger/oving4/oving4.md",
     "ttk4100-kybintro/ovinger/oving3/oving3.md",
     "ttk4100-kybintro/ovinger/oving3/oving3.pdf",
     "ttk4100-kybintro/KybintroKompendium.pdf",
