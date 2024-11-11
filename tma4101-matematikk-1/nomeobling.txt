@@ -1,0 +1,6 @@
+Hei,
+Jeg er i Ascend og der har vi det veldig kos og klem.
+Jeg er i autonomygruppen, og gjennom dette semesteret har det gått mest i lesing av artikler på eventuelle pathfinding algoritmer (Som artificial potential field, A*, Dijkstra, osv..)for å løse IARC Mission 10. Vi har også lagd en autonom minecraft-bot som oppstartsprosjekt. 
+
+Mvh
+Lars André Roda Jansen
