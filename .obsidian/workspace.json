@@ -4,19 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "eca61d8a0c130d0f",
+        "id": "0e08bd403da08a95",
         "type": "tabs",
         "children": [
           {
-            "id": "92cac2f7a2e5c851",
+            "id": "64d14486ea4e551a",
             "type": "leaf",
             "state": {
-              "type": "pdf",
-              "state": {
-                "file": "ttk4100-kybintro/KybintroKompendium.pdf"
-              },
-              "icon": "lucide-file-text",
-              "title": "KybintroKompendium"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -173,8 +171,9 @@
       "xournalpp:Create new Xournal++ note": false
     }
   },
-  "active": "92cac2f7a2e5c851",
+  "active": "64d14486ea4e551a",
   "lastOpenFiles": [
+    "ttk4100-kybintro/KybintroKompendium.pdf",
     "ttk4100-kybintro/ovinger/oving5/oving5.md",
     "ttk4100-kybintro/ovinger/oving5/utregning.xopp~",
     "ttk4100-kybintro/ovinger/oving5/utregning.xopp",
@@ -183,7 +182,6 @@
     "ttk4100-kybintro/ovinger/oving4/oving4.pdf",
     "ttk4100-kybintro/ovinger/oving3/oving3.md",
     "ttk4100-kybintro/ovinger/oving3/oving3.pdf",
-    "ttk4100-kybintro/KybintroKompendium.pdf",
     "ttk4100-kybintro/ovinger/oving4/img/oppg2j_tau3.PNG",
     "ttk4100-kybintro/ovinger/oving4/img/oppg2j_tau0.PNG",
     "ttk4100-kybintro/ovinger/oving4/img/oppg2b_2.png",
