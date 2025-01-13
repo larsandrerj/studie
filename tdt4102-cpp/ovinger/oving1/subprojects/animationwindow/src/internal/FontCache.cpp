@@ -4,10 +4,20 @@
 
 
 std::filesystem::path TDT4102::internal::FontCache::findTTFInDirectory(const std::filesystem::path &directoryToSearch, const std::string& fontFileName) {
-    for(const std::filesystem::path& entryInDirectory : std::filesystem::recursive_directory_iterator{directoryToSearch})
-    {
-        if(entryInDirectory.filename().string() == fontFileName) {
-            return entryInDirectory;
+    try {
+        for(const std::filesystem::path& entryInDirectory : std::filesystem::recursive_directory_iterator{directoryToSearch}) {
+            if(entryInDirectory.filename().string() == fontFileName) {
+                return entryInDirectory;
+            }
+        }
+    } catch(const std::filesystem::filesystem_error& e) {
+        // Had a single case where the recursive directory iterator caused a crash
+        // This is a backup strategy, even though it would not work as the regular approach due to some 
+        // fonts being buried within folders on some systems
+        for(const std::filesystem::path& entryInDirectory : std::filesystem::directory_iterator{directoryToSearch}) {
+            if(entryInDirectory.filename().string() == fontFileName) {
+                return entryInDirectory;
+            }
         }
     }
     return std::filesystem::path {"nonexistent"};
