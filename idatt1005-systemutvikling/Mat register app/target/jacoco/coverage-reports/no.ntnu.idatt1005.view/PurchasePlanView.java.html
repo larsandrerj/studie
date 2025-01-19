@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PurchasePlanView.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.view</a> &gt; <span class="el_source">PurchasePlanView.java</span></div><h1>PurchasePlanView.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.view;
+
+import java.util.HashMap;
+
+public class PurchasePlanView {
+
+  public class Detail {
+    public float amount;
+    public String unit;
+    public float defaultAmount;
+
+<span class="nc" id="L12">    public Detail(float amount, String unit, float defaultAmount) {</span>
+<span class="nc" id="L13">      this.amount = amount;</span>
+<span class="nc" id="L14">      this.unit = unit;</span>
+<span class="nc" id="L15">      this.defaultAmount = defaultAmount;</span>
+<span class="nc" id="L16">    }</span>
+  }
+
+  private HashMap&lt;String, Detail&gt; selectedIngredients;
+  private HashMap&lt;String, Detail&gt; selectedRecipes;
+
+<span class="nc" id="L22">  public PurchasePlanView() {</span>
+<span class="nc" id="L23">    this.selectedIngredients = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L24">    this.selectedRecipes = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L25">  }</span>
+
+  public void selectIngredient(String ingredientName, float amount, String unit, float defaultAmount) {
+<span class="nc" id="L28">    this.selectedIngredients.put(ingredientName, new Detail(amount, unit, defaultAmount));</span>
+<span class="nc" id="L29">  }</span>
+
+  public void selectRecipe(String recipeName, float amount, String unit, float defaultAmount) {
+<span class="nc" id="L32">    this.selectedRecipes.put(recipeName, new Detail(amount, unit, defaultAmount));</span>
+<span class="nc" id="L33">  }</span>
+
+  public HashMap&lt;String, Detail&gt; getSelectedIngredient() {
+<span class="nc" id="L36">    return selectedIngredients;</span>
+  }
+
+  public HashMap&lt;String, Detail&gt; getSelectedRecipe() {
+<span class="nc" id="L40">    return selectedRecipes;</span>
+  }
+
+  public void fillWithDummyValues() {
+    // Fill selectedIngredients with dummy values
+<span class="nc" id="L45">    this.selectIngredient(&quot;Butter&quot;, 400, &quot;g&quot;, 400 );</span>
+<span class="nc" id="L46">    this.selectIngredient(&quot;Flour&quot;, 2, &quot;kg&quot;, 1);</span>
+<span class="nc" id="L47">    this.selectIngredient(&quot;Eggs&quot;, 12, &quot;pcs&quot;, 6);</span>
+
+    // Fill selectedRecipes with dummy values
+<span class="nc" id="L50">    this.selectRecipe(&quot;Shrimp fried rice&quot;, 4, &quot;portions&quot;, 1);</span>
+<span class="nc" id="L51">    this.selectRecipe(&quot;Pizza&quot;, 2, &quot;portions&quot;, 1);</span>
+<span class="nc" id="L52">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

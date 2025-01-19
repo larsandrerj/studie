@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ServiceException.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.model.exceptions</a> &gt; <span class="el_source">ServiceException.java</span></div><h1>ServiceException.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.model.exceptions;
+
+/**
+
+ */
+public class ServiceException extends RuntimeException {
+    private final ErrorCode errorCode;
+    private final Exception exception;
+    private final String objectName;
+    private final Long id;
+
+<span class="fc" id="L12">    public ServiceException(ErrorCode errorCode, String objectName, Exception... exception) {</span>
+<span class="fc" id="L13">        this.errorCode = errorCode;</span>
+<span class="fc" id="L14">        this.objectName = objectName;</span>
+<span class="fc" id="L15">        this.id = 0L;</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        this.exception = exception.length &gt; 0 ? exception[0] : new Exception();</span>
+<span class="fc" id="L17">        print();</span>
+<span class="fc" id="L18">    }</span>
+
+<span class="fc" id="L20">    public ServiceException(ErrorCode errorCode, Long id, Exception... exception) {</span>
+<span class="fc" id="L21">        this.errorCode = errorCode;</span>
+<span class="fc" id="L22">        this.id = id;</span>
+<span class="fc" id="L23">        this.objectName = &quot;&quot;;</span>
+<span class="fc bfc" id="L24" title="All 2 branches covered.">        this.exception = exception.length &gt; 0 ? exception[0] : new Exception();</span>
+<span class="fc" id="L25">        print();</span>
+<span class="fc" id="L26">    }</span>
+
+    private void print() {
+<span class="fc" id="L29">        System.out.println(&quot;[ERROR] - &quot; + errorCode.getError() + &quot; - id: &quot; + errorCode.getId() + &quot; - &quot; + errorCode.getUserMessage());</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        System.out.println(exception.getMessage() != null? &quot;Exception: &quot; + exception.getMessage(): &quot;No internal exception found.&quot;);</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        System.out.println(id &gt; 0 ? &quot;Id: &quot; + id : &quot;ObjectName: &quot; + objectName);</span>
+<span class="fc" id="L32">    }</span>
+    public int getErrorCodeId() {
+<span class="nc" id="L34">        return errorCode.getId();</span>
+    }
+
+    public String getErrorCodeMessage() {
+<span class="nc" id="L38">        return errorCode.getUserMessage();</span>
+    }
+
+    public String getObjectName() {
+<span class="nc" id="L42">        return objectName;</span>
+    }
+
+    public Long getId() {
+<span class="nc" id="L46">        return id;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

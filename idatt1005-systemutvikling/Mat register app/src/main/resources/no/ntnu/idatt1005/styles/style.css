@@ -1,0 +1,85 @@
+
+
+
+/* Style for the background with information displayed*/
+.backgroundInfo {
+
+    -fx-background-color: #A6C857;
+}
+.backgroundInfo Label {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+}
+
+#toggleBtn {
+    -fx-min-width: 25;
+    -fx-min-height: 25;
+    -fx-max-width: 25;
+    -fx-max-height: 25;
+    -fx-shape: 'M0 0 a1,1 0 1,0 50,0 a1,1 0 1,0 -50,0';
+    -fx-font-size: 12px; /* Adjust this value as needed */
+    -fx-padding: 5px;
+
+}
+
+#purchasePlanHeader {
+    -fx-background-radius: 15 0 0 0;
+
+}
+#purchasePlanHeaderText {
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}
+
+
+#purchasePlanVBox {
+    -fx-background-color: #A6C857;
+}
+
+.subHeader Label {
+    -fx-text-fill: #407D4D;
+    -fx-font-size: 20px;
+    -fx-text-alignment: center;
+}
+
+#purchasePlanVBox {
+    -fx-background-color: #A6C857;
+    -fx-background-radius: 15 0 0 0; /* Adjust the first value as needed */
+}
+
+#purchasePlanFooter {
+
+    -fx-background-color: #A6C857;
+    -fx-alignment: center;
+}
+
+#purchasePlanFooter button {
+    -fx-background-color: #A6C857;
+    -fx-padding: 10px;
+    -fx-background-radius: 0 0 15 15;
+}
+
+#greenStrip {
+    -fx-background-color: #6a984f;
+    -fx-min-height: 5px; /* Adjust the height as needed */
+    -fx-max-height: 5px; /* Adjust the height as needed */
+}
+
+/* Styling for recipesPane */
+
+#recipe-vbox {
+    -fx-border-color: #000000;
+    -fx-background-color: green;
+    -fx-padding: 10px;
+}
+
+#recipe-edit-pane #name-textarea, #recipe-edit-pane #portion-textarea{
+    -fx-max-width: 100px;
+    -fx-max-height: 30px;
+}
+
+#recipe-edit-pane #name-portion-instructions-vbox{
+    -fx-min-width: 1000px;
+}

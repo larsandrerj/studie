@@ -1,0 +1,751 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PageLoader.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.controller</a> &gt; <span class="el_source">PageLoader.java</span></div><h1>PageLoader.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.controller;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import no.ntnu.idatt1005.model.data.IDAmountStruct;
+import no.ntnu.idatt1005.view.*;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Map;
+import java.util.stream.Stream;
+import java.util.concurrent.atomic.AtomicReference;
+
+<span class="nc" id="L26">public class PageLoader {</span>
+    MainController mainController;
+    @FXML
+    private AnchorPane subSceneRoot;
+    private Group fridgePane;
+    private Group recipesPane;
+<span class="nc" id="L32">    private FridgeViewBuilder fridgeViewBuilder = new FridgeViewBuilder();</span>
+<span class="nc" id="L33">    private RecipeViewBuilder recipeViewBuilder = new RecipeViewBuilder();</span>
+<span class="nc" id="L34">    private AlertViewBuilder alert = new AlertViewBuilder();</span>
+    private Group ingredientsPane;
+<span class="nc" id="L36">    private IngredientViewBuilder ingredientViewBuilder = new IngredientViewBuilder();</span>
+
+    @FXML
+    private VBox purchasePlanVBox;
+    @FXML
+    private VBox purchasePlanInfoVBox;
+    @FXML
+    private VBox ingredientsBox;
+    @FXML
+    public VBox recipesBox;
+    @FXML
+    public HBox purchasePlanHeader;
+    @FXML
+    public Label purchasePlanHeaderText;
+    @FXML
+    private HBox purchasePlanFooter;
+    @FXML
+    private Label greenStrip;
+<span class="nc" id="L54">    PurchasePlanView purchasePlanView = new PurchasePlanView();</span>
+<span class="nc" id="L55">    private boolean purchasePlanVisible = false;</span>
+<span class="nc" id="L56">    private int collapsedWidth = 30;</span>
+<span class="nc" id="L57">    private int expandedWidth = 800;</span>
+
+    /**
+     * Initializes the page loader.
+     */
+    public void initialize() {
+<span class="nc" id="L63">        initFridgePane();</span>
+<span class="nc" id="L64">        initIngredientPane();</span>
+<span class="nc" id="L65">        initRecipePane();</span>
+
+<span class="nc" id="L67">        purchasePlanVBox.setVisible(true);</span>
+<span class="nc" id="L68">        purchasePlanFooter.setVisible(false);</span>
+<span class="nc" id="L69">    }</span>
+
+    public void setController(MainController mainController) {
+<span class="nc" id="L72">        this.mainController = mainController;</span>
+<span class="nc" id="L73">    }</span>
+
+    private void initFridgePane() {
+<span class="nc" id="L76">        fridgePane = fridgeViewBuilder.getFridgeGroup();</span>
+<span class="nc" id="L77">    }</span>
+
+    /**
+     * Removes all items from the fridge.
+     */
+    public void ClearFridge() throws IllegalArgumentException {
+<span class="nc" id="L83">        VBox masterContainer = fridgePane.getChildren().stream().filter(e -&gt; e.getId().equals(&quot;fridge-container&quot;)).findFirst().map(node -&gt; (VBox) node) // Cast here if the node is found.</span>
+<span class="nc" id="L84">            .orElseThrow(() -&gt; new IllegalArgumentException(&quot;Fridge container not found&quot;)); // Or throw an exception if not found.</span>
+<span class="nc" id="L85">        masterContainer.getChildren().clear();</span>
+<span class="nc" id="L86">    }</span>
+
+    /**
+     * Adds an ingredient to the fridge pane.
+     *
+     * @param name The name of the ingredient.
+     * @param amount The amount of the ingredient.
+     * @param unit The unit of the ingredient.
+     * @throws IllegalArgumentException if the input is invalid
+     */
+    public void addToFridge(String name, String amount, String unit) throws IllegalArgumentException {
+
+<span class="nc" id="L98">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L99">            fridgePane.getChildren().stream(), &quot;fridge-container&quot;);</span>
+
+
+<span class="nc" id="L102">        HBox masterFridgeHbox = fridgeViewBuilder.getFridgeHbox(name, amount, unit);</span>
+
+<span class="nc" id="L104">        Button plusButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L105">            masterFridgeHbox.getChildren().stream(), &quot;plus-button&quot;);</span>
+<span class="nc" id="L106">        Button minusButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L107">            masterFridgeHbox.getChildren().stream(), &quot;minus-button&quot;);</span>
+<span class="nc" id="L108">        Label amountLabel = (Label) getChildByIdInNodeStream(</span>
+<span class="nc" id="L109">            masterFridgeHbox.getChildren().stream(), &quot;amount-label&quot;);</span>
+<span class="nc" id="L110">        Button editButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L111">            masterFridgeHbox.getChildren().stream(), &quot;edit-button&quot;</span>
+        );
+<span class="nc" id="L113">        editButton.setOnAction(e -&gt; editIngredientFridge(name, amount, unit));</span>
+
+
+<span class="nc" id="L116">        masterContainer</span>
+<span class="nc" id="L117">            .getChildren()</span>
+<span class="nc" id="L118">            .add(masterFridgeHbox);</span>
+
+<span class="nc" id="L120">    }</span>
+    private void editIngredientFridge(String name, String amount, String unit) {
+<span class="nc" id="L122">        Group fridgeEditPane = fridgeViewBuilder.getFridgeEdit(name, amount, unit);</span>
+
+<span class="nc" id="L124">        HBox nameLabelTextAreaHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L125">            fridgeEditPane.getChildren().stream(), &quot;name-label-unit-text-area-hbox&quot;</span>
+        );
+
+<span class="nc" id="L128">        Label nameLabel = (Label) getChildByIdInNodeStream(</span>
+<span class="nc" id="L129">            nameLabelTextAreaHbox.getChildren().stream(), &quot;name-label&quot;</span>
+        );
+<span class="nc" id="L131">        TextArea amountTextArea = (TextArea) getChildByIdInNodeStream(</span>
+<span class="nc" id="L132">            nameLabelTextAreaHbox.getChildren().stream(), &quot;amount-text-area&quot;</span>
+        );
+<span class="nc" id="L134">        Label unitLabel = (Label) getChildByIdInNodeStream(</span>
+<span class="nc" id="L135">            nameLabelTextAreaHbox.getChildren().stream(), &quot;unit-label&quot;</span>
+        );
+<span class="nc" id="L137">        Button saveButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L138">            nameLabelTextAreaHbox.getChildren().stream(), &quot;save-button&quot;</span>
+        );
+
+<span class="nc" id="L141">        Scene scene = new Scene(fridgeEditPane);</span>
+<span class="nc" id="L142">        Stage editStage = new Stage();</span>
+<span class="nc" id="L143">        editStage.setTitle(&quot;Fridge ingredient&quot;);</span>
+<span class="nc" id="L144">        editStage.setScene(scene);</span>
+<span class="nc" id="L145">        editStage.show();</span>
+
+<span class="nc" id="L147">    }</span>
+
+    /**
+     * Initializes the recipe pane.
+     */
+    private void initRecipePane() {
+<span class="nc" id="L153">        Group recipesGroup = recipeViewBuilder.getRecipesGroup();</span>
+<span class="nc" id="L154">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L155">                recipesGroup.getChildren().stream(),</span>
+                &quot;recipes-container&quot;
+        );
+
+<span class="nc" id="L159">        Button addButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L160">                masterContainer.getChildren().stream(),</span>
+                &quot;add-button&quot;
+        );
+
+<span class="nc" id="L164">        addButton.setOnAction(e -&gt;{loadRecipeAddPane();});</span>
+
+<span class="nc" id="L166">        recipesPane = recipesGroup;</span>
+
+<span class="nc" id="L168">    }</span>
+
+    /**
+     * Adds a recipe to the recipes pane with provided details.
+     *
+     * @param name             The name of the recipe.
+     * @param unit             The unit of the recipe (e.g., portions).
+     * @param defaultPortions  The default portions for the recipe.
+     * @param instructions     The instructions for preparing the recipe.
+     * @throws IllegalArgumentException If any argument is invalid.
+     */
+    public void addRecipeToRecipesPane(String name, String unit, String defaultPortions, String instructions) throws IllegalArgumentException {
+        // Get the container for recipes from the recipes pane
+<span class="nc" id="L181">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L182">            recipesPane.getChildren().stream(), &quot;recipes-container&quot;);</span>
+
+        // Build the VBox for the recipe
+<span class="nc" id="L185">        VBox masterRecipeVbox = recipeViewBuilder.getRecipeVbox(name, defaultPortions);</span>
+
+        // Find the VBox for the specific recipe
+<span class="nc" id="L188">        VBox recipeVbox = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L189">            masterRecipeVbox.getChildren().stream(), &quot;recipe-vbox&quot;);</span>
+
+        // Find the HBox containing the title and view button
+<span class="nc" id="L192">        HBox titleViewButtonHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L193">            recipeVbox.getChildren().stream(), &quot;title-view-button-hbox&quot;);</span>
+
+        // Set action for the view recipe instructions button
+<span class="nc" id="L196">        Button viewRecipeInstructionsButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L197">            titleViewButtonHbox.getChildren().stream(), &quot;view-recipe-instructions-button&quot;);</span>
+
+<span class="nc" id="L199">        viewRecipeInstructionsButton.setOnAction(e -&gt; mainController.LoadRecipeInstructionsView(name));</span>
+
+        // Find the HBox for adding to purchase plan
+<span class="nc" id="L202">        HBox addToPurchasePlanHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L203">            recipeVbox.getChildren().stream(), &quot;add-to-purchase-plan-hbox&quot;);</span>
+
+        // Find the HBox for editing and removing
+<span class="nc" id="L206">        HBox editRemoveHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L207">            recipeVbox.getChildren().stream(), &quot;edit-remove-hbox&quot;);</span>
+
+        // Find the edit button and set action to load edit pane
+<span class="nc" id="L210">        Button editButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L211">            editRemoveHbox.getChildren().stream(), &quot;edit-button&quot;);</span>
+<span class="nc" id="L212">        editButton.setOnAction(e -&gt; mainController.LoadRecipeAddView(name));</span>
+
+        // Find the remove button and set action to remove the recipe
+<span class="nc" id="L215">        Button removeButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L216">            editRemoveHbox.getChildren().stream(), &quot;remove-button&quot;);</span>
+<span class="nc" id="L217">        removeButton.setOnAction(e -&gt; mainController.RemoveRecipeFromRegistry(name));</span>
+
+        // Add the recipe VBox to the master container
+<span class="nc" id="L220">        masterContainer.getChildren().add(masterRecipeVbox);</span>
+<span class="nc" id="L221">    }</span>
+
+    public void loadRecipeAddPane() {
+<span class="nc" id="L224">        String name = &quot;&quot;;</span>
+<span class="nc" id="L225">        String instructions = &quot;&quot;;</span>
+<span class="nc" id="L226">        float defaultPortions = 0f;</span>
+<span class="nc" id="L227">        List&lt;IDAmountStruct&gt; ingredients = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L229">        loadRecipeAddPane(name, instructions, defaultPortions, ingredients);</span>
+<span class="nc" id="L230">    }</span>
+
+    /**
+     * Loads the recipe edit pane with the provided name.
+     *
+     * @param name The name of the recipe.
+     */
+    public void loadRecipeAddPane(String name, String instructions, float defaultPortions,
+                                   List&lt;IDAmountStruct&gt; ingredients) {
+<span class="nc" id="L239">        Group recipeAddPane = recipeViewBuilder.getRecipeAddPane(</span>
+                        name,
+                        instructions,
+                        defaultPortions,
+                        ingredients
+                );
+
+<span class="nc" id="L246">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+                recipeAddPane
+<span class="nc" id="L248">                        .getChildren()</span>
+<span class="nc" id="L249">                        .stream(),</span>
+                &quot;recipe-add-pane&quot;
+        );
+
+<span class="nc" id="L253">        Button addButton = (Button) getChildByIdInNodeStream(</span>
+                masterContainer
+<span class="nc" id="L255">                        .getChildren()</span>
+<span class="nc" id="L256">                        .stream(),</span>
+                &quot;recipe-add-button&quot;
+        );
+
+<span class="nc" id="L260">        addButton.setOnAction(e -&gt; {extractValuesFromRecipeAddPane(recipeAddPane);});</span>
+
+
+<span class="nc" id="L263">        subSceneRoot.getChildren().setAll(</span>
+                recipeAddPane
+        );
+<span class="nc" id="L266">    }</span>
+
+    private void extractValuesFromRecipeAddPane(Group recipeAddPane) {
+<span class="nc" id="L269">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L270">                recipeAddPane.getChildren().stream(),</span>
+                &quot;recipe-add-pane&quot;
+        );
+
+<span class="nc" id="L274">        HBox namePortionDescriptionIngredients = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L275">                masterContainer.getChildren().stream(),</span>
+                &quot;name-portion-description-ingredients&quot;
+        );
+
+<span class="nc" id="L279">        VBox namePortionInstructionsVbox = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L280">                namePortionDescriptionIngredients.getChildren().stream(),</span>
+                &quot;name-portion-instructions-vbox&quot;
+        );
+
+<span class="nc" id="L284">        HBox nameLabelTextAreaHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L285">                namePortionInstructionsVbox.getChildren().stream(),</span>
+                &quot;name-label-textarea-hbox&quot;
+        );
+
+<span class="nc" id="L289">        String name = ((TextArea) getChildByIdInNodeStream(</span>
+<span class="nc" id="L290">                nameLabelTextAreaHbox.getChildren().stream(),</span>
+                &quot;name-textarea&quot;
+<span class="nc" id="L292">        )).getText();</span>
+
+<span class="nc" id="L294">        HBox portionHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L295">                namePortionInstructionsVbox.getChildren().stream(),</span>
+                &quot;portion-hbox&quot;
+        );
+
+<span class="nc" id="L299">        float amount = Float.parseFloat(((Text) getChildByIdInNodeStream(</span>
+<span class="nc" id="L300">                portionHbox.getChildren().stream(),</span>
+                &quot;portion-text&quot;
+<span class="nc" id="L302">        )).getText());</span>
+
+<span class="nc" id="L304">        String instructions = ((TextArea) getChildByIdInNodeStream(</span>
+<span class="nc" id="L305">                namePortionInstructionsVbox.getChildren().stream(),</span>
+                &quot;instructions-textarea&quot;
+<span class="nc" id="L307">        )).getText();</span>
+
+<span class="nc" id="L309">        Group ingredientsGroup = (Group) getChildByIdInNodeStream(</span>
+<span class="nc" id="L310">                namePortionDescriptionIngredients.getChildren().stream(),</span>
+                &quot;ingredients-group&quot;
+        );
+
+<span class="nc" id="L314">        VBox recipeIngredientsMaster = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L315">                ingredientsGroup.getChildren().stream(),</span>
+                &quot;recipe-ingredients-master&quot;
+        );
+
+
+<span class="nc" id="L320">        VBox ingredientsVbox = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L321">                recipeIngredientsMaster.getChildren().stream(),</span>
+                &quot;recipe-ingredients-vbox&quot;
+        );
+
+
+<span class="nc" id="L326">        List&lt;IDAmountStruct&gt; ingredients = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L328">        ingredientsVbox.getChildren().stream().filter(</span>
+<span class="nc" id="L329">                e -&gt; Objects.equals(</span>
+<span class="nc" id="L330">                        e.getId(), &quot;ingredient-add-area-hbox&quot;</span>
+                )
+<span class="nc" id="L332">        ).forEach(</span>
+                e -&gt; {
+<span class="nc" id="L334">                    IDAmountStruct ing = getIDAmountStructIngredientFromHbox((HBox) e);</span>
+<span class="nc bnc" id="L335" title="All 2 branches missed.">                    if (!Objects.equals(ing.getName(), null)) {</span>
+<span class="nc" id="L336">                        ingredients.add(ing);</span>
+                    }
+<span class="nc" id="L338">                }</span>
+        );
+
+<span class="nc" id="L341">        mainController.EditRecipeInRegistry(</span>
+                new IDAmountStruct(name, amount),
+<span class="nc" id="L343">                ingredients.toArray(new IDAmountStruct[ingredients.size()]),</span>
+                new String[]{},
+                instructions
+        );
+
+<span class="nc" id="L348">    }</span>
+
+    private IDAmountStruct getIDAmountStructIngredientFromHbox(HBox hBox) {
+        //FORTSETT VIDERE PÅ AAAAAAAA
+<span class="nc" id="L352">        String name = ((TextArea) getChildByIdInNodeStream(</span>
+<span class="nc" id="L353">                hBox.getChildren().stream(),</span>
+                &quot;name-text-area&quot;
+<span class="nc" id="L355">        )).getText();</span>
+
+<span class="nc bnc" id="L357" title="All 2 branches missed.">        if (name.isEmpty()) {</span>
+<span class="nc" id="L358">            return new IDAmountStruct();</span>
+        }
+
+<span class="nc" id="L361">        float amount = Float.parseFloat(((Text) getChildByIdInNodeStream(</span>
+<span class="nc" id="L362">                hBox.getChildren().stream(),</span>
+                &quot;amount-text&quot;
+<span class="nc" id="L364">        )).getText());</span>
+
+<span class="nc" id="L366">        return new IDAmountStruct(name, amount);</span>
+    }
+
+    /**
+     * Loads the recipe instructions pane with the provided name and instructions.
+     *
+     * @param name The name of the recipe.
+     * @param instructions The instructions for preparing the recipe.
+     */
+    public void loadRecipeInstructionsPane(String name, String instructions,
+                                            float defaultPortions,
+                                            List&lt;IDAmountStruct&gt; ingredients) {
+
+<span class="nc" id="L379">        subSceneRoot.getChildren().setAll(</span>
+<span class="nc" id="L380">                        recipeViewBuilder.getRecipeInstructionsPane(name, instructions,</span>
+                                defaultPortions, ingredients));
+<span class="nc" id="L382">    }</span>
+
+    /**
+     * Clears all recipes from the recipes pane.
+     */
+    public void clearRecipesPane() {
+<span class="nc" id="L388">        recipesPane.getChildren().clear();</span>
+<span class="nc" id="L389">        initRecipePane();</span>
+<span class="nc" id="L390">    }</span>
+
+    /**
+     * Clears all ingredients from the ingredients pane.
+     */
+    public void clearIngredientsPane() {
+<span class="nc" id="L396">        ingredientsPane.getChildren().clear();</span>
+<span class="nc" id="L397">        initIngredientPane();</span>
+<span class="nc" id="L398">    }</span>
+
+    public void removeRecipeFromRecipes(String name) {
+<span class="nc" id="L401">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+                recipesPane
+<span class="nc" id="L403">                        .getChildren()</span>
+<span class="nc" id="L404">                        .stream(),</span>
+                &quot;recipes-container&quot;
+        );
+
+<span class="nc" id="L408">        masterContainer</span>
+<span class="nc" id="L409">                .getChildren().removeIf(</span>
+<span class="nc" id="L410">                        e -&gt; Objects.equals(</span>
+<span class="nc" id="L411">                                e.getId(), &quot;recipe-removable-&quot; + name</span>
+                        )
+                );
+<span class="nc" id="L414">    }</span>
+
+    private void addRecipeToPurchasePlan(String[] recipe) {
+
+<span class="nc" id="L418">    }</span>
+
+    private void initIngredientPane() {
+<span class="nc" id="L421">        ingredientsPane = ingredientViewBuilder.getIngredientsGroup();</span>
+<span class="nc" id="L422">    }</span>
+
+    public void addIngredientToIngredientsPane(String name, String defaultAmount, String unit) throws IllegalArgumentException {
+
+<span class="nc" id="L426">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L427">            ingredientsPane.getChildren().stream(), &quot;ingredient-container&quot;);</span>
+
+<span class="nc" id="L429">        VBox masterIngredientVbox = ingredientViewBuilder.getIngredientVbox(name, unit);</span>
+
+<span class="nc" id="L431">        VBox ingredientVbox = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L432">            masterIngredientVbox.getChildren().stream(), &quot;ingredient-vbox&quot;);</span>
+
+<span class="nc" id="L434">        HBox titleEditButtonHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L435">            ingredientVbox.getChildren().stream(), &quot;title-hbox&quot;);</span>
+
+<span class="nc" id="L437">        Text titleIngredientText = (Text) getChildByIdInNodeStream(</span>
+<span class="nc" id="L438">            titleEditButtonHbox.getChildren().stream(), &quot;title-ingredient-text&quot;);</span>
+
+<span class="nc" id="L440">        HBox adjustAmountHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L441">            ingredientVbox.getChildren().stream(), &quot;adjust-amount-hbox&quot;);</span>
+
+<span class="nc" id="L443">        HBox addTolistHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L444">            ingredientVbox.getChildren().stream(), &quot;add-to-list-hbox&quot;);</span>
+
+<span class="nc" id="L446">        Text addAmountToList = (Text) getChildByIdInNodeStream(</span>
+<span class="nc" id="L447">            adjustAmountHbox.getChildren().stream(), &quot;add-amount-to-list-text&quot;);</span>
+
+<span class="nc" id="L449">        Button plusButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L450">            adjustAmountHbox.getChildren().stream(), &quot;plus-button&quot;);</span>
+<span class="nc" id="L451">        plusButton.setOnAction(e -&gt; incrementDecrementIngredientAmountToList(&quot;+&quot;, addAmountToList));</span>
+
+<span class="nc" id="L453">        Button minusButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L454">            adjustAmountHbox.getChildren().stream(), &quot;minus-button&quot;);</span>
+<span class="nc" id="L455">        minusButton.setOnAction(e -&gt; incrementDecrementIngredientAmountToList(&quot;-&quot;, addAmountToList));</span>
+
+<span class="nc" id="L457">        Button addToListButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L458">            addTolistHbox.getChildren().stream(), &quot;add-to-list-button&quot;);</span>
+<span class="nc" id="L459">        addToListButton.setOnAction(e -&gt; addIngredientToListFromFridge(addAmountToList));</span>
+
+
+<span class="nc" id="L462">        Label unitLabel = (Label) getChildByIdInNodeStream(</span>
+<span class="nc" id="L463">            adjustAmountHbox.getChildren().stream(), &quot;ingredient-unit&quot;);</span>
+
+<span class="nc" id="L465">        HBox editRemoveHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L466">            ingredientVbox.getChildren().stream(), &quot;edit-remove-hbox&quot;);</span>
+
+<span class="nc" id="L468">        Button editIngredientButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L469">            editRemoveHbox.getChildren().stream(), &quot;edit-ingredient-button&quot;);</span>
+<span class="nc" id="L470">        editIngredientButton.setOnAction(e -&gt; loadIngredientEditPane(name, defaultAmount, unit));</span>
+
+<span class="nc" id="L472">        Button removeButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L473">            editRemoveHbox.getChildren().stream(), &quot;remove-button&quot;);</span>
+<span class="nc" id="L474">        removeButton.setOnAction(e -&gt; mainController.RemoveIngredientFromRegistry(name));</span>
+
+<span class="nc" id="L476">        masterContainer.getChildren().add(masterIngredientVbox);</span>
+<span class="nc" id="L477">    }</span>
+    private void loadIngredientEditPane(String name, String defaultAmount, String unit) {
+<span class="nc" id="L479">        Group ingredientEditPane = ingredientViewBuilder.getIngredientEditPane(name, unit, defaultAmount);</span>
+<span class="nc" id="L480">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L481">            ingredientEditPane.getChildren().stream(), &quot;ingredient-edit-pane&quot;</span>
+        );
+<span class="nc" id="L483">        VBox nameUnitDefaultAmountVbox = (VBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L484">            masterContainer.getChildren().stream(), &quot;name-unit-default-amount-vbox&quot;</span>
+        );
+<span class="nc" id="L486">        HBox nameLabelTextAreaHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L487">            nameUnitDefaultAmountVbox.getChildren().stream(), &quot;name-label-text-area-hbox&quot;</span>
+        );
+<span class="nc" id="L489">        HBox unitLabelTextAreaHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L490">            nameUnitDefaultAmountVbox.getChildren().stream(), &quot;unit-label-text-area-hbox&quot;</span>
+        );
+<span class="nc" id="L492">        HBox defaultAmountLabelTextAreaHbox = (HBox) getChildByIdInNodeStream(</span>
+<span class="nc" id="L493">            nameUnitDefaultAmountVbox.getChildren().stream(), &quot;default-amount-label-text-area-hbox&quot;</span>
+        );
+<span class="nc" id="L495">        Button saveButton = (Button) getChildByIdInNodeStream(</span>
+<span class="nc" id="L496">            nameUnitDefaultAmountVbox.getChildren().stream(), &quot;save-button&quot;</span>
+        );
+<span class="nc" id="L498">        TextArea nameTextArea = (TextArea) getChildByIdInNodeStream(</span>
+<span class="nc" id="L499">            nameLabelTextAreaHbox.getChildren().stream(), &quot;name-text-area&quot;</span>
+        );
+<span class="nc" id="L501">        nameTextArea.textProperty().addListener((observable, oldValue, newValue) -&gt; {</span>
+<span class="nc" id="L502">            nameTextArea.setText(newValue);</span>
+<span class="nc" id="L503">        });</span>
+
+<span class="nc" id="L505">        Label unitLabel = (Label) getChildByIdInNodeStream(</span>
+<span class="nc" id="L506">            unitLabelTextAreaHbox.getChildren().stream(), &quot;unit-label&quot;</span>
+        );
+<span class="nc" id="L508">        TextArea unitTextArea = (TextArea) getChildByIdInNodeStream(</span>
+<span class="nc" id="L509">            unitLabelTextAreaHbox.getChildren().stream(), &quot;unit-text-area&quot;</span>
+        );
+<span class="nc" id="L511">        Label defaultAmountLabel = (Label) getChildByIdInNodeStream(</span>
+<span class="nc" id="L512">            defaultAmountLabelTextAreaHbox.getChildren().stream(), &quot;default-amount-label&quot;</span>
+        );
+<span class="nc" id="L514">        TextArea defaultAmountTextArea = (TextArea) getChildByIdInNodeStream(</span>
+<span class="nc" id="L515">            defaultAmountLabelTextAreaHbox.getChildren().stream(), &quot;default-amount-text-area&quot;</span>
+        );
+<span class="nc" id="L517">        saveButton.setOnAction(e -&gt; saveIngredient(nameTextArea, unitTextArea, defaultAmountTextArea));</span>
+<span class="nc" id="L518">        Label nameLabel = (Label) getChildByIdInNodeStream(</span>
+<span class="nc" id="L519">            nameLabelTextAreaHbox.getChildren().stream(), &quot;name-label&quot;</span>
+        );
+
+<span class="nc" id="L522">        Scene scene = new Scene(ingredientEditPane);</span>
+<span class="nc" id="L523">        Stage editStage = new Stage();</span>
+<span class="nc" id="L524">        editStage.setTitle(&quot;Edit Ingredient&quot;);</span>
+<span class="nc" id="L525">        editStage.setScene(scene);</span>
+<span class="nc" id="L526">        editStage.show();</span>
+<span class="nc" id="L527">    }</span>
+
+    public void clearIngredientPane() {
+<span class="nc" id="L530">        ingredientsPane.getChildren().removeAll();</span>
+<span class="nc" id="L531">    }</span>
+
+    private void incrementDecrementIngredientAmountToList(String op, Text text) {
+<span class="nc" id="L534">        int i = Integer.parseInt(text.getText());</span>
+<span class="nc bnc" id="L535" title="All 4 branches missed.">        if (op.equals(&quot;-&quot;) &amp;&amp; i &gt; 0) {</span>
+<span class="nc" id="L536">            i--;</span>
+<span class="nc bnc" id="L537" title="All 2 branches missed.">        } else if (op.equals(&quot;+&quot;)){</span>
+<span class="nc" id="L538">            i++;</span>
+        }
+<span class="nc" id="L540">        text.setText(i + &quot;&quot;);</span>
+<span class="nc" id="L541">    }</span>
+
+    public void removeIngredientFromIngredients(String name) {
+<span class="nc" id="L544">        VBox masterContainer = (VBox) getChildByIdInNodeStream(</span>
+            ingredientsPane
+<span class="nc" id="L546">                .getChildren()</span>
+<span class="nc" id="L547">                .stream(),</span>
+            &quot;ingredient-container&quot;
+        );
+
+<span class="nc" id="L551">        masterContainer</span>
+<span class="nc" id="L552">            .getChildren().removeIf(</span>
+<span class="nc" id="L553">                e -&gt; e.getId().equals(&quot;ingredient-removable-&quot; + name)</span>
+            );
+<span class="nc" id="L555">    }</span>
+    private void addIngredientToListFromFridge(Text addAmountToList) {
+<span class="nc" id="L557">        AlertViewBuilder alertViewBuilder = new AlertViewBuilder();</span>
+<span class="nc" id="L558">        alertViewBuilder.showAlert(&quot;This amount is added to the shopping list: &quot; + Integer.parseInt(addAmountToList.getText()));</span>
+<span class="nc" id="L559">        addAmountToList.setText(0+&quot;&quot;);</span>
+<span class="nc" id="L560">    }</span>
+    private void saveIngredient(TextArea name, TextArea unit, TextArea defaultAmount){
+        //delete
+<span class="nc" id="L563">        String nameString = name.getText();</span>
+<span class="nc" id="L564">        String unitString = unit.getText();</span>
+<span class="nc" id="L565">        String defaultAmountString = defaultAmount.getText();</span>
+        //make new of string
+<span class="nc" id="L567">        mainController.EditIngredientInRegistry(new IDAmountStruct(nameString, Float.parseFloat(defaultAmountString)), unitString, new String[]{});</span>
+<span class="nc" id="L568">    }</span>
+
+
+
+    @FXML
+    private void loadIngredientsPane(ActionEvent event) throws IOException {
+<span class="nc" id="L574">        subSceneRoot.getChildren().setAll(ingredientsPane);</span>
+<span class="nc" id="L575">    }</span>
+    @FXML
+    private void loadFridgePane(ActionEvent event) throws IOException {
+<span class="nc" id="L578">        subSceneRoot.getChildren().setAll(fridgePane);</span>
+<span class="nc" id="L579">    }</span>
+
+    @FXML
+    private void loadRecipePane(ActionEvent event) throws IOException {
+<span class="nc" id="L583">        subSceneRoot.getChildren().setAll(recipesPane);</span>
+<span class="nc" id="L584">    }</span>
+
+
+
+
+
+
+
+    // Method to create UI elements for ingredients or recipes
+    private void createUIElements(Map&lt;String, PurchasePlanView.Detail&gt; items, VBox container) {
+<span class="nc bnc" id="L594" title="All 2 branches missed.">        for (Map.Entry&lt;String, PurchasePlanView.Detail&gt; entry : items.entrySet()) {</span>
+<span class="nc" id="L595">            String itemName = entry.getKey();</span>
+<span class="nc" id="L596">            PurchasePlanView.Detail detail = entry.getValue();</span>
+<span class="nc" id="L597">            AtomicReference&lt;Float&gt; amount = new AtomicReference&lt;&gt;(detail.amount);</span>
+<span class="nc" id="L598">            String unit = detail.unit;</span>
+<span class="nc" id="L599">            float defaultAmount = detail.defaultAmount;</span>
+
+<span class="nc" id="L601">            Label nameLabel = new Label(itemName);</span>
+<span class="nc" id="L602">            Label amountLabel = new Label(&quot; &quot; + amount.get() + &quot; &quot;);</span>
+<span class="nc" id="L603">            Label unitLabel = new Label(&quot; &quot; + unit);</span>
+
+<span class="nc" id="L605">            Button decreaseButton = new Button(&quot;-&quot;);</span>
+<span class="nc" id="L606">            decreaseButton.setOnAction(decrease -&gt; {</span>
+<span class="nc" id="L607">                amount.updateAndGet(v -&gt; {</span>
+<span class="nc" id="L608">                    float newValue = v - defaultAmount;</span>
+<span class="nc bnc" id="L609" title="All 2 branches missed.">                    return newValue &lt; 0 ? 0 : newValue;</span>
+                });
+<span class="nc" id="L611">                amountLabel.setText(&quot; &quot; + amount.get() + &quot; &quot;);</span>
+<span class="nc" id="L612">            });</span>
+
+<span class="nc" id="L614">            Button increaseButton = new Button(&quot;+&quot;);</span>
+<span class="nc" id="L615">            increaseButton.setOnAction(increase -&gt; {</span>
+<span class="nc" id="L616">                amount.updateAndGet(v -&gt; v + defaultAmount);</span>
+<span class="nc" id="L617">                amountLabel.setText(&quot; &quot; + amount.get() + &quot; &quot;);</span>
+<span class="nc" id="L618">            });</span>
+
+<span class="nc" id="L620">            HBox itemBox = new HBox(nameLabel, decreaseButton, amountLabel, increaseButton, unitLabel);</span>
+<span class="nc" id="L621">            container.getChildren().add(itemBox);</span>
+<span class="nc" id="L622">        }</span>
+<span class="nc" id="L623">    }</span>
+
+
+    @FXML
+    public void togglePurchasePlan(ActionEvent event) {
+
+
+<span class="nc bnc" id="L630" title="All 2 branches missed.">        purchasePlanVisible = !purchasePlanVisible;</span>
+
+<span class="nc bnc" id="L632" title="All 2 branches missed.">        if (purchasePlanVisible) {</span>
+            // Expand the purchase plan
+<span class="nc" id="L634">            purchasePlanVBox.setPrefWidth(expandedWidth);</span>
+<span class="nc" id="L635">            greenStrip.setPrefWidth(expandedWidth);</span>
+            // Show inner VBox with headers and information
+<span class="nc" id="L637">            purchasePlanInfoVBox.setVisible(true);</span>
+<span class="nc" id="L638">            purchasePlanHeaderText.setVisible(true);</span>
+<span class="nc" id="L639">            purchasePlanFooter.setVisible(true);</span>
+            //changes the background color style&lt;
+<span class="nc" id="L641">            purchasePlanHeader.setStyle(&quot;-fx-background-color: #396741; -fx-padding: 10px;&quot;);</span>
+
+
+        } else {
+            // Collapse the purchase plan
+<span class="nc" id="L646">            purchasePlanVBox.setPrefWidth(collapsedWidth);</span>
+<span class="nc" id="L647">            greenStrip.setPrefWidth(collapsedWidth);</span>
+            // Hide inner VBox with headers and information
+<span class="nc" id="L649">            purchasePlanInfoVBox.setVisible(false);</span>
+<span class="nc" id="L650">            purchasePlanHeaderText.setVisible(false);</span>
+<span class="nc" id="L651">            purchasePlanFooter.setVisible(false);</span>
+<span class="nc" id="L652">            purchasePlanHeader.setStyle(&quot;-fx-background-color: #A6C857; -fx-padding: 10px;&quot;);</span>
+
+        }
+
+
+        //Updates the visual purchase plan
+        // Loop through the ingredients list and create labels
+<span class="nc" id="L659">        updatePurchasePlanContent();</span>
+
+        // Call the method to create UI elements for ingredients
+<span class="nc" id="L662">        createUIElements(purchasePlanView.getSelectedIngredient(), ingredientsBox);</span>
+
+        // Call the method to create UI elements for recipes
+<span class="nc" id="L665">        createUIElements(purchasePlanView.getSelectedRecipe(), recipesBox);</span>
+<span class="nc" id="L666">    }</span>
+
+
+
+    private void updatePurchasePlanContent() {
+<span class="nc" id="L671">        ingredientsBox.getChildren().clear();</span>
+<span class="nc" id="L672">        recipesBox.getChildren().clear();</span>
+<span class="nc" id="L673">    }</span>
+
+
+
+    private void createShoppingListText(Map&lt;String, PurchasePlanView.Detail&gt; items, VBox container) {
+<span class="nc bnc" id="L678" title="All 2 branches missed.">        for (Map.Entry&lt;String, PurchasePlanView.Detail&gt; entry : items.entrySet()) {</span>
+<span class="nc" id="L679">            String itemName = entry.getKey();</span>
+<span class="nc" id="L680">            PurchasePlanView.Detail detail = entry.getValue();</span>
+<span class="nc" id="L681">            AtomicReference&lt;Float&gt; amount = new AtomicReference&lt;&gt;(detail.amount);</span>
+<span class="nc" id="L682">            String unit = detail.unit;</span>
+
+<span class="nc" id="L684">            Label nameLabel = new Label(itemName);</span>
+<span class="nc" id="L685">            Label amountLabel = new Label(&quot; &quot; + amount.get() + &quot; &quot;);</span>
+<span class="nc" id="L686">            Label unitLabel = new Label(&quot; &quot; + unit);</span>
+
+<span class="nc" id="L688">            HBox itemBox = new HBox(nameLabel, amountLabel, unitLabel);</span>
+<span class="nc" id="L689">            container.getChildren().add(itemBox);</span>
+<span class="nc" id="L690">        }</span>
+<span class="nc" id="L691">    }</span>
+    @FXML
+    public void generateShoppingList(ActionEvent event) {
+        // Create a new stage
+<span class="nc" id="L695">        Stage shoppingListStage = new Stage();</span>
+<span class="nc" id="L696">        shoppingListStage.setTitle(&quot;Shopping List&quot;);</span>
+
+<span class="nc" id="L698">        shoppingListStage.setMinWidth(300);</span>
+<span class="nc" id="L699">        shoppingListStage.setMinHeight(200);</span>
+<span class="nc" id="L700">        shoppingListStage.setMaxWidth(600);</span>
+<span class="nc" id="L701">        shoppingListStage.setMaxHeight(400);</span>
+
+        // Create a VBox to hold the shopping list items
+<span class="nc" id="L704">        VBox vBox = new VBox();</span>
+
+        // Create UI elements without buttons for selected ingredients and recipes
+<span class="nc" id="L707">        createShoppingListText(purchasePlanView.getSelectedIngredient(), vBox);</span>
+<span class="nc" id="L708">        createShoppingListText(purchasePlanView.getSelectedRecipe(), vBox);</span>
+
+        // Create a button to close the window
+<span class="nc" id="L711">        Button closeButton = new Button(&quot;Close&quot;);</span>
+<span class="nc" id="L712">        closeButton.setOnAction(e -&gt; shoppingListStage.close());</span>
+
+        // Add the close button to an HBox
+<span class="nc" id="L715">        HBox closeButtonBox = new HBox(closeButton);</span>
+
+        // Create a VBox to hold the shopping list items and the close button
+<span class="nc" id="L718">        VBox root = new VBox(vBox, closeButtonBox);</span>
+
+        // Set the scene in the stage
+<span class="nc" id="L721">        shoppingListStage.setScene(new Scene(root));</span>
+
+        // Show the stage
+<span class="nc" id="L724">        shoppingListStage.show();</span>
+<span class="nc" id="L725">    }</span>
+
+    private Node getChildByIdInNodeStream(Stream&lt;Node&gt; stream, String childId) throws IllegalArgumentException {
+
+<span class="nc" id="L729">        return stream</span>
+<span class="nc" id="L730">                .filter(</span>
+<span class="nc" id="L731">                        e -&gt; Objects.equals(</span>
+<span class="nc" id="L732">                                e.getId(), childId</span>
+                        )
+                )
+<span class="nc" id="L735">                .map(</span>
+<span class="nc" id="L736">                        node -&gt; (Node) node</span>
+                )
+<span class="nc" id="L738">                .findFirst()</span>
+<span class="nc" id="L739">                .orElseThrow(</span>
+<span class="nc" id="L740">                        () -&gt; new IllegalArgumentException(</span>
+                                childId + &quot;not found&quot;
+                        )
+                );
+    }
+
+    public void loadAlertWindow(String s) {
+<span class="nc" id="L747">        alert.showAlert(s);</span>
+<span class="nc" id="L748">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

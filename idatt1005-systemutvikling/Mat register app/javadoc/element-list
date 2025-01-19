@@ -1,0 +1,16 @@
+no.ntnu.idatt1005
+no.ntnu.idatt1005.controller
+no.ntnu.idatt1005.data
+no.ntnu.idatt1005.data.Ingredient
+no.ntnu.idatt1005.data.Recipe
+no.ntnu.idatt1005.demo.repo
+no.ntnu.idatt1005.logging
+no.ntnu.idatt1005.model.data
+no.ntnu.idatt1005.model.data.entities
+no.ntnu.idatt1005.model.exceptions
+no.ntnu.idatt1005.model.repo
+no.ntnu.idatt1005.model.services
+no.ntnu.idatt1005.model.utils
+no.ntnu.idatt1005.recipe
+no.ntnu.idatt1005.services
+no.ntnu.idatt1005.view

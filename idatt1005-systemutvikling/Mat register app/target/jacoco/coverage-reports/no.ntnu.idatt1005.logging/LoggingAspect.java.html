@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LoggingAspect.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.logging</a> &gt; <span class="el_source">LoggingAspect.java</span></div><h1>LoggingAspect.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.logging;
+
+import java.util.Arrays;
+import no.ntnu.idatt1005.model.data.Item;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+
+/**
+ * Aspect for logging service classes.
+ * The aspect intercepts all public methods in the service classes
+ * and logs the method name, arguments and return value. Exceptions are also intercepted and logged.
+ * The aspect uses the SLF4J logger and the Logback logging framework.&lt;br&gt;
+ * Method logs are stored in files in the logs directory.
+ */
+@Aspect
+@Component
+<span class="fc" id="L23">public class LoggingAspect {</span>
+<span class="fc" id="L24">    private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);</span>
+
+    /**
+     * Pointcut for all public methods in the service classes.
+     * Specifies that the aspect should intercept all public methods in the services package.
+     */
+    @Pointcut(&quot;execution(public * no.ntnu.idatt1005.model.services.*.*(..))&quot;)
+    private void publicMethodsFromLoggingPackage() {
+<span class="nc" id="L32">    }</span>
+
+    /**
+     * Advice for logging around the method.
+     * Logs the method name, arguments and return value.
+     * Exceptions in the service classes get rethrown and logged.
+     *
+     * @param joinPoint the join point
+     * @return the return value of the method
+     * @throws Throwable if the method throws an exception
+     */
+    @Around(value = &quot;publicMethodsFromLoggingPackage()&quot;)
+    public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
+<span class="fc" id="L45">        String methodName = joinPoint.getSignature().getName();</span>
+        try {
+<span class="fc" id="L47">            StringBuilder args = new StringBuilder();</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">            for (Object arg : joinPoint.getArgs()) {</span>
+<span class="fc" id="L49">                String argString = arg.toString().replace(&quot;\n&quot;, &quot; &quot;).replace(&quot;\r&quot;, &quot; &quot;);</span>
+<span class="fc" id="L50">                args.append(argString).append(&quot;, &quot;);</span>
+            }
+<span class="fc" id="L52">            logger.info(&quot;Method called: {} -- Class: {} -- Args: {}&quot;,</span>
+<span class="fc" id="L53">                methodName, joinPoint.getTarget().getClass().getName(), args);</span>
+<span class="fc" id="L54">        } catch (Exception e) {</span>
+<span class="fc" id="L55">            System.out.println(&quot;Logging aspect failed to log method: &quot; + e.getMessage());</span>
+<span class="fc" id="L56">        }</span>
+<span class="fc" id="L57">        Object result = joinPoint.proceed(); // Executes the method, exceptions should be rethrown</span>
+        try {
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            if (result != null) {</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">                logObject(result, methodName, result instanceof Item item ?</span>
+<span class="fc" id="L61">                    item.getName() : null);</span>
+            }
+<span class="nc" id="L63">        } catch (Exception e) {</span>
+<span class="nc" id="L64">            System.out.println(&quot;Logging aspect failed to log object: &quot; + e.getMessage());</span>
+<span class="fc" id="L65">        }</span>
+<span class="fc" id="L66">        return result;</span>
+    }
+
+    /**
+     * Logs the object returned from the method.
+     * The method logs the object and the name of the object if it is an Item.
+     *
+     * @param object the object to log
+     * @param methodName the name of the method
+     * @param objectName the name of the object
+     */
+    private void logObject(Object object, String methodName, String... objectName) {
+        try {
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">            if (objectName != null &amp;&amp; objectName.length &gt; 0) {</span>
+<span class="fc" id="L80">                logger.info(&quot;Object returned: {} -- Method {} -- Name of object: {}&quot;,</span>
+<span class="fc" id="L81">                    object.getClass().getName(), methodName, objectName[0]);</span>
+            } else {
+<span class="nc" id="L83">                logger.info(&quot;Object returned: {} -- Method {}&quot;,</span>
+<span class="nc" id="L84">                    object.getClass().getName(), methodName);</span>
+            }
+<span class="nc" id="L86">        } catch (Exception e) {</span>
+<span class="nc" id="L87">            System.out.println(&quot;Logging aspect failed to log object: &quot; + e.getMessage());</span>
+<span class="fc" id="L88">        }</span>
+<span class="fc" id="L89">    }</span>
+
+    /**
+     * Advice for logging exceptions.
+     * Logs the exception message.
+     *
+     * @param exception the exception
+     */
+    @AfterThrowing(value = &quot;publicMethodsFromLoggingPackage()&quot;, throwing = &quot;exception&quot;)
+    public void logException(Exception exception) {
+        try {
+<span class="fc" id="L100">            logger.error(&quot;Exception thrown: {}&quot;, exception.toString());</span>
+<span class="nc" id="L101">        } catch (Exception e) {</span>
+<span class="nc" id="L102">            System.out.println(&quot;Logging aspect failed to log exception: &quot; + e.getMessage());</span>
+<span class="fc" id="L103">        }</span>
+<span class="fc" id="L104">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

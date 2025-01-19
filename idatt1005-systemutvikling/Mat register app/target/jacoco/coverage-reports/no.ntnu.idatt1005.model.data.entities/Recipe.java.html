@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Recipe.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.model.data.entities</a> &gt; <span class="el_source">Recipe.java</span></div><h1>Recipe.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.model.data.entities;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import no.ntnu.idatt1005.model.data.IDAmountStruct;
+import no.ntnu.idatt1005.model.data.Item;
+
+import no.ntnu.idatt1005.model.utils.EntityValidator;
+
+/**
+ * Class for recipes
+ */
+@Entity
+@Table(name = &quot;recipe&quot;)
+public class Recipe extends Item {
+  /**
+   * Fields
+   */
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(
+      name = &quot;id&quot;,
+      updatable = false
+  )
+  private Long id;
+  @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER) // CascadeType.ALL kan brukes, men da kan man ikke lagre sub-objekter først
+  @JoinColumn(name = &quot;recipe_id&quot;)
+  private List&lt;RecipeIngredientElement&gt; ingredients;
+  @Column(
+      name = &quot;instructions&quot;,
+      nullable = false,
+      columnDefinition = &quot;TEXT&quot;
+  )
+  private String instructions;
+  @Column(
+      name = &quot;portions&quot;,
+      nullable = false
+  )
+  private static final String unit = &quot;portions&quot;;
+
+  /**
+   * Constructor
+   *
+   * @param name name of recipe
+   * @param defaultAmount default amount of recipe
+   * @param tags tags of recipe
+   * @param ingredients ingredients of recipe
+   * @param instructions instructions of recipe
+   */
+  public Recipe(String name, float defaultAmount, List&lt;Tag&gt; tags, List&lt;RecipeIngredientElement&gt; ingredients, String instructions) {
+<span class="fc" id="L65">    super(name, defaultAmount, tags);</span>
+<span class="fc bfc" id="L66" title="All 4 branches covered.">    if (ingredients.isEmpty() || instructions.isEmpty()) {</span>
+<span class="fc" id="L67">      throw new IllegalArgumentException(&quot;Invalid constructor parameters&quot;);</span>
+    }
+<span class="fc" id="L69">    this.ingredients = ingredients;</span>
+<span class="fc" id="L70">    this.instructions = instructions;</span>
+<span class="fc" id="L71">  }</span>
+
+  /**
+   * Copy constructor
+   */
+  public Recipe(Recipe recipe) {
+<span class="fc" id="L77">    super(recipe);</span>
+<span class="fc" id="L78">    this.ingredients = recipe.ingredients;</span>
+<span class="fc" id="L79">    this.instructions = recipe.instructions;</span>
+<span class="fc" id="L80">  }</span>
+
+  public Recipe() {
+<span class="fc" id="L83">      super();</span>
+<span class="fc" id="L84">  }</span>
+
+  public Long getId() {
+<span class="fc" id="L87">    return id;</span>
+  }
+
+  /**
+   * Gets ingredients of recipe
+   *
+   * @return ingredients of recipe
+   */
+  public List&lt;RecipeIngredientElement&gt; getIngredients() {
+<span class="fc" id="L96">    return ingredients;</span>
+  }
+
+  /**
+   * Gets instructions of recipe
+   *
+   * @return instructions of recipe
+   */
+  public String getInstructions() {
+<span class="fc" id="L105">    return instructions;</span>
+  }
+
+  /**
+   * Gets unit of recipe
+   *
+   * @return unit of recipe
+   */
+  public static String getUnit() {
+<span class="fc" id="L114">    return unit;</span>
+  }
+
+
+  public void setRecipeName(String name) {
+<span class="fc" id="L119">    EntityValidator.validateName(name);</span>
+<span class="fc" id="L120">    this.name = name;</span>
+<span class="fc" id="L121">  }</span>
+
+  public void setIngredients(List&lt;RecipeIngredientElement&gt; ingredients) {
+<span class="fc" id="L124">    EntityValidator.validateList(ingredients);</span>
+<span class="fc" id="L125">    this.ingredients = ingredients;</span>
+<span class="fc" id="L126">  }</span>
+
+  public void setInstructions(String instructions) {
+<span class="fc" id="L129">    EntityValidator.validateInstructions(instructions);</span>
+<span class="fc" id="L130">    this.instructions = instructions;</span>
+<span class="fc" id="L131">  }</span>
+
+  @Override
+  public boolean equals(Object o) {
+<span class="pc bpc" id="L135" title="1 of 2 branches missed.">    if (this == o) {</span>
+<span class="nc" id="L136">      return true;</span>
+    }
+<span class="pc bpc" id="L138" title="2 of 4 branches missed.">    if (o == null || this.getClass() != o.getClass()) {</span>
+<span class="nc" id="L139">      return false;</span>
+    }
+<span class="fc" id="L141">    Recipe recipe = (Recipe) o;</span>
+<span class="fc" id="L142">    return this.name.equals(recipe.name);</span>
+  }
+
+  @Override
+  public int hashCode() {
+<span class="fc" id="L147">    return Objects.hash(name);</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="fc" id="L152">    String ingredientsStr = ingredients.stream()</span>
+<span class="fc" id="L153">        .map(RecipeIngredientElement::toString)</span>
+<span class="fc" id="L154">        .collect(Collectors.joining(&quot;, &quot;));</span>
+<span class="fc" id="L155">    return &quot;Recipe{&quot; +</span>
+        &quot;id='&quot; + id + '\'' +
+        &quot;, recipeName='&quot; + name + '\'' +
+        &quot;, ingredients=[&quot; + ingredientsStr + &quot;]&quot; +
+        &quot;, instructions='&quot; + instructions + '\'' +
+        &quot;, portions=&quot; + defaultAmount +
+        '}';
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

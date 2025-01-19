@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GenerateTestData.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.controller</a> &gt; <span class="el_source">GenerateTestData.java</span></div><h1>GenerateTestData.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.controller;
+
+import no.ntnu.idatt1005.model.data.entities.FridgeElement;
+import no.ntnu.idatt1005.model.data.entities.Ingredient;
+import no.ntnu.idatt1005.model.data.entities.Recipe;
+import no.ntnu.idatt1005.model.data.entities.RecipeIngredientElement;
+import no.ntnu.idatt1005.model.data.entities.Tag;
+import no.ntnu.idatt1005.model.services.FridgeService;
+import no.ntnu.idatt1005.model.services.IngredientService;
+import no.ntnu.idatt1005.model.services.RecipeService;
+import no.ntnu.idatt1005.model.services.TagService;
+
+import java.util.*;
+
+<span class="nc" id="L15">public abstract class GenerateTestData {</span>
+  public static void FillDatabase(TagService ts, IngredientService is, RecipeService rs, FridgeService fs) {
+<span class="nc" id="L17">    FillDatabaseWithTags(ts);</span>
+<span class="nc" id="L18">    FillDatabaseWithIngredients(ts, is);</span>
+<span class="nc" id="L19">    FillDatabaseWithRecipes(ts, rs);</span>
+<span class="nc" id="L20">    FillDatabaseWithFridgeElements(ts, is, fs);</span>
+<span class="nc" id="L21">  }</span>
+
+  private static void FillDatabaseWithTags(TagService ts) {
+    // Budget
+<span class="nc" id="L25">    ts.saveObjectToDatabase(new Tag(&quot;expensive&quot;, &quot;cost&quot;));</span>
+<span class="nc" id="L26">    ts.saveObjectToDatabase(new Tag(&quot;budget-friendly&quot;, &quot;cost&quot;));</span>
+
+    // Preparation time
+<span class="nc" id="L29">    ts.saveObjectToDatabase(new Tag(&quot;quick&quot;, &quot;preparation time&quot;));</span>
+<span class="nc" id="L30">    ts.saveObjectToDatabase(new Tag(&quot;long&quot;, &quot;preparation time&quot;));</span>
+<span class="nc" id="L31">    ts.saveObjectToDatabase(new Tag(&quot;slow cook&quot;, &quot;preparation time&quot;));</span>
+
+    // Difficulty
+<span class="nc" id="L34">    ts.saveObjectToDatabase(new Tag(&quot;easy&quot;, &quot;difficulty&quot;));</span>
+<span class="nc" id="L35">    ts.saveObjectToDatabase(new Tag(&quot;medium&quot;, &quot;difficulty&quot;));</span>
+<span class="nc" id="L36">    ts.saveObjectToDatabase(new Tag(&quot;hard&quot;, &quot;difficulty&quot;));</span>
+<span class="nc" id="L37">    ts.saveObjectToDatabase(new Tag(&quot;very hard&quot;, &quot;difficulty&quot;));</span>
+
+    // Allergens
+<span class="nc" id="L40">    ts.saveObjectToDatabase(new Tag(&quot;gluten&quot;, &quot;allergen&quot;));</span>
+<span class="nc" id="L41">    ts.saveObjectToDatabase(new Tag(&quot;dairy&quot;, &quot;allergen&quot;));</span>
+<span class="nc" id="L42">    ts.saveObjectToDatabase(new Tag(&quot;nuts&quot;, &quot;allergen&quot;));</span>
+<span class="nc" id="L43">    ts.saveObjectToDatabase(new Tag(&quot;seafood&quot;, &quot;allergen&quot;));</span>
+<span class="nc" id="L44">    ts.saveObjectToDatabase(new Tag(&quot;soy&quot;, &quot;allergen&quot;));</span>
+
+    //Health
+<span class="nc" id="L47">    ts.saveObjectToDatabase(new Tag(&quot;healthy&quot;, &quot;health&quot;));</span>
+<span class="nc" id="L48">    ts.saveObjectToDatabase(new Tag(&quot;unhealthy&quot;, &quot;health&quot;));</span>
+
+    // Nutrition
+<span class="nc" id="L51">    ts.saveObjectToDatabase(new Tag(&quot;high-protein&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L52">    ts.saveObjectToDatabase(new Tag(&quot;heart-healthy&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L53">    ts.saveObjectToDatabase(new Tag(&quot;low-calorie&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L54">    ts.saveObjectToDatabase(new Tag(&quot;high-calorie&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L55">    ts.saveObjectToDatabase(new Tag(&quot;low-carb&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L56">    ts.saveObjectToDatabase(new Tag(&quot;high-carb&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L57">    ts.saveObjectToDatabase(new Tag(&quot;low-fat&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L58">    ts.saveObjectToDatabase(new Tag(&quot;high-fat&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L59">    ts.saveObjectToDatabase(new Tag(&quot;low-sugar&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L60">    ts.saveObjectToDatabase(new Tag(&quot;high-sugar&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L61">    ts.saveObjectToDatabase(new Tag(&quot;protein&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L62">    ts.saveObjectToDatabase(new Tag(&quot;lean&quot;, &quot;nutrition&quot;));</span>
+<span class="nc" id="L63">    ts.saveObjectToDatabase(new Tag(&quot;omega-3&quot;, &quot;nutrition&quot;));</span>
+
+    // Diets
+<span class="nc" id="L66">    ts.saveObjectToDatabase(new Tag(&quot;vegetarian&quot;, &quot;dietary restriction&quot;));</span>
+<span class="nc" id="L67">    ts.saveObjectToDatabase(new Tag(&quot;vegan&quot;, &quot;dietary restriction&quot;));</span>
+
+    // Seasonality
+<span class="nc" id="L70">    ts.saveObjectToDatabase(new Tag(&quot;seasonal&quot;, &quot;availability&quot;));</span>
+<span class="nc" id="L71">    ts.saveObjectToDatabase(new Tag(&quot;year-round&quot;, &quot;availability&quot;));</span>
+
+<span class="nc" id="L73">    ts.saveObjectToDatabase(new Tag(&quot;tropical&quot;, &quot;availability&quot;));</span>
+<span class="nc" id="L74">    ts.saveObjectToDatabase(new Tag(&quot;grain&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L75">    ts.saveObjectToDatabase(new Tag(&quot;staple&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L76">    ts.saveObjectToDatabase(new Tag(&quot;fiber&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L77">    ts.saveObjectToDatabase(new Tag(&quot;legume&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L78">    ts.saveObjectToDatabase(new Tag(&quot;baking&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L79">    ts.saveObjectToDatabase(new Tag(&quot;seasoning&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L80">    ts.saveObjectToDatabase(new Tag(&quot;milk&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L81">    ts.saveObjectToDatabase(new Tag(&quot;cheese&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L82">    ts.saveObjectToDatabase(new Tag(&quot;yogurt&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L83">    ts.saveObjectToDatabase(new Tag(&quot;butter&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L84">    ts.saveObjectToDatabase(new Tag(&quot;oil&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L85">    ts.saveObjectToDatabase(new Tag(&quot;cooking oil&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L86">    ts.saveObjectToDatabase(new Tag(&quot;olive oil&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L87">    ts.saveObjectToDatabase(new Tag(&quot;vegetable oil&quot;, &quot;category&quot;));</span>
+<span class="nc" id="L88">    ts.saveObjectToDatabase(new Tag(&quot;coconut oil&quot;, &quot;category&quot;));</span>
+
+    // North America
+<span class="nc" id="L91">    ts.saveObjectToDatabase(new Tag(&quot;United States&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L92">    ts.saveObjectToDatabase(new Tag(&quot;Canada&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L93">    ts.saveObjectToDatabase(new Tag(&quot;Mexico&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L94">    ts.saveObjectToDatabase(new Tag(&quot;Panama&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L95">    ts.saveObjectToDatabase(new Tag(&quot;Haiti&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L96">    ts.saveObjectToDatabase(new Tag(&quot;Jamaica&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L97">    ts.saveObjectToDatabase(new Tag(&quot;Peru&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L98">    ts.saveObjectToDatabase(new Tag(&quot;Dominican Republic&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L99">    ts.saveObjectToDatabase(new Tag(&quot;Cuba&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L100">    ts.saveObjectToDatabase(new Tag(&quot;Greenland&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L101">    ts.saveObjectToDatabase(new Tag(&quot;El Salvador&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L102">    ts.saveObjectToDatabase(new Tag(&quot;Puerto Rico&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L103">    ts.saveObjectToDatabase(new Tag(&quot;Colombia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L104">    ts.saveObjectToDatabase(new Tag(&quot;Venezuela&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L105">    ts.saveObjectToDatabase(new Tag(&quot;Honduras&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L106">    ts.saveObjectToDatabase(new Tag(&quot;Guyana&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L107">    ts.saveObjectToDatabase(new Tag(&quot;Guatemala&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L108">    ts.saveObjectToDatabase(new Tag(&quot;Bolivia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L109">    ts.saveObjectToDatabase(new Tag(&quot;Argentina&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L110">    ts.saveObjectToDatabase(new Tag(&quot;Ecuador&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L111">    ts.saveObjectToDatabase(new Tag(&quot;Chile&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L112">    ts.saveObjectToDatabase(new Tag(&quot;Brazil&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L113">    ts.saveObjectToDatabase(new Tag(&quot;Costa Rica&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L114">    ts.saveObjectToDatabase(new Tag(&quot;Belize&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L115">    ts.saveObjectToDatabase(new Tag(&quot;Nicaragua&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L116">    ts.saveObjectToDatabase(new Tag(&quot;Bahamas&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L117">    ts.saveObjectToDatabase(new Tag(&quot;Trinidad and Tobago&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L118">    ts.saveObjectToDatabase(new Tag(&quot;Paraguay&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L119">    ts.saveObjectToDatabase(new Tag(&quot;Uruguay&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L120">    ts.saveObjectToDatabase(new Tag(&quot;Suriname&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L121">    ts.saveObjectToDatabase(new Tag(&quot;French Guiana&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L122">    ts.saveObjectToDatabase(new Tag(&quot;Barbados&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L123">    ts.saveObjectToDatabase(new Tag(&quot;Guam&quot;, &quot;Cuisine&quot;));</span>
+
+    // Europe
+<span class="nc" id="L126">    ts.saveObjectToDatabase(new Tag(&quot;Norway&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L127">    ts.saveObjectToDatabase(new Tag(&quot;Sweden&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L128">    ts.saveObjectToDatabase(new Tag(&quot;Iceland&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L129">    ts.saveObjectToDatabase(new Tag(&quot;Finland&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L130">    ts.saveObjectToDatabase(new Tag(&quot;Germany&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L131">    ts.saveObjectToDatabase(new Tag(&quot;Switzerland&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L132">    ts.saveObjectToDatabase(new Tag(&quot;Austria&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L133">    ts.saveObjectToDatabase(new Tag(&quot;Czech Republic&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L134">    ts.saveObjectToDatabase(new Tag(&quot;Italy&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L135">    ts.saveObjectToDatabase(new Tag(&quot;Turkey&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L136">    ts.saveObjectToDatabase(new Tag(&quot;Greece&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L137">    ts.saveObjectToDatabase(new Tag(&quot;Poland&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L138">    ts.saveObjectToDatabase(new Tag(&quot;Romania&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L139">    ts.saveObjectToDatabase(new Tag(&quot;Scotland&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L140">    ts.saveObjectToDatabase(new Tag(&quot;Albania&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L141">    ts.saveObjectToDatabase(new Tag(&quot;Ireland&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L142">    ts.saveObjectToDatabase(new Tag(&quot;Russia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L143">    ts.saveObjectToDatabase(new Tag(&quot;Oman&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L144">    ts.saveObjectToDatabase(new Tag(&quot;Bulgaria&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L145">    ts.saveObjectToDatabase(new Tag(&quot;Saudi Arabia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L146">    ts.saveObjectToDatabase(new Tag(&quot;Hungary&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L147">    ts.saveObjectToDatabase(new Tag(&quot;Cyprus&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L148">    ts.saveObjectToDatabase(new Tag(&quot;Iraq&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L149">    ts.saveObjectToDatabase(new Tag(&quot;Iran&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L150">    ts.saveObjectToDatabase(new Tag(&quot;Syria&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L151">    ts.saveObjectToDatabase(new Tag(&quot;Lebanon&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L152">    ts.saveObjectToDatabase(new Tag(&quot;Israel&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L153">    ts.saveObjectToDatabase(new Tag(&quot;Jordan&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L154">    ts.saveObjectToDatabase(new Tag(&quot;Yemen&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L155">    ts.saveObjectToDatabase(new Tag(&quot;Kuwait&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L156">    ts.saveObjectToDatabase(new Tag(&quot;Bahrain&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L157">    ts.saveObjectToDatabase(new Tag(&quot;Netherlands&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L158">    ts.saveObjectToDatabase(new Tag(&quot;Luxembourg&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L159">    ts.saveObjectToDatabase(new Tag(&quot;Belgium&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L160">    ts.saveObjectToDatabase(new Tag(&quot;Portugal&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L161">    ts.saveObjectToDatabase(new Tag(&quot;France&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L162">    ts.saveObjectToDatabase(new Tag(&quot;England&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L163">    ts.saveObjectToDatabase(new Tag(&quot;Denmark&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L164">    ts.saveObjectToDatabase(new Tag(&quot;Spain&quot;, &quot;Cuisine&quot;));</span>
+
+    // Asia
+<span class="nc" id="L167">    ts.saveObjectToDatabase(new Tag(&quot;India&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L168">    ts.saveObjectToDatabase(new Tag(&quot;Pakistan&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L169">    ts.saveObjectToDatabase(new Tag(&quot;Myanmar (Burma)&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L170">    ts.saveObjectToDatabase(new Tag(&quot;Afghanistan&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L171">    ts.saveObjectToDatabase(new Tag(&quot;Thailand&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L172">    ts.saveObjectToDatabase(new Tag(&quot;Nepal&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L173">    ts.saveObjectToDatabase(new Tag(&quot;Bhutan&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L174">    ts.saveObjectToDatabase(new Tag(&quot;Cambodia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L175">    ts.saveObjectToDatabase(new Tag(&quot;Malaysia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L176">    ts.saveObjectToDatabase(new Tag(&quot;Bangladesh&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L177">    ts.saveObjectToDatabase(new Tag(&quot;China&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L178">    ts.saveObjectToDatabase(new Tag(&quot;South Korea&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L179">    ts.saveObjectToDatabase(new Tag(&quot;Japan&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L180">    ts.saveObjectToDatabase(new Tag(&quot;Mongolia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L181">    ts.saveObjectToDatabase(new Tag(&quot;Laos&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L182">    ts.saveObjectToDatabase(new Tag(&quot;Tibet&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L183">    ts.saveObjectToDatabase(new Tag(&quot;Indonesia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L184">    ts.saveObjectToDatabase(new Tag(&quot;Philippines&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L185">    ts.saveObjectToDatabase(new Tag(&quot;Taiwan&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L186">    ts.saveObjectToDatabase(new Tag(&quot;Sri Lanka&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L187">    ts.saveObjectToDatabase(new Tag(&quot;New Guinea&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L188">    ts.saveObjectToDatabase(new Tag(&quot;Sumatra&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L189">    ts.saveObjectToDatabase(new Tag(&quot;Borneo&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L190">    ts.saveObjectToDatabase(new Tag(&quot;Vietnam&quot;, &quot;Cuisine&quot;));</span>
+
+    // Africa
+<span class="nc" id="L193">    ts.saveObjectToDatabase(new Tag(&quot;Tunisia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L194">    ts.saveObjectToDatabase(new Tag(&quot;Morocco&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L195">    ts.saveObjectToDatabase(new Tag(&quot;Uganda&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L196">    ts.saveObjectToDatabase(new Tag(&quot;Angola&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L197">    ts.saveObjectToDatabase(new Tag(&quot;Zimbabwe&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L198">    ts.saveObjectToDatabase(new Tag(&quot;Djibouti&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L199">    ts.saveObjectToDatabase(new Tag(&quot;Botswana&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L200">    ts.saveObjectToDatabase(new Tag(&quot;Mozambique&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L201">    ts.saveObjectToDatabase(new Tag(&quot;Zambia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L202">    ts.saveObjectToDatabase(new Tag(&quot;Swaziland&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L203">    ts.saveObjectToDatabase(new Tag(&quot;Gambia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L204">    ts.saveObjectToDatabase(new Tag(&quot;Guinea&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L205">    ts.saveObjectToDatabase(new Tag(&quot;Algeria&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L206">    ts.saveObjectToDatabase(new Tag(&quot;Ghana&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L207">    ts.saveObjectToDatabase(new Tag(&quot;Burundi&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L208">    ts.saveObjectToDatabase(new Tag(&quot;Lesotho&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L209">    ts.saveObjectToDatabase(new Tag(&quot;Malawi&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L210">    ts.saveObjectToDatabase(new Tag(&quot;Togo&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L211">    ts.saveObjectToDatabase(new Tag(&quot;Niger&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L212">    ts.saveObjectToDatabase(new Tag(&quot;Nigeria&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L213">    ts.saveObjectToDatabase(new Tag(&quot;Chad&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L214">    ts.saveObjectToDatabase(new Tag(&quot;Liberia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L215">    ts.saveObjectToDatabase(new Tag(&quot;Egypt&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L216">    ts.saveObjectToDatabase(new Tag(&quot;Benin&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L217">    ts.saveObjectToDatabase(new Tag(&quot;Gabon&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L218">    ts.saveObjectToDatabase(new Tag(&quot;Tanzania&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L219">    ts.saveObjectToDatabase(new Tag(&quot;Somalia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L220">    ts.saveObjectToDatabase(new Tag(&quot;Kenya&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L221">    ts.saveObjectToDatabase(new Tag(&quot;Mali&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L222">    ts.saveObjectToDatabase(new Tag(&quot;Sierra Leone&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L223">    ts.saveObjectToDatabase(new Tag(&quot;Ethiopia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L224">    ts.saveObjectToDatabase(new Tag(&quot;Guinea-Bissau&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L225">    ts.saveObjectToDatabase(new Tag(&quot;Madagascar&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L226">    ts.saveObjectToDatabase(new Tag(&quot;Rwanda&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L227">    ts.saveObjectToDatabase(new Tag(&quot;Comoros&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L228">    ts.saveObjectToDatabase(new Tag(&quot;Mauritania&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L229">    ts.saveObjectToDatabase(new Tag(&quot;Transylvania&quot;, &quot;Cuisine&quot;));</span>
+
+    // Oceania
+<span class="nc" id="L232">    ts.saveObjectToDatabase(new Tag(&quot;Fiji&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L233">    ts.saveObjectToDatabase(new Tag(&quot;Australia&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L234">    ts.saveObjectToDatabase(new Tag(&quot;Sudan&quot;, &quot;Cuisine&quot;));</span>
+<span class="nc" id="L235">  }</span>
+
+  private static List&lt;Tag&gt; GenerateTagsListFromDB(TagService ts, String[] tags) {
+<span class="nc" id="L238">    List&lt;Tag&gt; tagsList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L239" title="All 2 branches missed.">    for (String tag : tags) {</span>
+<span class="nc" id="L240">      ts.getObjectFromDatabase(tag).ifPresent(tagsList::add);</span>
+    }
+<span class="nc" id="L242">    return tagsList;</span>
+  }
+
+  private static void FillDatabaseWithIngredients(TagService ts, IngredientService is) {
+    // Vegetables
+<span class="nc" id="L247">    is.saveObjectToDatabase(new Ingredient(&quot;Tomato&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L248">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L249">    is.saveObjectToDatabase(new Ingredient(&quot;Lettuce&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L250">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L251">    is.saveObjectToDatabase(new Ingredient(&quot;Carrot&quot;, 100, &quot;grams&quot;,</span>
+<span class="nc" id="L252">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;high-vitamin&quot;})));</span>
+<span class="nc" id="L253">    is.saveObjectToDatabase(new Ingredient(&quot;Cucumber&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L254">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;low-calorie&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L255">    is.saveObjectToDatabase(new Ingredient(&quot;Bell Pepper&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L256">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;high-vitamin&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L257">    is.saveObjectToDatabase(new Ingredient(&quot;Spinach&quot;, 100, &quot;grams&quot;,</span>
+<span class="nc" id="L258">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;high-vitamin&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L259">    is.saveObjectToDatabase(new Ingredient(&quot;Broccoli&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L260">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;high-vitamin&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L261">    is.saveObjectToDatabase(new Ingredient(&quot;Zucchini&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L262">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;low-calorie&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L263">    is.saveObjectToDatabase(new Ingredient(&quot;Mushroom&quot;, 100, &quot;grams&quot;,</span>
+<span class="nc" id="L264">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;low-calorie&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L265">    is.saveObjectToDatabase(new Ingredient(&quot;Cauliflower&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L266">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;high-vitamin&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L267">    is.saveObjectToDatabase(new Ingredient(&quot;Onion&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L268">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;staple&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L269">    is.saveObjectToDatabase(new Ingredient(&quot;Red Onion&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L270">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;staple&quot;, &quot;seasonal&quot;})));</span>
+<span class="nc" id="L271">    is.saveObjectToDatabase(new Ingredient(&quot;Ginger&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L272">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;seasonal&quot;})));</span>
+
+    // Fruits
+<span class="nc" id="L275">    is.saveObjectToDatabase(new Ingredient(&quot;Apple&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L276">        GenerateTagsListFromDB(ts, new String[]{&quot;seasonal&quot;})));</span>
+<span class="nc" id="L277">    is.saveObjectToDatabase(new Ingredient(&quot;Banana&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L278">        GenerateTagsListFromDB(ts, new String[]{&quot;tropical&quot;})));</span>
+<span class="nc" id="L279">    is.saveObjectToDatabase(new Ingredient(&quot;Orange&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L280">        GenerateTagsListFromDB(ts, new String[]{&quot;seasonal&quot;, &quot;citrus&quot;})));</span>
+<span class="nc" id="L281">    is.saveObjectToDatabase(new Ingredient(&quot;Grapes&quot;, 100, &quot;grams&quot;,</span>
+<span class="nc" id="L282">        GenerateTagsListFromDB(ts, new String[]{&quot;seasonal&quot;})));</span>
+<span class="nc" id="L283">    is.saveObjectToDatabase(new Ingredient(&quot;Strawberry&quot;, 100, &quot;grams&quot;,</span>
+<span class="nc" id="L284">        GenerateTagsListFromDB(ts, new String[]{&quot;seasonal&quot;})));</span>
+<span class="nc" id="L285">    is.saveObjectToDatabase(new Ingredient(&quot;Pineapple&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L286">        GenerateTagsListFromDB(ts, new String[]{&quot;tropical&quot;})));</span>
+<span class="nc" id="L287">    is.saveObjectToDatabase(new Ingredient(&quot;Watermelon&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L288">        GenerateTagsListFromDB(ts, new String[]{&quot;seasonal&quot;})));</span>
+<span class="nc" id="L289">    is.saveObjectToDatabase(new Ingredient(&quot;Kiwi&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L290">        GenerateTagsListFromDB(ts, new String[]{&quot;seasonal&quot;})));</span>
+<span class="nc" id="L291">    is.saveObjectToDatabase(new Ingredient(&quot;Peach&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L292">        GenerateTagsListFromDB(ts, new String[]{&quot;seasonal&quot;})));</span>
+<span class="nc" id="L293">    is.saveObjectToDatabase(new Ingredient(&quot;Mango&quot;, 1, &quot;pcs&quot;,</span>
+<span class="nc" id="L294">        GenerateTagsListFromDB(ts, new String[]{&quot;tropical&quot;})));</span>
+
+    // Meat
+<span class="nc" id="L297">    is.saveObjectToDatabase(new Ingredient(&quot;Chicken Breast&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L298">        GenerateTagsListFromDB(ts, new String[]{&quot;protein&quot;, &quot;lean&quot;})));</span>
+<span class="nc" id="L299">    is.saveObjectToDatabase(new Ingredient(&quot;Beef Steak&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L300">        GenerateTagsListFromDB(ts, new String[]{&quot;protein&quot;})));</span>
+<span class="nc" id="L301">    is.saveObjectToDatabase(new Ingredient(&quot;Pork Chop&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L302">        GenerateTagsListFromDB(ts, new String[]{&quot;protein&quot;})));</span>
+<span class="nc" id="L303">    is.saveObjectToDatabase(new Ingredient(&quot;Salmon Fillet&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L304">        GenerateTagsListFromDB(ts, new String[]{&quot;protein&quot;, &quot;omega-3&quot;})));</span>
+<span class="nc" id="L305">    is.saveObjectToDatabase(new Ingredient(&quot;Tofu&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L306">        GenerateTagsListFromDB(ts, new String[]{&quot;vegetarian&quot;, &quot;protein&quot;})));</span>
+<span class="nc" id="L307">    is.saveObjectToDatabase(new Ingredient(&quot;Shrimp&quot;, 100, &quot;grams&quot;,</span>
+<span class="nc" id="L308">        GenerateTagsListFromDB(ts, new String[]{&quot;seafood&quot;, &quot;protein&quot;})));</span>
+<span class="nc" id="L309">    is.saveObjectToDatabase(new Ingredient(&quot;Ground Turkey&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L310">        GenerateTagsListFromDB(ts, new String[]{&quot;protein&quot;, &quot;lean&quot;})));</span>
+<span class="nc" id="L311">    is.saveObjectToDatabase(new Ingredient(&quot;Lamb Chop&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L312">        GenerateTagsListFromDB(ts, new String[]{&quot;protein&quot;})));</span>
+<span class="nc" id="L313">    is.saveObjectToDatabase(new Ingredient(&quot;Duck Breast&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L314">        GenerateTagsListFromDB(ts, new String[]{&quot;protein&quot;})));</span>
+<span class="nc" id="L315">    is.saveObjectToDatabase(new Ingredient(&quot;Venison&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L316">        GenerateTagsListFromDB(ts, new String[]{&quot;protein&quot;, &quot;lean&quot;})));</span>
+
+    // Dry goods
+<span class="nc" id="L319">    is.saveObjectToDatabase(new Ingredient(&quot;Rice&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L320">        GenerateTagsListFromDB(ts, new String[]{&quot;grain&quot;, &quot;staple&quot;})));</span>
+<span class="nc" id="L321">    is.saveObjectToDatabase(new Ingredient(&quot;Pasta&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L322">        GenerateTagsListFromDB(ts, new String[]{&quot;grain&quot;, &quot;staple&quot;})));</span>
+<span class="nc" id="L323">    is.saveObjectToDatabase(new Ingredient(&quot;Spaghetti&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L324">        GenerateTagsListFromDB(ts, new String[]{&quot;grain&quot;, &quot;staple&quot;})));</span>
+<span class="nc" id="L325">    is.saveObjectToDatabase(new Ingredient(&quot;Quinoa&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L326">        GenerateTagsListFromDB(ts, new String[]{&quot;grain&quot;})));</span>
+<span class="nc" id="L327">    is.saveObjectToDatabase(new Ingredient(&quot;Oats&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L328">        GenerateTagsListFromDB(ts, new String[]{&quot;grain&quot;, &quot;fiber&quot;})));</span>
+<span class="nc" id="L329">    is.saveObjectToDatabase(new Ingredient(&quot;Couscous&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L330">        GenerateTagsListFromDB(ts, new String[]{&quot;grain&quot;})));</span>
+<span class="nc" id="L331">    is.saveObjectToDatabase(new Ingredient(&quot;Lentils&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L332">        GenerateTagsListFromDB(ts, new String[]{&quot;legume&quot;, &quot;protein&quot;})));</span>
+<span class="nc" id="L333">    is.saveObjectToDatabase(new Ingredient(&quot;Beans&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L334">        GenerateTagsListFromDB(ts, new String[]{&quot;legume&quot;, &quot;protein&quot;})));</span>
+<span class="nc" id="L335">    is.saveObjectToDatabase(new Ingredient(&quot;Chickpeas&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L336">        GenerateTagsListFromDB(ts, new String[]{&quot;legume&quot;, &quot;protein&quot;})));</span>
+<span class="nc" id="L337">    is.saveObjectToDatabase(new Ingredient(&quot;Flour&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L338">        GenerateTagsListFromDB(ts, new String[]{&quot;baking&quot;, &quot;staple&quot;})));</span>
+<span class="nc" id="L339">    is.saveObjectToDatabase(new Ingredient(&quot;Breadcrumbs&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L340">        GenerateTagsListFromDB(ts, new String[]{&quot;baking&quot;})));</span>
+<span class="nc" id="L341">    is.saveObjectToDatabase(new Ingredient(&quot;Sugar&quot;, 200, &quot;grams&quot;,</span>
+<span class="nc" id="L342">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+
+    // Herbs
+<span class="nc" id="L345">    is.saveObjectToDatabase(new Ingredient(&quot;Basil&quot;, 2, &quot;leaves&quot;,</span>
+<span class="nc" id="L346">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L347">    is.saveObjectToDatabase(new Ingredient(&quot;Parsley&quot;, 2, &quot;leaves&quot;,</span>
+<span class="nc" id="L348">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L349">    is.saveObjectToDatabase(new Ingredient(&quot;Cilantro&quot;, 2, &quot;leaves&quot;,</span>
+<span class="nc" id="L350">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+
+    // spices
+<span class="nc" id="L353">    is.saveObjectToDatabase(new Ingredient(&quot;Salt&quot;, 5, &quot;grams&quot;,</span>
+<span class="nc" id="L354">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L355">    is.saveObjectToDatabase(new Ingredient(&quot;Black Pepper&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L356">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L357">    is.saveObjectToDatabase(new Ingredient(&quot;Garlic Powder&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L358">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L359">    is.saveObjectToDatabase(new Ingredient(&quot;Garlic&quot;, 1, &quot;cloves&quot;,</span>
+<span class="nc" id="L360">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L361">    is.saveObjectToDatabase(new Ingredient(&quot;Onion Powder&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L362">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L363">    is.saveObjectToDatabase(new Ingredient(&quot;Paprika&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L364">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L365">    is.saveObjectToDatabase(new Ingredient(&quot;Cumin&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L366">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L367">    is.saveObjectToDatabase(new Ingredient(&quot;Cinnamon&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L368">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L369">    is.saveObjectToDatabase(new Ingredient(&quot;Chili Powder&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L370">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L371">    is.saveObjectToDatabase(new Ingredient(&quot;Curry Powder&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L372">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L373">    is.saveObjectToDatabase(new Ingredient(&quot;Oregano&quot;, 2, &quot;grams&quot;,</span>
+<span class="nc" id="L374">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L375">    is.saveObjectToDatabase(new Ingredient(&quot;Lemon Juice&quot;, 20, &quot;ml&quot;,</span>
+<span class="nc" id="L376">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+<span class="nc" id="L377">    is.saveObjectToDatabase(new Ingredient(&quot;Soy Sauce&quot;, 30, &quot;ml&quot;,</span>
+<span class="nc" id="L378">        GenerateTagsListFromDB(ts, new String[]{&quot;seasoning&quot;})));</span>
+
+    // Dairy
+<span class="nc" id="L381">    is.saveObjectToDatabase(new Ingredient(&quot;Milk&quot;, 250, &quot;ml&quot;,</span>
+<span class="nc" id="L382">        GenerateTagsListFromDB(ts, new String[]{&quot;dairy&quot;, &quot;milk&quot;})));</span>
+<span class="nc" id="L383">    is.saveObjectToDatabase(new Ingredient(&quot;Cheddar Cheese&quot;, 100, &quot;grams&quot;,</span>
+<span class="nc" id="L384">        GenerateTagsListFromDB(ts, new String[]{&quot;dairy&quot;, &quot;cheese&quot;})));</span>
+<span class="nc" id="L385">    is.saveObjectToDatabase(new Ingredient(&quot;Greek Yogurt&quot;, 150, &quot;grams&quot;,</span>
+<span class="nc" id="L386">        GenerateTagsListFromDB(ts, new String[]{&quot;dairy&quot;, &quot;yogurt&quot;})));</span>
+<span class="nc" id="L387">    is.saveObjectToDatabase(new Ingredient(&quot;Butter&quot;, 50, &quot;grams&quot;,</span>
+<span class="nc" id="L388">        GenerateTagsListFromDB(ts, new String[]{&quot;dairy&quot;, &quot;butter&quot;})));</span>
+<span class="nc" id="L389">    is.saveObjectToDatabase(new Ingredient(&quot;Cream&quot;, 100, &quot;ml&quot;,</span>
+<span class="nc" id="L390">        GenerateTagsListFromDB(ts, new String[]{&quot;dairy&quot;})));</span>
+
+    // Oils
+<span class="nc" id="L393">    is.saveObjectToDatabase(new Ingredient(&quot;Olive Oil&quot;, 50, &quot;ml&quot;,</span>
+<span class="nc" id="L394">        GenerateTagsListFromDB(ts, new String[]{&quot;oil&quot;, &quot;cooking oil&quot;, &quot;olive oil&quot;})));</span>
+<span class="nc" id="L395">    is.saveObjectToDatabase(new Ingredient(&quot;Vegetable Oil&quot;, 50, &quot;ml&quot;,</span>
+<span class="nc" id="L396">        GenerateTagsListFromDB(ts, new String[]{&quot;oil&quot;, &quot;cooking oil&quot;, &quot;vegetable oil&quot;})));</span>
+<span class="nc" id="L397">    is.saveObjectToDatabase(new Ingredient(&quot;Coconut Oil&quot;, 50, &quot;ml&quot;,</span>
+<span class="nc" id="L398">        GenerateTagsListFromDB(ts, new String[]{&quot;oil&quot;, &quot;cooking oil&quot;, &quot;coconut oil&quot;})));</span>
+<span class="nc" id="L399">    is.saveObjectToDatabase(new Ingredient(&quot;Sesame Oil&quot;, 50, &quot;ml&quot;,</span>
+<span class="nc" id="L400">        GenerateTagsListFromDB(ts, new String[]{&quot;oil&quot;, &quot;cooking oil&quot;})));</span>
+<span class="nc" id="L401">    is.saveObjectToDatabase(new Ingredient(&quot;Canola Oil&quot;, 50, &quot;ml&quot;,</span>
+<span class="nc" id="L402">        GenerateTagsListFromDB(ts, new String[]{&quot;oil&quot;, &quot;cooking oil&quot;})));</span>
+<span class="nc" id="L403">  }</span>
+
+  private static void FillDatabaseWithRecipes(TagService ts, RecipeService rs) {
+<span class="nc" id="L406">    rs.saveObjectToDatabase(new Recipe(&quot;Spaghetti Carbonara&quot;, 4.0f,</span>
+<span class="nc" id="L407">        GenerateTagsListFromDB(ts, new String[]{&quot;quick&quot;, &quot;budget-friendly&quot;, &quot;easy&quot;}),</span>
+<span class="nc" id="L408">        new ArrayList&lt;&gt;(){{</span>
+<span class="nc" id="L409">          add(new RecipeIngredientElement(&quot;Spaghetti&quot;, 200));</span>
+<span class="nc" id="L410">          add(new RecipeIngredientElement(&quot;Olive Oil&quot;, 50));</span>
+<span class="nc" id="L411">          add(new RecipeIngredientElement(&quot;Tomato&quot;, 4));</span>
+<span class="nc" id="L412">          add(new RecipeIngredientElement(&quot;Salt&quot;, 5));</span>
+<span class="nc" id="L413">          add(new RecipeIngredientElement(&quot;Black Pepper&quot;, 2));</span>
+<span class="nc" id="L414">          add(new RecipeIngredientElement(&quot;Garlic&quot;, 2));</span>
+<span class="nc" id="L415">        }}, &quot;1. Add spaghetti to boiling water and cook for 10 minutes.\n&quot; +</span>
+        &quot;2. Heat olive oil in a pan and add chopped garlic.\n&quot; +
+        &quot;3. Add chopped tomatoes and cook for 5 minutes.\n&quot; +
+        &quot;4. Add cooked spaghetti to the pan and mix well.\n&quot; +
+        &quot;5. Season with salt and pepper.&quot;));
+<span class="nc" id="L420">    rs.saveObjectToDatabase(new Recipe(&quot;Grilled Chicken Salad&quot;, 2.0f,</span>
+<span class="nc" id="L421">        GenerateTagsListFromDB(ts, new String[]{&quot;quick&quot;, &quot;healthy&quot;, &quot;easy&quot;}), // Tags</span>
+<span class="nc" id="L422">        new ArrayList&lt;&gt;(){{</span>
+<span class="nc" id="L423">          add(new RecipeIngredientElement(&quot;Chicken Breast&quot;, 200)); // Ingredients</span>
+<span class="nc" id="L424">          add(new RecipeIngredientElement(&quot;Lettuce&quot;, 100));</span>
+<span class="nc" id="L425">          add(new RecipeIngredientElement(&quot;Tomato&quot;, 1));</span>
+<span class="nc" id="L426">          add(new RecipeIngredientElement(&quot;Cucumber&quot;, 1));</span>
+<span class="nc" id="L427">          add(new RecipeIngredientElement(&quot;Red Onion&quot;, 0.5f));</span>
+<span class="nc" id="L428">          add(new RecipeIngredientElement(&quot;Olive Oil&quot;, 30));</span>
+<span class="nc" id="L429">          add(new RecipeIngredientElement(&quot;Lemon Juice&quot;, 20));</span>
+<span class="nc" id="L430">          add(new RecipeIngredientElement(&quot;Salt&quot;, 3));</span>
+<span class="nc" id="L431">          add(new RecipeIngredientElement(&quot;Black Pepper&quot;, 1));</span>
+<span class="nc" id="L432">        }},</span>
+        &quot;1. Season chicken breast with salt and pepper, then grill until cooked.\n&quot; + // Preparation steps
+            &quot;2. Chop lettuce, tomato, cucumber, and red onion.\n&quot; +
+            &quot;3. Slice grilled chicken breast.\n&quot; +
+            &quot;4. Mix all ingredients in a bowl.\n&quot; +
+            &quot;5. Drizzle olive oil and lemon juice over the salad, toss to combine.&quot;));
+<span class="nc" id="L438">    rs.saveObjectToDatabase(new Recipe(&quot;Vegetable Stir-Fry&quot;, 4.0f,</span>
+<span class="nc" id="L439">        GenerateTagsListFromDB(ts, new String[]{&quot;quick&quot;, &quot;vegetarian&quot;, &quot;easy&quot;}), // Tags</span>
+<span class="nc" id="L440">        new ArrayList&lt;&gt;(){{</span>
+<span class="nc" id="L441">          add(new RecipeIngredientElement(&quot;Broccoli&quot;, 200)); // Ingredients</span>
+<span class="nc" id="L442">          add(new RecipeIngredientElement(&quot;Carrot&quot;, 100));</span>
+<span class="nc" id="L443">          add(new RecipeIngredientElement(&quot;Bell Pepper&quot;, 1));</span>
+<span class="nc" id="L444">          add(new RecipeIngredientElement(&quot;Onion&quot;, 1));</span>
+<span class="nc" id="L445">          add(new RecipeIngredientElement(&quot;Garlic&quot;, 2));</span>
+<span class="nc" id="L446">          add(new RecipeIngredientElement(&quot;Ginger&quot;, 1));</span>
+<span class="nc" id="L447">          add(new RecipeIngredientElement(&quot;Soy Sauce&quot;, 30));</span>
+<span class="nc" id="L448">          add(new RecipeIngredientElement(&quot;Sesame Oil&quot;, 10));</span>
+<span class="nc" id="L449">          add(new RecipeIngredientElement(&quot;Rice&quot;, 100));</span>
+<span class="nc" id="L450">        }},</span>
+        &quot;1. Cook rice according to package instructions.\n&quot; + // Preparation steps
+            &quot;2. Heat sesame oil in a large skillet or wok over medium-high heat.\n&quot; +
+            &quot;3. Add minced garlic and ginger, stir for 30 seconds.\n&quot; +
+            &quot;4. Add chopped vegetables (broccoli, carrot, bell pepper, onion) and stir-fry for 5-7 minutes.\n&quot; +
+            &quot;5. Add soy sauce and stir to combine.\n&quot; +
+            &quot;6. Serve stir-fried vegetables over cooked rice.&quot;));
+<span class="nc" id="L457">    rs.saveObjectToDatabase(new Recipe(&quot;Tomato Basil Pasta&quot;, 4.0f,</span>
+<span class="nc" id="L458">        GenerateTagsListFromDB(ts, new String[]{&quot;quick&quot;, &quot;vegetarian&quot;, &quot;easy&quot;}), // Tags</span>
+<span class="nc" id="L459">        new ArrayList&lt;&gt;(){{</span>
+<span class="nc" id="L460">          add(new RecipeIngredientElement(&quot;Pasta&quot;, 200)); // Ingredients</span>
+<span class="nc" id="L461">          add(new RecipeIngredientElement(&quot;Tomato&quot;, 2));</span>
+<span class="nc" id="L462">          add(new RecipeIngredientElement(&quot;Garlic&quot;, 2));</span>
+<span class="nc" id="L463">          add(new RecipeIngredientElement(&quot;Olive Oil&quot;, 30));</span>
+<span class="nc" id="L464">          add(new RecipeIngredientElement(&quot;Basil&quot;, 20));</span>
+<span class="nc" id="L465">          add(new RecipeIngredientElement(&quot;Salt&quot;, 5));</span>
+<span class="nc" id="L466">          add(new RecipeIngredientElement(&quot;Black Pepper&quot;, 2));</span>
+<span class="nc" id="L467">        }},</span>
+        &quot;1. Cook pasta according to package instructions.\n&quot; + // Preparation steps
+            &quot;2. Heat olive oil in a pan over medium heat.\n&quot; +
+            &quot;3. Add minced garlic and sauté for 1-2 minutes.\n&quot; +
+            &quot;4. Add chopped tomatoes and cook for 5 minutes.\n&quot; +
+            &quot;5. Season with salt and pepper.\n&quot; +
+            &quot;6. Add cooked pasta to the pan and toss to combine.\n&quot; +
+            &quot;7. Garnish with chopped fresh basil before serving.&quot;));
+<span class="nc" id="L475">  }</span>
+
+  private static void FillDatabaseWithFridgeElements(TagService ts, IngredientService is, FridgeService fs) {
+<span class="nc" id="L478">    fs.saveFridgeElement(new FridgeElement(&quot;Carrot&quot;, 100.0f));</span>
+<span class="nc" id="L479">    fs.saveFridgeElement(new FridgeElement(&quot;Broccoli&quot;, 400.0f));</span>
+<span class="nc" id="L480">    fs.saveFridgeElement(new FridgeElement(&quot;Olive Oil&quot;, 100.0f));</span>
+<span class="nc" id="L481">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

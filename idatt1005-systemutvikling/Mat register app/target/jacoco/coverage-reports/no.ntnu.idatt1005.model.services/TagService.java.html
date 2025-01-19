@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TagService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.model.services</a> &gt; <span class="el_source">TagService.java</span></div><h1>TagService.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.model.services;
+
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.DUPLICATE_OBJECT_PASSED_TO_SERVICE;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.FAILED_TO_DELETE_OBJECT;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.FAILED_TO_UPDATE_OBJECT;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.INVALID_ARGUMENTS;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.INVALID_OBJECT_ID;
+
+import jakarta.transaction.Transactional;
+import java.util.Optional;
+import no.ntnu.idatt1005.model.exceptions.ServiceException;
+import no.ntnu.idatt1005.model.data.entities.Tag;
+import no.ntnu.idatt1005.model.repo.TagRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.stereotype.Service;
+
+/**
+ * &lt;p&gt;Class for handling business logic for Tag objects.&lt;/p&gt;
+ * The class will handle the following CRUD operations:
+ * &lt;ul&gt;
+ *     &lt;li&gt;Find by id&lt;/li&gt;
+ *     &lt;li&gt;Find by object&lt;/li&gt;
+ *     &lt;li&gt;Find all&lt;/li&gt;
+ *     &lt;li&gt;Save&lt;/li&gt;
+ *     &lt;li&gt;Update&lt;/li&gt;
+ *     &lt;li&gt;Delete by id&lt;/li&gt;
+ *     &lt;li&gt;Delete object&lt;/li&gt;
+ * &lt;/ul&gt;
+ *
+ * The tagRepository is autowired into the class to handle the CRUD operations.
+ * &lt;p&gt;Any exceptions that occur during the CRUD operations will be caught and rethrown as a ServiceException
+ * with a corresponding error code.&lt;/p&gt;
+ * @see TagRepository
+ * @see Tag
+ * @see no.ntnu.idatt1005.model.exceptions.ErrorCode
+ **/
+@Service
+public class TagService {
+    TagRepository tagRepository;
+
+    /**
+     * Constructor for TagService
+     * The tagRepository is autowired into the class to handle the CRUD operations by Spring.
+     * @param tagRepository the repository for handling CRUD operations on Tag objects
+     * @see TagRepository
+     */
+    @Autowired
+<span class="fc" id="L49">    public TagService(TagRepository tagRepository) {</span>
+<span class="fc" id="L50">        this.tagRepository = tagRepository;</span>
+<span class="fc" id="L51">    }</span>
+
+    /**
+     * Method for finding a Tag object by id
+     * If id is less than or equal to 0, a ServiceException is thrown.
+     *
+     * @param id
+     * @return an Optional of Tag object
+     */
+    @Transactional
+    public Optional&lt;Tag&gt; getObjectFromDatabase(Long id) {
+<span class="pc bpc" id="L62" title="1 of 2 branches missed.">        if (id &lt;= 0) {</span>
+<span class="nc" id="L63">            throw new ServiceException(INVALID_OBJECT_ID, id);</span>
+        }
+<span class="fc" id="L65">        return tagRepository.findById(id);</span>
+    }
+
+    @Transactional
+    public Optional&lt;Tag&gt; getObjectFromDatabase(String name) {
+<span class="nc" id="L70">        return tagRepository.findByName(name);</span>
+    }
+
+  /**
+   * Method for finding a Tag object by name
+   *
+   * @param entity the Tag object to find
+   * @return an Optional of Tag object
+   */
+    @Transactional
+    public Optional&lt;Tag&gt; getObjectFromDatabase(Tag entity) {
+<span class="fc" id="L81">        return tagRepository.findByName(entity.getName());</span>
+    }
+
+    /**
+     * Method for returning all Tag objects
+     *
+     * @return an Iterable of Tag objects
+     */
+    @Transactional
+    public Iterable&lt;Tag&gt; getAllObjectsFromDatabase() {
+<span class="fc" id="L91">        return tagRepository.findAll();</span>
+    }
+
+    /**
+     * Method for saving a Tag object
+     * The tag object is saved to the database. If a duplicate tag is passed,
+     * a ServiceException gets thrown.
+     *
+     * @param entity the Tag object to be saved
+     */
+    @Transactional
+    public void saveObjectToDatabase(Tag entity) {
+<span class="fc" id="L103">        Iterable&lt;Tag&gt; tags = tagRepository.findAll();</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        for (Tag tag : tags) {</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">            if (tag.getName().equals(entity.getName())) {</span>
+<span class="fc" id="L106">                throw new ServiceException(DUPLICATE_OBJECT_PASSED_TO_SERVICE, entity.getName());</span>
+            }
+<span class="fc" id="L108">        }</span>
+<span class="fc" id="L109">        tagRepository.save(entity);</span>
+<span class="fc" id="L110">    }</span>
+
+    /**
+     * Method for updating a Tag object
+     * The tag object is updated in the database. If the tag object does not exist in the database,
+     * a ServiceException is thrown.
+     * &lt;p&gt;&lt;/p&gt;
+     * The method can throw an InvalidDataAccessApiUsageException
+     * if the arguments are invalid. The exception is caught and
+     * rethrown as a ServiceException.
+     *
+     * @param entity the Tag object to be updated
+     * @return the updated Tag object
+     */
+    @Transactional
+    public Tag updateObjectInDatabase(Tag entity) {
+        try {
+<span class="fc" id="L127">            Optional&lt;Tag&gt; tag = tagRepository.findById(entity.getId());</span>
+<span class="pc bpc" id="L128" title="2 of 4 branches missed.">            if (tag.isPresent() &amp;&amp; tag.get().getName().equals(entity.getName())) {</span>
+<span class="fc" id="L129">                tag.get().setCategory(entity.getCategory());</span>
+<span class="fc" id="L130">                return tagRepository.save(tag.get());</span>
+            } else {
+<span class="nc" id="L132">                throw new ServiceException(FAILED_TO_UPDATE_OBJECT, entity.getName());</span>
+            }
+<span class="fc" id="L134">        } catch (InvalidDataAccessApiUsageException e) {</span>
+<span class="fc" id="L135">            throw new ServiceException(INVALID_ARGUMENTS, entity.getName(), e);</span>
+        }
+    }
+
+    /**
+     * Method for deleting a Tag object by id
+     * The tag object is deleted from the database.
+     * If id is less than or equal to 0, a ServiceException is thrown.
+     * If the tag object does not exist in the database, a ServiceException is thrown.
+     *
+     * @param id the id of the Tag object to be deleted
+     */
+    @Transactional
+    public void removeObjectFromDatabase(Long id) {
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        if (id &lt;= 0) {</span>
+<span class="nc" id="L150">            throw new ServiceException(INVALID_OBJECT_ID, id);</span>
+        }
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (tagRepository.findById(id).isPresent()) {</span>
+<span class="fc" id="L153">            tagRepository.deleteById(id);</span>
+        } else {
+<span class="fc" id="L155">            throw new ServiceException(FAILED_TO_DELETE_OBJECT, id);</span>
+        }
+<span class="fc" id="L157">    }</span>
+
+    /**
+     * Method for deleting a Tag object
+     * The tag object is deleted from the database.
+     * If the tag object does not exist in the database, a ServiceException is thrown.
+     *
+     * @param entity the Tag object to be deleted
+     */
+    @Transactional
+    public void removeObjectFromDatabase(Tag entity) {
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (tagRepository.findByName(entity.getName()).isPresent()) {</span>
+<span class="fc" id="L169">            tagRepository.delete(entity);</span>
+        } else {
+<span class="fc" id="L171">            throw new ServiceException(FAILED_TO_DELETE_OBJECT, entity.getName());</span>
+        }
+<span class="fc" id="L173">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FridgeService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.model.services</a> &gt; <span class="el_source">FridgeService.java</span></div><h1>FridgeService.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.model.services;
+
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.DUPLICATE_OBJECT_PASSED_TO_SERVICE;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.INVALID_ARGUMENTS;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.INVALID_OBJECT_ID;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.FAILED_TO_UPDATE_OBJECT;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.OBJECT_NOT_FOUND;
+
+import jakarta.transaction.Transactional;
+import java.util.Optional;
+import no.ntnu.idatt1005.model.exceptions.ServiceException;
+import no.ntnu.idatt1005.model.data.entities.FridgeElement;
+import no.ntnu.idatt1005.model.repo.FridgeRepository;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.stereotype.Service;
+
+/**
+ * &lt;p&gt;Class for handling business logic for FridgeElement objects.&lt;/p&gt;
+ * The class will handle the following CRUD operations:
+ * &lt;ul&gt;
+ *     &lt;li&gt;Find by id&lt;/li&gt;
+ *     &lt;li&gt;Find by name&lt;/li&gt;
+ *     &lt;li&gt;Find all&lt;/li&gt;
+ *     &lt;li&gt;Save&lt;/li&gt;
+ *     &lt;li&gt;Update&lt;/li&gt;
+ *     &lt;li&gt;Delete by id&lt;/li&gt;
+ *     &lt;li&gt;Delete object&lt;/li&gt;
+ * &lt;/ul&gt;
+ * The fridgeRepository is autowired into the class to handle the CRUD operations.
+ * &lt;p&gt;Any exceptions that occur during the CRUD operations will be caught and rethrown as a ServiceException
+ * with a corresponding error code.&lt;/p&gt;
+ *
+ * @see FridgeRepository
+ * @see FridgeElement
+ * @see no.ntnu.idatt1005.model.exceptions.ErrorCode
+ */
+@Service
+public class FridgeService {
+    FridgeRepository fridgeRepository;
+<span class="fc" id="L40">    public FridgeService(FridgeRepository fridgeRepository) {</span>
+<span class="fc" id="L41">        this.fridgeRepository = fridgeRepository;</span>
+<span class="fc" id="L42">    }</span>
+
+    /**
+     * Method for finding a FridgeElement object by id
+     * If id is less than or equal to 0, a ServiceException is thrown.
+     *
+     * @param id
+     * @return an Optional of FridgeElement object
+     */
+    @Transactional
+    public Optional&lt;FridgeElement&gt; findFridgeElementById(Long id) {
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (id &lt;= 0) {</span>
+<span class="nc" id="L54">            throw new ServiceException(INVALID_OBJECT_ID, id);</span>
+        }
+<span class="fc" id="L56">        return fridgeRepository.findById(id);</span>
+    }
+
+    /**
+     * Method for finding a FridgeElement object by name
+     *
+     * @param entity the FridgeElement object to find
+     * @return an Optional of FridgeElement object
+     */
+    @Transactional
+    public Optional&lt;FridgeElement&gt; findFridgeElementByEntity(FridgeElement entity) {
+<span class="fc" id="L67">        return fridgeRepository.findByName(entity.getName());</span>
+    }
+
+    /**
+     * Method for finding a FridgeElement object by name
+     *
+     * @param name the name of the FridgeElement object to find
+     * @return an Optional of FridgeElement object
+     */
+    @Transactional
+    public Optional&lt;FridgeElement&gt; findFridgeElementByName(String name) {
+<span class="nc" id="L78">        return fridgeRepository.findByName(name);</span>
+    }
+
+    /**
+     * Method for returning all FridgeElement objects
+     *
+     * @return an Iterable of FridgeElement objects
+     */
+    @Transactional
+    public Iterable&lt;FridgeElement&gt; findAllFridgeElements() {
+<span class="fc" id="L88">        return fridgeRepository.findAll();</span>
+    }
+
+    /**
+     * Method for saving a FridgeElement object
+     * If the FridgeElement object already exists in the database, a ServiceException is thrown.
+     *
+     * @param entity the FridgeElement object to save
+     */
+    @Transactional
+    public void saveFridgeElement(FridgeElement entity) {
+<span class="fc" id="L99">        Iterable&lt;FridgeElement&gt; fridgeElements = fridgeRepository.findAll();</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        for (FridgeElement fridgeElement : fridgeElements) {</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">            if (fridgeElement.getName().equals(entity.getName())) {</span>
+<span class="fc" id="L102">                throw new ServiceException(DUPLICATE_OBJECT_PASSED_TO_SERVICE, entity.getName());</span>
+            }
+<span class="fc" id="L104">        }</span>
+<span class="fc" id="L105">        fridgeRepository.save(entity);</span>
+<span class="fc" id="L106">    }</span>
+
+    /**
+     * Method for updating a FridgeElement object
+     * If the FridgeElement object does not exist in the database,
+     * a ServiceException is thrown.
+     * &lt;p&gt;&lt;/p&gt;
+     * - The method can throw an InvalidDataAccessApiUsageException if the arguments are invalid,
+     * this will be caught and rethrown as a ServiceException along with the original exception.
+     *
+     * @param entity the FridgeElement object to update
+     * @return the updated FridgeElement object
+     */
+    @Transactional
+    public FridgeElement updateFridgeElement(FridgeElement entity) {
+        try {
+<span class="fc" id="L122">            Optional&lt;FridgeElement&gt; fridgeElement = fridgeRepository.findById(entity.getId());</span>
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">            if (fridgeElement.isPresent() &amp;&amp; fridgeElement.get().getName().equals(entity.getName())) {</span>
+<span class="fc" id="L124">                fridgeElement.get().setAmount(entity.getAmount());</span>
+<span class="fc" id="L125">                return fridgeRepository.save(fridgeElement.get());</span>
+            } else {
+<span class="nc" id="L127">                throw new ServiceException(FAILED_TO_UPDATE_OBJECT, entity.getName());</span>
+            }
+<span class="fc" id="L129">        } catch (InvalidDataAccessApiUsageException e) {</span>
+<span class="fc" id="L130">            throw new ServiceException(INVALID_ARGUMENTS, entity.getName(), e);</span>
+        }
+    }
+
+    /**
+     * Method for deleting a FridgeElement object by id
+     * If id is less than or equal to 0, a ServiceException is thrown.
+     * If the FridgeElement object does not exist in the database, a ServiceException is thrown.
+     *
+     * @param id the id of the FridgeElement object to delete
+     */
+    @Transactional
+    public void deleteFridgeElementById(Long id) {
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (id &lt;= 0) {</span>
+<span class="nc" id="L144">            throw new ServiceException(INVALID_OBJECT_ID, id);</span>
+        }
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (fridgeRepository.findById(id).isPresent()) {</span>
+<span class="fc" id="L147">            fridgeRepository.deleteById(id);</span>
+        } else {
+<span class="fc" id="L149">            throw new ServiceException(OBJECT_NOT_FOUND, id);</span>
+        }
+<span class="fc" id="L151">    }</span>
+
+    /**
+     * Method for deleting a FridgeElement object
+     * If the FridgeElement object does not exist in the database, a ServiceException is thrown.
+     *
+     * @param entity the FridgeElement object to delete
+     */
+    @Transactional
+    public void deleteFridgeElement(FridgeElement entity) {
+<span class="fc bfc" id="L161" title="All 2 branches covered.">        if (fridgeRepository.findByName(entity.getName()).isPresent()) {</span>
+<span class="fc" id="L162">            fridgeRepository.delete(entity);</span>
+        } else {
+<span class="fc" id="L164">            throw new ServiceException(OBJECT_NOT_FOUND, entity.getName());</span>
+        }
+<span class="fc" id="L166">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

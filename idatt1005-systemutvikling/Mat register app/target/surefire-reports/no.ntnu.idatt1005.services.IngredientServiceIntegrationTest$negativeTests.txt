@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: no.ntnu.idatt1005.services.IngredientServiceIntegrationTest$negativeTests
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.363 s - in no.ntnu.idatt1005.services.IngredientServiceIntegrationTest$negativeTests

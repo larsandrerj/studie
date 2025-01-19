@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecipeViewBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.view</a> &gt; <span class="el_source">RecipeViewBuilder.java</span></div><h1>RecipeViewBuilder.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.view;
+
+import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import no.ntnu.idatt1005.model.data.IDAmountStruct;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Class responsible for creating the content of all recipes in RecipesPane and content of a
+ * specific recipe in RecipesPane.
+ */
+public class RecipeViewBuilder {
+<span class="nc" id="L20">    public RecipeViewBuilder() {</span>
+<span class="nc" id="L21">    }</span>
+
+    /**
+     * Method for getting the Group that is going to contain all the recipes.
+     *
+     * @return empty Group-object with id recipes-container
+     */
+    public Group getRecipesGroup() {
+<span class="nc" id="L29">        VBox masterContainer = new VBox();</span>
+<span class="nc" id="L30">        masterContainer.setId(&quot;recipes-container&quot;);</span>
+
+<span class="nc" id="L32">        Button addButton = new Button(&quot;Add new recipe&quot;);</span>
+<span class="nc" id="L33">        addButton.setId(&quot;add-button&quot;);</span>
+
+<span class="nc" id="L35">        masterContainer.getChildren().add(addButton);</span>
+
+<span class="nc" id="L37">        return new Group(</span>
+                masterContainer
+        );
+    }
+
+    /**
+     * Method for creating a Vbox with the name and portion size of a recipe.
+     * Includes buttons for adding and subtracting the amount to add the purchase plan, button
+     * for adding to the purchase plan, as well as buttons for editing and viewing the recipe.
+     *
+     * @param name Title of the recipe.
+     * @param defaultAmount Portion size of the recipe.
+     * @return Vbox with the name and portion size of a recipe, with buttons to process it.
+     */
+    public VBox getRecipeVbox(String name, String defaultAmount) {
+<span class="nc" id="L52">        Text title = new Text(name);</span>
+        //Text description = new Text(recipe[1]);
+
+<span class="nc" id="L55">        Button viewButton = new Button(&quot;View&quot;);</span>
+
+<span class="nc" id="L57">        viewButton.setId(</span>
+                &quot;view-recipe-instructions-button&quot;
+        );
+
+<span class="nc" id="L61">        Button addToPurchasePlanButton = new Button(&quot;Add to list&quot;);</span>
+
+<span class="nc" id="L63">        Text addAmountToListAsText = new Text(defaultAmount);</span>
+<span class="nc" id="L64">        addAmountToListAsText</span>
+<span class="nc" id="L65">                .setId(</span>
+                        &quot;add-amount-to-list-as-text&quot;
+                );
+
+<span class="nc" id="L69">        Button plusButton = new Button(&quot;+&quot;);</span>
+<span class="nc" id="L70">        plusButton</span>
+<span class="nc" id="L71">                .setId(&quot;plus-button&quot;);</span>
+<span class="nc" id="L72">        plusButton.setOnAction(</span>
+                e -&gt; {
+<span class="nc" id="L74">                    addOrSubText(&quot;+&quot;, addAmountToListAsText);</span>
+<span class="nc" id="L75">                }</span>
+        );
+
+<span class="nc" id="L78">        Button minusButton = new Button(&quot;-&quot;);</span>
+<span class="nc" id="L79">        minusButton</span>
+<span class="nc" id="L80">                .setId(&quot;minus-button&quot;);</span>
+<span class="nc" id="L81">        minusButton.setOnAction(</span>
+                e -&gt; {
+<span class="nc" id="L83">                    addOrSubText(&quot;-&quot;, addAmountToListAsText);</span>
+<span class="nc" id="L84">                }</span>
+        );
+
+
+<span class="nc" id="L88">        HBox titleViewButtonHbox = new HBox(title, viewButton);</span>
+
+<span class="nc" id="L90">        titleViewButtonHbox</span>
+<span class="nc" id="L91">                .setId(</span>
+                        &quot;title-view-button-hbox&quot;
+                );
+
+<span class="nc" id="L95">        HBox addToPurchasePlanHbox = new HBox(</span>
+                minusButton,
+                addAmountToListAsText,
+                plusButton,
+                addToPurchasePlanButton
+        );
+
+<span class="nc" id="L102">        addToPurchasePlanHbox</span>
+<span class="nc" id="L103">                .setId(</span>
+                        &quot;add-to-purchase-plan-hbox&quot;
+                );
+
+<span class="nc" id="L107">        Button editButton = new Button(&quot;Edit&quot;);</span>
+<span class="nc" id="L108">        editButton</span>
+<span class="nc" id="L109">                .setId(</span>
+                        &quot;edit-button&quot;
+                );
+
+<span class="nc" id="L113">        Button removeButton = new Button(&quot;Remove&quot;);</span>
+<span class="nc" id="L114">        removeButton</span>
+<span class="nc" id="L115">                .setId(</span>
+                        &quot;remove-button&quot;
+                );
+
+<span class="nc" id="L119">        HBox editRemoveHbox = new HBox(</span>
+                editButton,
+                removeButton
+        );
+
+<span class="nc" id="L124">        editRemoveHbox</span>
+<span class="nc" id="L125">                .setId(</span>
+                        &quot;edit-remove-hbox&quot;
+                );
+
+<span class="nc" id="L129">        VBox recipeVbox = new VBox(</span>
+                titleViewButtonHbox,
+                //description,
+                addToPurchasePlanHbox,
+                editRemoveHbox
+        );
+<span class="nc" id="L135">        recipeVbox.setId(&quot;recipe-vbox&quot;);</span>
+
+<span class="nc" id="L137">        VBox masterRecipeVbox = new VBox(</span>
+                recipeVbox
+        );
+<span class="nc" id="L140">        masterRecipeVbox.setId(&quot;recipe-removable-&quot; + name);</span>
+
+<span class="nc" id="L142">        return masterRecipeVbox;</span>
+    }
+
+    /**
+     * Method for getting the Group with the information to a specific recipe. Contains the name
+     * and instructions to a given recipe.
+     *
+     * @param name Title to the recipe.
+     * @param instructions Instructions to the recipe.
+     * @return Group-object with information to a recipe.
+     */
+    public Group getRecipeInstructionsPane(String name, String instructions, float defaultPortions,
+                                  List&lt;IDAmountStruct&gt; ingredients) {
+<span class="nc" id="L155">        Label nameLabel = new Label(&quot;Name: &quot; + name);</span>
+<span class="nc" id="L156">        nameLabel.setId(&quot;recipe-name-label&quot;);</span>
+
+<span class="nc" id="L158">        Label portionLabel = new Label(&quot;Standard portion: &quot; + defaultPortions);</span>
+<span class="nc" id="L159">        portionLabel.setId(&quot;portion-label&quot;);</span>
+
+<span class="nc" id="L161">        Label instructionsLabel = new Label(&quot;Instructions:&quot;);</span>
+<span class="nc" id="L162">        instructionsLabel.setId(</span>
+                &quot;instructions-label&quot;
+        );
+
+<span class="nc" id="L166">        Text instructionsText = new Text(instructions);</span>
+<span class="nc" id="L167">        instructionsText.setId(</span>
+                &quot;recipe-instructions-text&quot;
+        );
+
+<span class="nc" id="L171">        VBox namePortionInstructionsVbox = new VBox(</span>
+                nameLabel,
+                portionLabel,
+                instructionsLabel,
+                instructionsText
+        );
+
+<span class="nc" id="L178">        namePortionInstructionsVbox.setId(</span>
+                &quot;name-portion-instructions-vbox&quot;
+        );
+
+<span class="nc" id="L182">        Group ingredientsGroup = createIngredientsGroup(ingredients, false);</span>
+
+<span class="nc" id="L184">        HBox namePortionDescriptionIngredients = new HBox(</span>
+                namePortionInstructionsVbox,
+                ingredientsGroup
+        );
+
+<span class="nc" id="L189">        VBox masterContainer = new VBox(</span>
+                namePortionDescriptionIngredients
+        );
+
+<span class="nc" id="L193">        masterContainer.setId(</span>
+                &quot;recipe-instructions-pane&quot;
+        );
+
+<span class="nc" id="L197">        return new Group(</span>
+                masterContainer
+        );
+    }
+
+    /**
+     * Returns a Group-object with the editable textareas for the name of the recipe, portion
+     * size, instructions and toggleable buttons for the ingredients.
+     *
+     * @param name Name of a recipe.
+     * @param instructions Instructions to the recipe.
+     * @param defaultPortions Portion size of the recipe.
+     * @param ingredients String[][] array of the ingredients in the recipe.
+     * @return Group with editable components to a Recipe.
+     */
+    public Group getRecipeAddPane(String name, String instructions, float defaultPortions,
+                                  List&lt;IDAmountStruct&gt; ingredients) {
+<span class="nc" id="L214">        Label nameLabel = new Label(&quot;Name: &quot;);</span>
+<span class="nc" id="L215">        nameLabel.setId(&quot;name-label&quot;);</span>
+<span class="nc" id="L216">        TextArea nameTextArea = new TextArea(name);</span>
+<span class="nc" id="L217">        nameTextArea.setId(&quot;name-textarea&quot;);</span>
+
+<span class="nc" id="L219">        HBox nameLabelTextAreaHbox = new HBox(</span>
+                nameLabel,
+                nameTextArea
+        );
+
+<span class="nc" id="L224">        nameLabelTextAreaHbox.setId(</span>
+                &quot;name-label-textarea-hbox&quot;
+        );
+
+<span class="nc" id="L228">        Label portionLabel = new Label(&quot;Standard portion: &quot;);</span>
+<span class="nc" id="L229">        portionLabel.setId(&quot;portion-label&quot;);</span>
+
+<span class="nc" id="L231">        Text portionText = new Text(defaultPortions + &quot;&quot;);</span>
+<span class="nc" id="L232">        portionText.setId(&quot;portion-text&quot;);</span>
+
+<span class="nc" id="L234">        Button minusButton = new Button(&quot;-&quot;);</span>
+<span class="nc" id="L235">        minusButton.setOnAction(e -&gt; {addOrSubText(&quot;-&quot;, portionText);});</span>
+<span class="nc" id="L236">        Button plusButton = new Button(&quot;+&quot;);</span>
+<span class="nc" id="L237">        plusButton.setOnAction(e -&gt; {addOrSubText(&quot;+&quot;, portionText);});</span>
+
+
+
+<span class="nc" id="L241">        HBox portionHbox = new HBox(</span>
+                portionLabel,
+                minusButton,
+                portionText,
+                plusButton
+        );
+
+<span class="nc" id="L248">        portionHbox.setId(&quot;portion-hbox&quot;);</span>
+
+<span class="nc" id="L250">        Label instructionsLabel = new Label(&quot;Instructions:&quot;);</span>
+<span class="nc" id="L251">        instructionsLabel.setId(</span>
+                &quot;instructions-label&quot;
+        );
+
+<span class="nc" id="L255">        TextArea instructionsTextArea = new TextArea(instructions);</span>
+<span class="nc" id="L256">        instructionsTextArea.setId(</span>
+                &quot;instructions-textarea&quot;
+        );
+
+<span class="nc" id="L260">        VBox namePortionInstructionsVbox = new VBox(</span>
+                nameLabelTextAreaHbox,
+                portionHbox,
+                instructionsLabel,
+                instructionsTextArea
+        );
+
+<span class="nc" id="L267">        namePortionInstructionsVbox.setId(</span>
+                &quot;name-portion-instructions-vbox&quot;
+        );
+
+<span class="nc" id="L271">        Group ingredientsGroup = createIngredientsGroup(ingredients,</span>
+<span class="nc" id="L272">                true);</span>
+
+<span class="nc" id="L274">        ingredientsGroup.setId(&quot;ingredients-group&quot;);</span>
+
+<span class="nc" id="L276">        HBox namePortionDescriptionIngredients = new HBox(</span>
+                namePortionInstructionsVbox,
+                ingredientsGroup
+        );
+
+<span class="nc" id="L281">        namePortionDescriptionIngredients.setId(</span>
+                &quot;name-portion-description-ingredients&quot;
+        );
+
+<span class="nc" id="L285">        Button addButton = new Button(&quot;Add / Update&quot;);</span>
+<span class="nc" id="L286">        addButton.setId(</span>
+                &quot;recipe-add-button&quot;
+        );
+
+
+<span class="nc" id="L291">        VBox masterContainer = new VBox(</span>
+                namePortionDescriptionIngredients,
+                addButton
+        );
+
+<span class="nc" id="L296">        masterContainer.setId(</span>
+                &quot;recipe-add-pane&quot;
+        );
+
+<span class="nc" id="L300">        return new Group(</span>
+                masterContainer
+        );
+    }
+
+    private Group createIngredientsGroup() {
+<span class="nc" id="L306">        List&lt;IDAmountStruct&gt; ingredients = new ArrayList&lt;&gt;();</span>
+
+<span class="nc" id="L308">        return createIngredientsGroup(ingredients, false);</span>
+    }
+
+    /**
+     * Creates a Group-object with a list of all ingredients in a recipe.
+     * Each ingredient has a designated radio-button to show if it selected in the recipe, in
+     * addition to having an amount-value to describe how much of an ingredient is in the recipe.
+     *
+     * @param ingredients String[][] array of all the chosen ingredients which are used in
+     *                          the recipe.
+     * @param isSelectable Boolean to decide if the buttons to handle ingredients are to be shown
+     *                    or not.
+     * @return Group with selectable buttons for each ingredient.
+     */
+    private Group createIngredientsGroup(List&lt;IDAmountStruct&gt; ingredients,
+                                         Boolean isSelectable) {
+<span class="nc" id="L324">        VBox master = new VBox();</span>
+<span class="nc" id="L325">        master.setId(&quot;recipe-ingredients-master&quot;);</span>
+<span class="nc" id="L326">        VBox ingredientsVbox = new VBox();</span>
+<span class="nc" id="L327">        ingredientsVbox.setId(&quot;recipe-ingredients-vbox&quot;);</span>
+
+<span class="nc bnc" id="L329" title="All 2 branches missed.">        if (isSelectable) {</span>
+<span class="nc" id="L330">            ingredients.forEach(</span>
+                    e -&gt; {
+<span class="nc" id="L332">                        ingredientsVbox</span>
+<span class="nc" id="L333">                                .getChildren()</span>
+<span class="nc" id="L334">                                .add(</span>
+<span class="nc" id="L335">                                        getIngredientAddArea(</span>
+<span class="nc" id="L336">                                                e.getName(), e.getAmount()</span>
+                                        )
+                                );
+<span class="nc" id="L339">                    }</span>
+            );
+
+<span class="nc" id="L342">            Button addNewIngredientButton = new Button(&quot;Add new ingredient&quot;);</span>
+<span class="nc" id="L343">            addNewIngredientButton.setOnAction(</span>
+                    e -&gt; {
+<span class="nc" id="L345">                        ingredientsVbox</span>
+<span class="nc" id="L346">                                .getChildren()</span>
+<span class="nc" id="L347">                                .add(</span>
+<span class="nc" id="L348">                                        getIngredientAddArea()</span>
+                                );
+<span class="nc" id="L350">                    }</span>
+            );
+
+<span class="nc" id="L353">            master.getChildren().add(addNewIngredientButton);</span>
+
+
+
+<span class="nc" id="L357">        } else {</span>
+<span class="nc" id="L358">            ingredients.forEach(</span>
+                    e -&gt; {
+
+<span class="nc" id="L361">                        HBox hBox = new HBox(</span>
+<span class="nc" id="L362">                                new Text(e.getName() + &quot; x &quot; + e.getAmount())</span>
+                        );
+
+<span class="nc" id="L365">                        hBox.setId(</span>
+                                &quot;ingredient-text&quot;
+                        );
+
+<span class="nc" id="L369">                        ingredientsVbox</span>
+<span class="nc" id="L370">                                .getChildren()</span>
+<span class="nc" id="L371">                                .add(</span>
+                                        hBox
+                                );
+<span class="nc" id="L374">                    }</span>
+            );
+        }
+
+<span class="nc" id="L378">        master.getChildren().add(ingredientsVbox);</span>
+<span class="nc" id="L379">        return new Group(master);</span>
+    }
+    private HBox getIngredientAddArea() {
+<span class="nc" id="L382">        return getIngredientAddArea(&quot;&quot;, 0 );</span>
+    }
+
+    private HBox getIngredientAddArea(String name, float amount) {
+<span class="nc" id="L386">        HBox ingredientAddAreaHBox = new HBox();</span>
+<span class="nc" id="L387">        ingredientAddAreaHBox.setId(</span>
+                &quot;ingredient-add-area-hbox&quot;
+        );
+
+<span class="nc" id="L391">        TextArea nameTextArea = new TextArea(name);</span>
+<span class="nc" id="L392">        nameTextArea.setId(</span>
+                &quot;name-text-area&quot;
+        );
+<span class="nc" id="L395">        nameTextArea.setMaxHeight(50);</span>
+
+<span class="nc" id="L397">        Text amountText = new Text(amount + &quot;&quot;);</span>
+<span class="nc" id="L398">        amountText.setId(</span>
+                &quot;amount-text&quot;
+        );
+<span class="nc" id="L401">        Button minusButton = new Button(&quot;-&quot;);</span>
+<span class="nc" id="L402">        minusButton.setOnAction(</span>
+                e -&gt; {
+<span class="nc" id="L404">                    addOrSubText(&quot;-&quot;, amountText);</span>
+<span class="nc" id="L405">                }</span>
+        );
+
+<span class="nc" id="L408">        Button plusButton = new Button(&quot;+&quot;);</span>
+<span class="nc" id="L409">        plusButton.setOnAction(</span>
+                e -&gt; {
+<span class="nc" id="L411">                    addOrSubText(&quot;+&quot;, amountText);</span>
+<span class="nc" id="L412">                }</span>
+        );
+
+<span class="nc" id="L415">        ingredientAddAreaHBox</span>
+<span class="nc" id="L416">                .getChildren()</span>
+<span class="nc" id="L417">                .addAll(</span>
+                        new Text(&quot;name: &quot;),
+                        nameTextArea,
+                        new Text(&quot;amount: &quot;),
+                        minusButton,
+                        amountText,
+                        plusButton
+                );
+
+
+<span class="nc" id="L427">        return ingredientAddAreaHBox;</span>
+
+    }
+
+    private void addOrSubText(String op, Text text) {
+<span class="nc" id="L432">        float f = 0.0f;</span>
+
+        try {
+<span class="nc" id="L435">            f = Float.parseFloat(text.getText());</span>
+<span class="nc" id="L436">        } catch (Exception e) {</span>
+<span class="nc" id="L437">            System.out.println(e.getMessage());</span>
+<span class="nc" id="L438">        }</span>
+
+
+<span class="nc bnc" id="L441" title="All 4 branches missed.">        if (op.equals(&quot;-&quot;) &amp;&amp; f &gt; 0) {</span>
+<span class="nc" id="L442">            f--;</span>
+<span class="nc bnc" id="L443" title="All 2 branches missed.">        } else if (op.equals(&quot;+&quot;)){</span>
+<span class="nc" id="L444">            f++;</span>
+        }
+
+<span class="nc bnc" id="L447" title="All 2 branches missed.">        if (f == (int) f) {</span>
+<span class="nc" id="L448">            text.setText((int) f + &quot;&quot;);</span>
+        } else {
+<span class="nc" id="L450">            text.setText(f + &quot;&quot;);</span>
+        }
+
+
+<span class="nc" id="L454">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

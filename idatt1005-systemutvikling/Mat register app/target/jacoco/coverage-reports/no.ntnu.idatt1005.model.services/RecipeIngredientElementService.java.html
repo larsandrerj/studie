@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecipeIngredientElementService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.model.services</a> &gt; <span class="el_source">RecipeIngredientElementService.java</span></div><h1>RecipeIngredientElementService.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.model.services;
+
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.DUPLICATE_OBJECT_PASSED_TO_SERVICE;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.FAILED_TO_DELETE_OBJECT;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.FAILED_TO_SAVE_OBJECT;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.INVALID_ARGUMENTS;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.INVALID_OBJECT_ID;
+import static no.ntnu.idatt1005.model.exceptions.ErrorCode.RETRIEVAL_ERROR;
+
+import jakarta.transaction.Transactional;
+import no.ntnu.idatt1005.model.data.entities.RecipeIngredientElement;
+import no.ntnu.idatt1005.model.exceptions.ServiceException;
+import no.ntnu.idatt1005.model.repo.RecipeIngredientElementRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+/**
+ * &lt;p&gt;Class for handling business logic for Ingredient objects.&lt;/p&gt;
+ * The class will handle the following CRUD operations:
+ * &lt;ul&gt;
+ *     &lt;li&gt;Find by id&lt;/li&gt;
+ *     &lt;li&gt;Find all&lt;/li&gt;
+ *     &lt;li&gt;Save&lt;/li&gt;
+ *     &lt;li&gt;Delete by id&lt;/li&gt;
+ *     &lt;li&gt;Delete&lt;/li&gt;
+ * &lt;/ul&gt;
+ * The ingredientRepository is autowired into the class to handle the CRUD operations.
+ * &lt;p&gt;Any exceptions that occur during the CRUD operations will be caught and rethrown as a ServiceException.&lt;/p&gt;
+ */
+@Service
+public class RecipeIngredientElementService {
+  private final RecipeIngredientElementRepository repository;
+
+  /**
+   * Constructor for IngredientService
+   * The ingredientRepository is autowired into the class to handle the CRUD operations by Spring.
+   * @param repository the repository for handling CRUD operations on Ingredient objects
+   * @see RecipeIngredientElementRepository
+   */
+  @Autowired
+<span class="fc" id="L43">  public RecipeIngredientElementService(RecipeIngredientElementRepository repository) {</span>
+<span class="fc" id="L44">    this.repository = repository;</span>
+<span class="fc" id="L45">  }</span>
+
+  /**
+   * Method for finding an Ingredient object by id
+   * The ingredient object is fetched from the database.
+   *
+   * @param id the id of the Ingredient object
+   * @return an Optional of Ingredient object
+   */
+  @Transactional
+  public Optional&lt;RecipeIngredientElement&gt; getObjectFromDatabase(Long id) {
+<span class="nc bnc" id="L56" title="All 2 branches missed.">    if (id &lt;= 0) {</span>
+<span class="nc" id="L57">      throw new ServiceException(INVALID_OBJECT_ID, id);</span>
+    }
+<span class="nc" id="L59">    return repository.findById(id);</span>
+  }
+
+  @Transactional
+  public Optional&lt;RecipeIngredientElement&gt; getObjectFromDatabase(String name) {
+<span class="nc" id="L64">    return repository.findByName(name);</span>
+  }
+
+  /**
+   * Method for finding all Ingredient objects.
+   * The ingredient objects are fetched from the database.
+   *
+   * @return an Iterable of Ingredient objects
+   */
+  @Transactional
+  public Iterable&lt;RecipeIngredientElement&gt; getAllObjectsFromDatabase() {
+    try {
+<span class="fc" id="L76">      return repository.findAll();</span>
+<span class="nc" id="L77">    } catch (RuntimeException e) {</span>
+<span class="nc" id="L78">      throw new ServiceException(RETRIEVAL_ERROR, 0L, e);</span>
+    }
+  }
+
+  /**
+   * Method for saving an Ingredient object
+   * The ingredient object is saved to the database. If any exceptions occur, they are caught and rethrown as a ServiceException.
+   *
+   * @param entity the Ingredient object to be saved
+   * @return the saved Ingredient object
+   */
+  @Transactional
+  public RecipeIngredientElement saveObjectToDatabase(RecipeIngredientElement entity) {
+    try {
+            /*
+            repository.save(entity) wil update the entity if it already exists in the database,
+            which is not the desired behavior. Therefore, we need to check if the entity already exists in the database.
+            */
+<span class="fc" id="L96">      Iterable&lt;RecipeIngredientElement&gt; retrievedEntities = repository.findAll();</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">      for (RecipeIngredientElement ingredient : retrievedEntities) {</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (entity.equals(ingredient)) {</span>
+<span class="nc" id="L99">          throw new ServiceException(DUPLICATE_OBJECT_PASSED_TO_SERVICE, entity.getName());</span>
+        }
+<span class="fc" id="L101">      }</span>
+<span class="fc" id="L102">      return repository.save(entity); // If the entity does not exist in the database, it will be saved.</span>
+<span class="nc" id="L103">    } catch (Exception e) {</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">      if (e instanceof InvalidDataAccessApiUsageException) {</span>
+<span class="nc" id="L105">        throw new ServiceException(INVALID_ARGUMENTS, entity.name, e);</span>
+      }
+<span class="nc" id="L107">      throw new ServiceException(FAILED_TO_SAVE_OBJECT, entity.name, e);</span>
+    }
+  }
+
+  @Transactional
+  public void saveListOfObjectsToDatabase(Iterable&lt;RecipeIngredientElement&gt; entities) {
+    try {
+<span class="nc" id="L114">      Iterable&lt;RecipeIngredientElement&gt; retrievedEntities = repository.findAll();</span>
+<span class="nc bnc" id="L115" title="All 2 branches missed.">      for (RecipeIngredientElement databaseEntity: retrievedEntities) {</span>
+<span class="nc bnc" id="L116" title="All 2 branches missed.">        for (RecipeIngredientElement ingredient : entities) {</span>
+<span class="nc bnc" id="L117" title="All 2 branches missed.">          if (databaseEntity.equals(ingredient)) {</span>
+<span class="nc" id="L118">            throw new ServiceException(DUPLICATE_OBJECT_PASSED_TO_SERVICE, ingredient.getName());</span>
+          }
+<span class="nc" id="L120">        }</span>
+<span class="nc" id="L121">      }</span>
+<span class="nc" id="L122">      repository.saveAll(entities);</span>
+<span class="nc" id="L123">    } catch (RuntimeException e) {</span>
+<span class="nc" id="L124">      throw new ServiceException(FAILED_TO_SAVE_OBJECT, entities.iterator().next().getName(), e);</span>
+<span class="nc" id="L125">    }</span>
+<span class="nc" id="L126">  }</span>
+
+  @Transactional
+  public void updateObjectInDatabase(RecipeIngredientElement updatedEntity) {
+    try {
+      // TODO: Necessary?
+    } catch (InvalidDataAccessApiUsageException e) {
+    }
+<span class="nc" id="L134">  }</span>
+
+  /**
+   * Method for deleting an Ingredient object by id
+   * The ingredient object is deleted from the database.
+   *
+   * @param id the id of the Ingredient object to be deleted
+   */
+  @Transactional
+  public void removeObjectFromDatabase(Long id) {
+<span class="nc bnc" id="L144" title="All 2 branches missed.">    if (repository.findById(id).isPresent()) {</span>
+<span class="nc" id="L145">      repository.deleteById(id);</span>
+    } else {
+<span class="nc" id="L147">      throw new ServiceException(FAILED_TO_DELETE_OBJECT, id);</span>
+    }
+<span class="nc" id="L149">  }</span>
+
+  /**
+   * Method for deleting an Ingredient object
+   * The ingredient object is deleted from the database.
+   *
+   * @param entity the Ingredient object to be deleted
+   */
+  @Transactional
+  public void removeObjectFromDatabase(RecipeIngredientElement entity) {
+<span class="nc bnc" id="L159" title="All 2 branches missed.">    if (repository.findByName(entity.getName()).isPresent()) {</span>
+<span class="nc" id="L160">      repository.delete(entity);</span>
+    } else {
+<span class="nc" id="L162">      throw new ServiceException(FAILED_TO_DELETE_OBJECT, entity.getName());</span>
+    }
+<span class="nc" id="L164">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

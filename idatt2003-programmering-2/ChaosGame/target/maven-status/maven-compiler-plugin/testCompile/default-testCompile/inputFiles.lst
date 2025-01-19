@@ -1,0 +1,13 @@
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/controller/GameDescriptionFactoryTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/controller/SettingFillerTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/controller/observer/IterationsObserverTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/model/engine/ChaosCanvasTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/model/engine/ChaosGameFileHandlerTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/model/engine/ChaosGameTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/model/linalg/ComplexTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/model/linalg/Matrix2x2Test.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/model/linalg/Vector2DTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/model/transform/AffineTransform2DTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/model/transform/JuliaTransform2DTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/view/settingboxes/components/JuliaSliderTest.java
+/home/larsandre/Documents/prevstudie/idatt2003-programmering-2/ChaosGame/src/test/java/edu/ntnu/stud/view/settingboxes/components/VectorBoxTest.java

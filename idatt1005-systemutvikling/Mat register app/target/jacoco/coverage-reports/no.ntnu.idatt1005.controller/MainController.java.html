@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.controller</a> &gt; <span class="el_source">MainController.java</span></div><h1>MainController.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.controller;
+
+import aj.org.objectweb.asm.Handle;
+import java.util.logging.Logger;
+import no.ntnu.idatt1005.model.data.*;
+import no.ntnu.idatt1005.model.data.entities.FridgeElement;
+import no.ntnu.idatt1005.model.data.entities.Ingredient;
+import no.ntnu.idatt1005.model.data.entities.PurchasePlan;
+import no.ntnu.idatt1005.model.data.entities.Recipe;
+import no.ntnu.idatt1005.model.data.entities.RecipeIngredientElement;
+import no.ntnu.idatt1005.model.data.entities.Tag;
+import no.ntnu.idatt1005.model.exceptions.ErrorCode;
+import no.ntnu.idatt1005.model.exceptions.ServiceException;
+import no.ntnu.idatt1005.model.services.FridgeService;
+import no.ntnu.idatt1005.model.services.IngredientService;
+import no.ntnu.idatt1005.model.services.PurchasePlanService;
+import no.ntnu.idatt1005.model.services.RecipeService;
+import no.ntnu.idatt1005.model.services.TagService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+/**
+ * Intermediary layer that manages communication between the database layer and the GUI.
+ * Some methods call methods in the view layer, while others are designed to be called by the view layer.
+ */
+@Component
+public class MainController {
+  private PageLoader pageLoader;
+  private TagService tagService;
+  private FridgeService fridgeService;
+  private IngredientService ingredientService;
+  private RecipeService recipeService;
+  private PurchasePlanService purchasePlanService;
+  public IngredientCache ingredientCache;
+  public RecipeCache recipeCache;
+
+  @Autowired
+<span class="fc" id="L41">  public MainController(TagService tagService, FridgeService fridgeService, IngredientService ingredientService, RecipeService recipeService, PurchasePlanService purchasePlanService) {</span>
+<span class="fc" id="L42">    this.tagService = tagService;</span>
+<span class="fc" id="L43">    this.fridgeService = fridgeService;</span>
+<span class="fc" id="L44">    this.ingredientService = ingredientService;</span>
+<span class="fc" id="L45">    this.recipeService = recipeService;</span>
+<span class="fc" id="L46">    this.purchasePlanService = purchasePlanService;</span>
+<span class="fc" id="L47">    ingredientCache = new IngredientCache(ingredientService);</span>
+<span class="fc" id="L48">    recipeCache = new RecipeCache(recipeService);</span>
+<span class="fc" id="L49">  }</span>
+
+<span class="nc" id="L51">  public MainController(){}</span>
+
+  public void init(PageLoader pl) {
+<span class="nc" id="L54">    pageLoader = pl;</span>
+<span class="nc" id="L55">    GenerateTestData.FillDatabase(tagService, ingredientService, recipeService, fridgeService);</span>
+<span class="nc" id="L56">    LoadView();</span>
+<span class="nc" id="L57">  }</span>
+
+  public void start() {
+
+<span class="nc" id="L61">  }</span>
+
+  /**
+   * Clears and loads all visuals with up-to-date data from model
+   */
+  public void LoadView() {
+<span class="nc" id="L67">    LoadFridge();</span>
+    //LoadPurchasePlan();
+<span class="nc" id="L69">    LoadIngredientRegistry();</span>
+<span class="nc" id="L70">    LoadRecipeRegistry();</span>
+    //TODO - Tell view to close the purchase plan and show the fridge page?
+<span class="nc" id="L72">  }</span>
+
+  /**
+   * Adds all ingredients in the database to the fridge view
+   */
+  public void LoadFridge() {
+<span class="nc" id="L78">    pageLoader.ClearFridge(); // Clear fridge view for cleanliness</span>
+    // Get all ingredients from fridge DB
+<span class="nc bnc" id="L80" title="All 2 branches missed.">    for (FridgeElement ing : fridgeService.findAllFridgeElements()) {</span>
+<span class="nc" id="L81">      HandleFridgeElementLoading(ing); // Load ingredient into fridge view</span>
+<span class="nc" id="L82">    }</span>
+<span class="nc" id="L83">  }</span>
+
+  /**
+   * Handles loading of a fridge element into the fridge view
+   *
+   * @param ing The fridge element to load
+   * @throws Error if the ingredient is not found in the database.
+   *               This should never happen, as the ingredient should have been added to the fridge database before this method is called.
+   *               This is different from AddToFridgeView, which might be called using user input, thus throwing an IllegalArgumentException instead.
+   */
+  private void HandleFridgeElementLoading(FridgeElement ing) throws Error {
+    try {
+<span class="nc" id="L95">      AddToFridgeView(ing);</span>
+<span class="nc" id="L96">    } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L97">      Logger logger = Logger.getLogger(MainController.class.getName());</span>
+<span class="nc" id="L98">      logger.severe(&quot;Ingredient retrieved from fridge DB not found in Ingredient Repository&quot;);</span>
+<span class="nc" id="L99">      throw new Error(&quot;Ingredient not found in database&quot;); //Should have been prevented in fridge-add-logic.</span>
+<span class="nc" id="L100">    }</span>
+<span class="nc" id="L101">  }</span>
+
+  /**
+   * Adds an ingredient to the fridge view
+   *
+   * @param ingredient The name and amount of the ingredient to add
+   * @throws IllegalArgumentException if the ingredient is not found in the database
+   */
+  public void AddToFridgeView( FridgeElement ingredient ) throws IllegalArgumentException {
+    // Retrieve ingredient from database for unit
+<span class="nc" id="L111">    Optional&lt;Ingredient&gt; ingDB = ingredientService.getObjectFromDatabase(ingredient.name);</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">    if (ingDB.isEmpty()) {</span>
+<span class="nc" id="L113">      throw new IllegalArgumentException(&quot;Ingredient not found in database&quot;);</span>
+    }
+<span class="nc" id="L115">    pageLoader.addToFridge(ingredient.name, String.valueOf(ingredient.amount), ingDB.get().getUnit());</span>
+<span class="nc" id="L116">  }</span>
+
+  /**
+   * Adds an ingredient to the fridge database
+   */
+  public void LoadPurchasePlan() {
+    //TODO - ClearPurchasePlan() on view
+<span class="nc" id="L123">    Iterable&lt;? extends IDAmountStruct&gt; items = purchasePlanService.findAllPurchasePlans();</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">    while (items.iterator().hasNext()) {</span>
+<span class="nc" id="L125">      IDAmountStruct item = (IDAmountStruct) items.iterator().next();</span>
+<span class="nc" id="L126">      HandlePurchasePlanElementLoading(item);</span>
+<span class="nc" id="L127">    }</span>
+<span class="nc" id="L128">  }</span>
+
+  /**
+   * Handles loading of a purchase plan element into the purchase plan view
+   *
+   * @param item The purchase plan element to load
+   * @throws Error if the item is not found in the database.
+   *               This should never happen, as the item should have been added to the purchase plan database before this method is called.
+   *               This is different from AddToPurchasePlanView, which might be called using user input, thus throwing an IllegalArgumentException instead.
+   */
+  private void HandlePurchasePlanElementLoading(IDAmountStruct item) throws Error {
+    try {
+<span class="nc" id="L140">      AddToPurchasePlanView(item);</span>
+<span class="nc" id="L141">    } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L142">      Logger logger = Logger.getLogger(MainController.class.getName());</span>
+<span class="nc" id="L143">      logger.severe(&quot;Item retrieved from purchase plan DB not found in Ingredient Repository&quot;);</span>
+<span class="nc" id="L144">      throw new Error(&quot;Item not found in database&quot;); //Should have been prevented in purchase-plan-add-logic.</span>
+<span class="nc" id="L145">    }</span>
+<span class="nc" id="L146">  }</span>
+
+  public void AddToPurchasePlanView( IDAmountStruct item ) {
+    // Retrieve ingredient from database for unit
+<span class="nc" id="L150">    Optional&lt;Ingredient&gt; ingDB = ingredientService.getObjectFromDatabase(item.name);</span>
+<span class="nc bnc" id="L151" title="All 2 branches missed.">    if (ingDB.isEmpty()) {</span>
+<span class="nc" id="L152">      throw new IllegalArgumentException(&quot;Item not found in database&quot;);</span>
+    }
+    // TODO: pageLoader.AddToPurchasePlan(new String[]{item.name, String.valueOf(item.amount), ingDB.get().getUnit()});
+<span class="nc" id="L155">  }</span>
+
+  /**
+   * Adds an item to the purchase plan database
+   */
+  public void LoadIngredientRegistry() {
+<span class="nc" id="L161">    pageLoader.clearIngredientsPane();</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">    for (Ingredient ing : ingredientService.getAllObjectsFromDatabase()) {</span>
+<span class="nc" id="L163">      HandleIngredientRegistryLoading(ing);</span>
+<span class="nc" id="L164">    }</span>
+<span class="nc" id="L165">  }</span>
+
+  /**
+   * Adds an ingredient to the ingredient registry view
+   *
+   * @param ingredient The ingredient to add
+   */
+  public void HandleIngredientRegistryLoading( Ingredient ingredient ) {
+<span class="nc" id="L173">    pageLoader.addIngredientToIngredientsPane(ingredient.getName(), String.valueOf((int) ingredient.getDefaultAmount()), ingredient.getUnit());</span>
+<span class="nc" id="L174">  }</span>
+
+  /**
+   * Adds an ingredient to the ingredient registry view
+   *
+   * @param ingredient The ingredient to add
+   * @throws IllegalArgumentException if the ingredient is not found in the database
+   */
+  public void AddToIngredientRegistryView( Ingredient ingredient ) throws IllegalArgumentException {
+<span class="nc bnc" id="L183" title="All 2 branches missed.">    if (ingredientService.getObjectFromDatabase(ingredient.getName()).isEmpty()) {</span>
+<span class="nc" id="L184">      throw new IllegalArgumentException(&quot;Ingredient not found in database&quot;);</span>
+    }
+<span class="nc" id="L186">    HandleIngredientRegistryLoading(ingredient);</span>
+<span class="nc" id="L187">  }</span>
+
+  /**
+   * Adds a recipe to the recipe database
+   */
+  public void LoadRecipeRegistry() {
+<span class="nc" id="L193">    pageLoader.clearRecipesPane();</span>
+<span class="nc bnc" id="L194" title="All 2 branches missed.">    for (Recipe recipe : recipeService.getAllObjectsFromDatabase()) {</span>
+<span class="nc" id="L195">      HandleRecipeRegistryLoading(recipe);</span>
+<span class="nc" id="L196">    }</span>
+<span class="nc" id="L197">  }</span>
+
+
+  /**
+   * Loads the recipeAddPane in pageloader
+   */
+  public void LoadRecipeAddView() {
+<span class="nc" id="L204">    pageLoader.loadRecipeAddPane();</span>
+<span class="nc" id="L205">  }</span>
+
+  /**
+   * Loads the recipeAddPane in pageloader with given recipe name
+   *
+   * @param name Name of the recipe
+   */
+  public void LoadRecipeAddView(String name) {
+    try {
+<span class="nc" id="L214">      Recipe recipe = recipeService.getObjectFromDatabase(name).get();</span>
+
+<span class="nc" id="L216">      pageLoader.loadRecipeAddPane(</span>
+<span class="nc" id="L217">              recipe.getName(),</span>
+<span class="nc" id="L218">              recipe.getInstructions(),</span>
+<span class="nc" id="L219">              recipe.getDefaultAmount(),</span>
+<span class="nc" id="L220">              new ArrayList&lt;IDAmountStruct&gt;(recipe.getIngredients())</span>
+              );
+
+<span class="nc" id="L223">    } catch (Exception e) {</span>
+<span class="nc" id="L224">      pageLoader.loadAlertWindow(&quot;Recipe &quot; + name + &quot; not found&quot;);</span>
+<span class="nc" id="L225">    }</span>
+<span class="nc" id="L226">  }</span>
+
+  public void LoadRecipeInstructionsView(String name) {
+    try {
+<span class="nc" id="L230">      Recipe recipe = recipeService.getObjectFromDatabase(name).get();</span>
+
+<span class="nc" id="L232">      pageLoader.loadRecipeInstructionsPane(</span>
+<span class="nc" id="L233">              recipe.getName(),</span>
+<span class="nc" id="L234">              recipe.getInstructions(),</span>
+<span class="nc" id="L235">              recipe.getDefaultAmount(),</span>
+<span class="nc" id="L236">              new ArrayList&lt;IDAmountStruct&gt;(recipe.getIngredients())</span>
+      );
+<span class="nc" id="L238">    } catch (Exception e) {</span>
+<span class="nc" id="L239">      pageLoader.loadAlertWindow(&quot;Recipe &quot; + name + &quot; not found&quot;);</span>
+<span class="nc" id="L240">    }</span>
+<span class="nc" id="L241">  }</span>
+
+  /**
+   * Checks if a given recipe exists in the database.
+   *
+   * @param name Name of the ingredient
+   * @return True if the ingredient exists, false otherwise
+   */
+  public boolean IngredientExists(String name) {
+<span class="nc" id="L250">    return ingredientService.getObjectFromDatabase(name).isPresent();</span>
+  }
+
+  /**
+   * Adds a recipe to the recipe registry view
+   *
+   * @param recipe The recipe to add
+   */
+  public void HandleRecipeRegistryLoading( Recipe recipe ) {
+<span class="nc" id="L259">    pageLoader.addRecipeToRecipesPane(recipe.getName(), Recipe.getUnit(), String.valueOf((int) recipe.getDefaultAmount()), recipe.getInstructions());</span>
+<span class="nc" id="L260">  }</span>
+
+  /**
+   * Adds a recipe to the recipe registry view
+   *
+   * @param recipe The recipe to add
+   * @throws IllegalArgumentException if the recipe is not found in the database
+   */
+  public void AddToRecipeRegistryView( Recipe recipe ) throws IllegalArgumentException {
+<span class="nc bnc" id="L269" title="All 2 branches missed.">    if (recipeService.getObjectFromDatabase(recipe).isEmpty()) {</span>
+<span class="nc" id="L270">      throw new IllegalArgumentException(&quot;Recipe not found in database&quot;);</span>
+    }
+<span class="nc" id="L272">    HandleRecipeRegistryLoading(recipe);</span>
+<span class="nc" id="L273">  }</span>
+
+  /**
+   * Adds an ingredient to the ingredient registry
+   *
+   * @param ingredientInfo The name and amount of the ingredient
+   * @param unit The unit of the ingredient
+   * @param tags The tags of the ingredient
+   * @throws Exception if the ingredient is not found in the database,
+   *                   if the ingredient is a duplicate,
+   *                   or if there is an error loading data from the view
+   */
+  public void AddIngredientToRegistry(IDAmountStruct ingredientInfo, String unit, String[] tags) {
+    try {
+<span class="nc" id="L287">      List&lt;Tag&gt; tagsList = GenerateTagsListFromDB(tags);</span>
+<span class="nc" id="L288">      Ingredient ing = new Ingredient(ingredientInfo.name, ingredientInfo.amount, unit, tagsList);</span>
+<span class="nc" id="L289">      ingredientService.saveObjectToDatabase(ing); // Throws ServiceException</span>
+<span class="nc" id="L290">      HandleIngredientRegistryLoading(ing); // Throws JavaFXException</span>
+<span class="nc" id="L291">    } catch (ServiceException e) {</span>
+<span class="nc" id="L292">      HandleServiceException(e);</span>
+<span class="nc" id="L293">    } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L294">      pageLoader.loadAlertWindow(&quot;Error loading data from view. You may try refreshing the view.&quot;);</span>
+<span class="nc" id="L295">    }</span>
+<span class="nc" id="L296">  }</span>
+
+  /**
+   * Edits info about an ingredient in the database and reloads it in the view.
+   *
+   * @param ingredientInfo
+   * @param unit
+   * @param tags
+   */
+  public void EditIngredientInRegistry(IDAmountStruct ingredientInfo, String unit, String[] tags) {
+    try {
+<span class="nc" id="L307">      List&lt;Tag&gt; tagsList = GenerateTagsListFromDB(tags);</span>
+<span class="nc" id="L308">      Ingredient ing = new Ingredient(ingredientInfo.name, ingredientInfo.amount, unit, tagsList);</span>
+<span class="nc" id="L309">      ingredientService.updateObjectInDatabase(ing); // Throws ServiceException</span>
+<span class="nc" id="L310">      pageLoader.removeIngredientFromIngredients(ingredientInfo.name);</span>
+<span class="nc" id="L311">      HandleIngredientRegistryLoading(ing); // Throws JavaFXException</span>
+<span class="nc" id="L312">    } catch (ServiceException e) {</span>
+<span class="nc" id="L313">      HandleServiceException(e);</span>
+<span class="nc" id="L314">    } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L315">      pageLoader.loadAlertWindow(&quot;Error loading data from view. You may try refreshing the view.&quot;);</span>
+<span class="nc" id="L316">    }</span>
+<span class="nc" id="L317">  }</span>
+
+  /**
+   * Edits info about a recipe in the database and reloads it in the view.
+   *
+   * @param recipeInfo The name and default portion amount of the recipe
+   * @param ingredients The ingredients of the recipe
+   * @param tags The tags of the recipe
+   */
+  public void EditRecipeInRegistry(IDAmountStruct recipeInfo, IDAmountStruct[] ingredients, String[] tags, String instructions) {
+<span class="nc" id="L327">    ArrayList&lt;RecipeIngredientElement&gt; ingredientsList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L328" title="All 2 branches missed.">    for (IDAmountStruct ingredient : ingredients) {</span>
+<span class="nc" id="L329">      ingredientsList.add(new RecipeIngredientElement(ingredient));</span>
+    }
+<span class="nc" id="L331">    List&lt;Tag&gt; tagsList = GenerateTagsListFromDB(tags);</span>
+<span class="nc" id="L332">    Recipe recipe = new Recipe(recipeInfo.name, recipeInfo.amount, tagsList, ingredientsList, instructions);</span>
+    try {
+<span class="nc" id="L334">      recipeService.updateObjectInDatabase(recipe);</span>
+<span class="nc" id="L335">    } catch (ServiceException e) {</span>
+      try {
+<span class="nc" id="L337">        recipeService.saveObjectToDatabase(recipe);</span>
+<span class="nc" id="L338">      } catch (ServiceException d) {</span>
+<span class="nc" id="L339">        HandleServiceException(d);</span>
+<span class="nc" id="L340">      }</span>
+<span class="nc" id="L341">    }</span>
+<span class="nc" id="L342">    pageLoader.removeRecipeFromRecipes(recipeInfo.name);</span>
+<span class="nc" id="L343">    HandleRecipeRegistryLoading(recipe);</span>
+<span class="nc" id="L344">    pageLoader.loadAlertWindow(&quot;Recipe has been added&quot;);</span>
+<span class="nc" id="L345">  }</span>
+
+  /**
+   * Takes a service exception and presents the proper information to the user.
+   *
+   * @param e The exception
+   */
+  public void HandleServiceException(ServiceException e) {
+<span class="nc" id="L353">    String hint = &quot; You may try refreshing the view.&quot;;</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">    if (e.getErrorCodeId() == ErrorCode.OBJECT_NOT_FOUND.getId()) {</span>
+<span class="nc" id="L355">      pageLoader.loadAlertWindow(e.getErrorCodeMessage() + &quot; Object: &quot; + e.getObjectName() + &quot;(Tag)&quot; + hint);</span>
+<span class="nc bnc" id="L356" title="All 2 branches missed.">    } else if (e.getErrorCodeId() == ErrorCode.DUPLICATE_OBJECT_PASSED_TO_SERVICE.getId()) {</span>
+<span class="nc" id="L357">      pageLoader.loadAlertWindow(e.getErrorCodeMessage() + &quot; Object: &quot; + e.getObjectName() + &quot;(Ingredient)&quot; + hint);</span>
+    } else {
+<span class="nc" id="L359">      pageLoader.loadAlertWindow(e.getErrorCodeMessage());</span>
+    }
+<span class="nc" id="L361">  }</span>
+
+  /**
+   * Generates a list of tags retrieved from the database based on the tag names.
+   *
+   * @param tags The names of the tags to retrieve
+   * @return A list of tags retrieved from the database
+   */
+  private List&lt;Tag&gt; GenerateTagsListFromDB(String[] tags) {
+<span class="nc" id="L370">    List&lt;Tag&gt; tagsList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L371" title="All 2 branches missed.">    for (String tag : tags) {</span>
+<span class="nc" id="L372">      tagService.getObjectFromDatabase(tag).ifPresent(tagsList::add);</span>
+    }
+<span class="nc" id="L374">    return tagsList;</span>
+  }
+
+  /**
+   * Adds a recipe to the recipe registry
+   *
+   * @param recipeInfo The name and default portion amount of the recipe
+   * @param ingredients The ingredients of the recipe
+   * @param tags The tags of the recipe
+   * @param instructions The instructions of the recipe
+   */
+  public void AddRecipeToRegistry(IDAmountStruct recipeInfo, IDAmountStruct[] ingredients, String[] tags, String instructions) {
+<span class="nc" id="L386">    ArrayList&lt;RecipeIngredientElement&gt; ingredientsList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L387" title="All 2 branches missed.">    for (IDAmountStruct ingredient : ingredients) {</span>
+<span class="nc" id="L388">      ingredientsList.add(new RecipeIngredientElement(ingredient));</span>
+    }
+<span class="nc" id="L390">    ArrayList&lt;Tag&gt; tagsList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L391" title="All 2 branches missed.">    for (String tag : tags) {</span>
+      try {
+<span class="nc" id="L393">        tagsList.add(tagService.getObjectFromDatabase(tag).get());</span>
+<span class="nc" id="L394">      } catch (ArrayIndexOutOfBoundsException e) {</span>
+        // TODO - Handle exception
+<span class="nc" id="L396">      } catch (NoSuchElementException e) {</span>
+        // TODO - Handle exception
+<span class="nc" id="L398">      }</span>
+    }
+<span class="nc" id="L400">    Recipe recipe = new Recipe(recipeInfo.name, recipeInfo.amount, tagsList, ingredientsList, instructions);</span>
+<span class="nc" id="L401">    recipeService.saveObjectToDatabase(recipe);</span>
+<span class="nc" id="L402">    HandleRecipeRegistryLoading(recipe);</span>
+<span class="nc" id="L403">  }</span>
+
+  /**
+   * Adds an amount of the given ingredient to the fridge
+   *
+   * @param ingredient The name and amount of the ingredient to add.
+   */
+  public void AddIngredientToFridge(IDAmountStruct ingredient) {
+<span class="nc" id="L411">    Optional&lt;FridgeElement&gt; fetched = fridgeService.findFridgeElementByName(ingredient.name);</span>
+<span class="nc bnc" id="L412" title="All 2 branches missed.">    if (fetched.isPresent()) {</span>
+<span class="nc" id="L413">      AlterFridgeIngredientAmount(new IDAmountStruct(ingredient.name, ingredient.amount + fetched.get().getAmount()));</span>
+    } else {
+      try {
+<span class="nc" id="L416">        fridgeService.saveFridgeElement((FridgeElement) ingredient);</span>
+<span class="nc" id="L417">        HandleFridgeElementLoading((FridgeElement) ingredient);</span>
+<span class="nc" id="L418">      } catch (ServiceException e) {</span>
+        //TODO - Handle exception
+<span class="nc" id="L420">      } catch (NumberFormatException e) {</span>
+        //TODO - Handle exception
+<span class="nc" id="L422">      }</span>
+    }
+<span class="nc" id="L424">  }</span>
+
+  /**
+   * Adds an amount of an ingredient or recipe to the purchase plan
+   *
+   * @param item The name and amount of the item to add.
+   */
+  public void AddItemToPurchasePlan(IDAmountStruct item) {
+    try {
+<span class="nc" id="L433">      purchasePlanService.savePurchasePlan((PurchasePlan) item);</span>
+<span class="nc" id="L434">      HandlePurchasePlanElementLoading(item);</span>
+<span class="nc" id="L435">    } catch (ServiceException e) {</span>
+      //TODO - Handle exception
+<span class="nc" id="L437">    } catch (NumberFormatException e) {</span>
+      //TODO - Handle exception
+<span class="nc" id="L439">    }</span>
+<span class="nc" id="L440">  }</span>
+
+  /**
+   * Sets the amount of a specific ingredient in the fridge
+   * Can be used to alter amount, or remove if the new amount is 0
+   *
+   * @param ingredient The name of the ingredient to alter + the new amount
+   * @throws IllegalArgumentException if a non-existant ingredient is attempted removed from the fridge.
+   */
+  public void AlterFridgeIngredientAmount ( IDAmountStruct ingredient )throws IllegalArgumentException  {
+<span class="nc bnc" id="L450" title="All 2 branches missed.">    if (ingredient.amount == 0) {</span>
+      try {
+<span class="nc" id="L452">        fridgeService.deleteFridgeElement((FridgeElement) ingredient);</span>
+<span class="nc" id="L453">      } catch (ServiceException e) {</span>
+<span class="nc" id="L454">        throw new IllegalArgumentException(&quot;Attempted to remove an ingredient that is not in the fridge.&quot;);</span>
+<span class="nc" id="L455">      }</span>
+    }
+    try {
+<span class="nc" id="L458">      fridgeService.updateFridgeElement((FridgeElement) ingredient);</span>
+<span class="nc" id="L459">    } catch (IllegalArgumentException e) {</span>
+      // TODO: Decide if this should be a part of this methods functionality:
+<span class="nc" id="L461">      fridgeService.saveFridgeElement((FridgeElement) ingredient);</span>
+<span class="nc" id="L462">    }</span>
+    // TODO: pageLoader.removeIngredientFromFridgePane(ingredient.name);
+<span class="nc" id="L464">    pageLoader.addToFridge(ingredient.name, String.valueOf(ingredient.amount), ingredientService.getObjectFromDatabase(ingredient.name).get().getUnit());</span>
+<span class="nc" id="L465">  }</span>
+
+  /**
+   * Sets the amount of a specific ingredient in the fridge
+   * Can be used to alter amount, or remove if the new amount is 0
+   *
+   * @param item The name of the item to alter + the new amount
+   * @throws IllegalArgumentException if a non-existent item is attempted removed from the purchase plan.
+   */
+  public void AlterPurchasePlanItemAmount( IDAmountStruct item ) {
+<span class="nc bnc" id="L475" title="All 2 branches missed.">    if (item.amount == 0) {</span>
+      try {
+<span class="nc" id="L477">        purchasePlanService.deletePurchasePlan((PurchasePlan) item);</span>
+<span class="nc" id="L478">      } catch (ServiceException e) {</span>
+<span class="nc" id="L479">        throw new IllegalArgumentException(&quot;Attempted to remove an item not in the purchase plan&quot;);</span>
+<span class="nc" id="L480">      }</span>
+    }
+    try {
+<span class="nc" id="L483">      purchasePlanService.updatePurchasePlan((PurchasePlan) item);</span>
+<span class="nc" id="L484">    } catch (IllegalArgumentException e) {</span>
+      // TODO: Decide if this should be a part of this methods functionality:
+<span class="nc" id="L486">      purchasePlanService.savePurchasePlan((PurchasePlan) item);</span>
+<span class="nc" id="L487">    }</span>
+<span class="nc" id="L488">  }</span>
+
+  /**
+   * Converts all recipes in the purchase plan to ingredients and saves the updated purchase plan to the database
+   */
+  public void GenerateShoppingList() throws IllegalArgumentException {
+    //Fetch all items in the purchase plan database
+<span class="nc" id="L495">    ArrayList&lt;PurchasePlan&gt; items = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L496">    Iterable&lt;PurchasePlan&gt; fetchedPP = purchasePlanService.findAllPurchasePlans();</span>
+<span class="nc bnc" id="L497" title="All 2 branches missed.">    for (PurchasePlan item : fetchedPP) {</span>
+<span class="nc" id="L498">      items.add(item);</span>
+<span class="nc" id="L499">    }</span>
+
+    //Iterate through all items in the purchase plan and break them into ingredients, summing up the amounts
+<span class="nc" id="L502">    HashMap&lt;String, Float&gt; shoppingList = new HashMap&lt;&gt;();</span>
+    Optional&lt;? extends Item&gt; fetched;
+<span class="nc bnc" id="L504" title="All 2 branches missed.">    for (PurchasePlan item : items) {</span>
+<span class="nc" id="L505">      fetched = ingredientService.getObjectFromDatabase(item.name);</span>
+<span class="nc bnc" id="L506" title="All 2 branches missed.">      if ( fetched.isPresent() ) {</span>
+<span class="nc bnc" id="L507" title="All 2 branches missed.">        if (shoppingList.containsKey(item.name)) {</span>
+<span class="nc" id="L508">          float current = shoppingList.get(item.name);</span>
+<span class="nc" id="L509">          shoppingList.put(item.name, current + item.amount);</span>
+<span class="nc" id="L510">        } else {</span>
+<span class="nc" id="L511">          shoppingList.put(item.name, item.amount);</span>
+        }
+      } else {
+<span class="nc" id="L514">        fetched = recipeService.getObjectFromDatabase(item.name);</span>
+<span class="nc bnc" id="L515" title="All 2 branches missed.">        if ( fetched.isPresent() ) {</span>
+<span class="nc" id="L516">          Recipe currentRecipe = (Recipe) fetched.get();</span>
+<span class="nc bnc" id="L517" title="All 2 branches missed.">          for (IDAmountStruct ingredient : currentRecipe.getIngredients()) {</span>
+<span class="nc" id="L518">            float newAmount = ingredient.amount / currentRecipe.getDefaultAmount() * item.amount;</span>
+<span class="nc bnc" id="L519" title="All 2 branches missed.">            if (shoppingList.containsKey(item.name)) {</span>
+<span class="nc" id="L520">              float current = shoppingList.get(item.name);</span>
+<span class="nc" id="L521">              shoppingList.put(item.name, current + newAmount);</span>
+<span class="nc" id="L522">            } else {</span>
+<span class="nc" id="L523">              shoppingList.put(item.name, newAmount);</span>
+            }
+<span class="nc" id="L525">          }</span>
+<span class="nc" id="L526">        } else {</span>
+<span class="nc" id="L527">          throw new IllegalArgumentException(&quot;No ingredient or recipe exists with specified identifier.&quot;);</span>
+        }
+      }
+      //Delete the processed ingredient/recipe from the purchase plan.
+<span class="nc" id="L531">      purchasePlanService.deletePurchasePlan(item);</span>
+<span class="nc" id="L532">    }</span>
+
+    //Save the shopping list to the purchase plan database
+<span class="nc" id="L535">    shoppingList.forEach((key, value) -&gt; {</span>
+<span class="nc" id="L536">      purchasePlanService.savePurchasePlan(new PurchasePlan(key, value));</span>
+<span class="nc" id="L537">    });</span>
+<span class="nc" id="L538">  }</span>
+
+  /**
+   * Converts the purchase plan to a shopping list and reloades view.
+   */
+  public void ConvertPurchasePlanToShoppingList() {
+    try {
+<span class="nc" id="L545">      GenerateShoppingList();</span>
+<span class="nc" id="L546">    } catch (IllegalArgumentException e) {</span>
+<span class="nc" id="L547">      pageLoader.loadAlertWindow(&quot;There was an error generating the shopping list.&quot;);</span>
+<span class="nc" id="L548">      return;</span>
+<span class="nc" id="L549">    }</span>
+    // TODO: pageLoader.clearPurchasePlan()
+<span class="nc" id="L551">    LoadPurchasePlan();</span>
+<span class="nc" id="L552">    pageLoader.loadAlertWindow(&quot;The purchase plan has been converted to a shopping list.&quot;);</span>
+<span class="nc" id="L553">  }</span>
+
+  /**
+   * Moves all items in the purchase plan to the fridge
+   */
+  public void MovePurchasePlanToFridge() {
+<span class="nc" id="L559">    Iterable&lt;PurchasePlan&gt; fetchedPP = purchasePlanService.findAllPurchasePlans();</span>
+<span class="nc bnc" id="L560" title="All 2 branches missed.">    for (PurchasePlan item : fetchedPP) {</span>
+<span class="nc bnc" id="L561" title="All 2 branches missed.">      if (recipeService.getObjectFromDatabase(item.name).isPresent()) {</span>
+<span class="nc" id="L562">        pageLoader.loadAlertWindow(&quot;The purchase plan contains recipes. Please convert to shopping list before moving to fridge.&quot;);</span>
+<span class="nc" id="L563">        return;</span>
+<span class="nc bnc" id="L564" title="All 2 branches missed.">      } else if (ingredientService.getObjectFromDatabase(item.name).isEmpty()) {</span>
+<span class="nc" id="L565">        pageLoader.loadAlertWindow(&quot;ERROR: The purchase plan contains ingredients items that don't exist in the database.&quot;);</span>
+      }
+<span class="nc" id="L567">    }</span>
+<span class="nc bnc" id="L568" title="All 2 branches missed.">    for (PurchasePlan item : fetchedPP) {</span>
+<span class="nc" id="L569">      AddIngredientToFridge(item);</span>
+<span class="nc" id="L570">    }</span>
+    //TODO - ClearPurchasePlan() on view
+<span class="nc" id="L572">    pageLoader.ClearFridge();</span>
+<span class="nc" id="L573">    LoadFridge();</span>
+<span class="nc" id="L574">  }</span>
+
+  /**
+   * Moves a specific item in the purchase plan to the fridge
+   *
+   * @param name The name of the item to move to the fridge
+   */
+  public void MoveIngredientToFridge(String name) {
+<span class="nc" id="L582">    Optional&lt;PurchasePlan&gt; fetched = purchasePlanService.findPurchasePlanByName(name);</span>
+<span class="nc bnc" id="L583" title="All 2 branches missed.">    if(fetched.isEmpty()) {</span>
+<span class="nc" id="L584">      pageLoader.loadAlertWindow(&quot;The item is not in the purchase plan.&quot;);</span>
+<span class="nc" id="L585">      return;</span>
+    }
+<span class="nc" id="L587">    PurchasePlan item = fetched.get();</span>
+<span class="nc bnc" id="L588" title="All 2 branches missed.">    if (recipeService.getObjectFromDatabase(item.name).isPresent()) {</span>
+<span class="nc" id="L589">      pageLoader.loadAlertWindow(&quot;The item is a recipe. Please convert to shopping list before moving to fridge.&quot;);</span>
+<span class="nc" id="L590">      return;</span>
+<span class="nc bnc" id="L591" title="All 2 branches missed.">    } else if (ingredientService.getObjectFromDatabase(item.name).isEmpty()) {</span>
+<span class="nc" id="L592">      pageLoader.loadAlertWindow(&quot;ERROR: The item doesn't exist in the database.&quot;);</span>
+    }
+<span class="nc" id="L594">    AddIngredientToFridge(item);</span>
+    //TODO - ClearPurchasePlan() on view
+<span class="nc" id="L596">    pageLoader.ClearFridge();</span>
+<span class="nc" id="L597">    LoadFridge();</span>
+<span class="nc" id="L598">  }</span>
+
+  /**
+   * Removes an ingredient from the ingredient registry
+   *
+   * @param name The name of the ingredient to remove.
+   */
+  public void RemoveIngredientFromRegistry(String name) {
+    try {
+<span class="nc" id="L607">      ingredientService.removeObjectFromDatabase(ingredientService.getObjectFromDatabase(name).get());</span>
+<span class="nc" id="L608">      pageLoader.removeIngredientFromIngredients(name);</span>
+<span class="nc" id="L609">    } catch (Exception e) {</span>
+<span class="nc" id="L610">      pageLoader.loadAlertWindow(&quot;Error: ingredient could not be removed&quot;);</span>
+<span class="nc" id="L611">    }</span>
+<span class="nc" id="L612">  }</span>
+
+  /**
+   * Removes an ingredient from the ingredient registry
+   *
+   * @param name The name of the ingredient to remove.
+   */
+  public void RemoveRecipeFromRegistry(String name) {
+    try {
+<span class="nc" id="L621">      recipeService.removeObjectFromDatabase(recipeService.getObjectFromDatabase(name).get());</span>
+<span class="nc" id="L622">      pageLoader.removeRecipeFromRecipes(name);</span>
+<span class="nc" id="L623">    } catch (Exception e) {</span>
+<span class="nc" id="L624">      pageLoader.loadAlertWindow(&quot;Error: recipe could not be removed&quot;);</span>
+<span class="nc" id="L625">    }</span>
+<span class="nc" id="L626">  }</span>
+
+  public class IngredientCache
+  {
+    private IngredientService is;
+    private Ingredient cachedIngredient;
+
+<span class="fc" id="L633">    public IngredientCache(IngredientService is) {</span>
+<span class="fc" id="L634">      this.is = is;</span>
+<span class="fc" id="L635">    }</span>
+
+    /**
+     * Caches an ingredient in controller layer for later use
+     *
+     * @param name The name of the ingredient to cache
+     * @throws IllegalArgumentException if the ingredient is not found in the database
+     */
+    public void LoadIngredient(String name) throws IllegalArgumentException {
+<span class="nc" id="L644">      Optional&lt;Ingredient&gt; fetched = is.getObjectFromDatabase(name);</span>
+<span class="nc bnc" id="L645" title="All 2 branches missed.">      if (fetched.isEmpty()) {</span>
+<span class="nc" id="L646">        throw new IllegalArgumentException(&quot;Ingredient not found in database&quot;);</span>
+      }
+<span class="nc" id="L648">      cachedIngredient = fetched.get();</span>
+<span class="nc" id="L649">    }</span>
+
+    /**
+     * Returns the name of the cached ingredient
+     *
+     * @return The name of the cached ingredient
+     */
+    public String getName() {
+<span class="nc" id="L657">      return cachedIngredient.getName();</span>
+    }
+
+    /**
+     * Returns the default amount of the cached ingredient
+     *
+     * @return The default amount of the cached ingredient
+     */
+    public float getAmount() {
+<span class="nc" id="L666">      return cachedIngredient.getDefaultAmount();</span>
+    }
+
+    /**
+     * Returns the unit of the cached ingredient
+     *
+     * @return The unit of the cached ingredient
+     */
+    public String getUnit() {
+<span class="nc" id="L675">      return cachedIngredient.getUnit();</span>
+    }
+
+    /**
+     * Returns the tags of the cached ingredient
+     *
+     * @return The tags of the cached ingredient
+     */
+    public Iterable&lt;String[]&gt; getTags() {
+<span class="nc" id="L684">      List&lt;String[]&gt; tagsList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L685" title="All 2 branches missed.">      for (Tag tag : cachedIngredient.getTags()) {</span>
+<span class="nc" id="L686">        tagsList.add(new String[]{tag.getName(), tag.getCategory()});</span>
+<span class="nc" id="L687">      }</span>
+<span class="nc" id="L688">      return tagsList;</span>
+    }
+  }
+
+  public class RecipeCache
+  {
+    private RecipeService rs;
+    private Recipe cachedRecipe;
+
+<span class="fc" id="L697">    public RecipeCache(RecipeService rs) {</span>
+<span class="fc" id="L698">      this.rs = rs;</span>
+<span class="fc" id="L699">    }</span>
+
+    /**
+     * Caches a recipe in controller layer for later use
+     *
+     * @param name The name of the recipe to cache
+     * @throws IllegalArgumentException if the recipe is not found in the database
+     */
+    public void LoadRecipe(String name) throws IllegalArgumentException {
+<span class="nc" id="L708">      Optional&lt;Recipe&gt; fetched = rs.getObjectFromDatabase(name);</span>
+<span class="nc bnc" id="L709" title="All 2 branches missed.">      if (fetched.isEmpty()) {</span>
+<span class="nc" id="L710">        throw new IllegalArgumentException(&quot;Recipe not found in database&quot;);</span>
+      }
+<span class="nc" id="L712">      cachedRecipe = fetched.get();</span>
+<span class="nc" id="L713">    }</span>
+
+    /**
+     * Returns the name of the cached recipe
+     *
+     * @return The name of the cached recipe
+     */
+    public String getName() {
+<span class="nc" id="L721">      return cachedRecipe.getName();</span>
+    }
+
+    /**
+     * Returns the default portions of the cached recipe
+     *
+     * @return The default portions of the cached recipe
+     */
+    public float getDefaultAmount() {
+<span class="nc" id="L730">      return cachedRecipe.getDefaultAmount();</span>
+    }
+
+    /**
+     * Returns the tags of the cached recipe
+     *
+     * @return The tags of the cached recipe
+     */
+    public List&lt;String[]&gt; getTags() {
+<span class="nc" id="L739">      List&lt;String[]&gt; tagsList = new ArrayList&lt;&gt;();</span>
+<span class="nc bnc" id="L740" title="All 2 branches missed.">      for (Tag tag : cachedRecipe.getTags()) {</span>
+<span class="nc" id="L741">        tagsList.add(new String[]{tag.getName(), tag.getCategory()});</span>
+<span class="nc" id="L742">      }</span>
+<span class="nc" id="L743">      return tagsList;</span>
+    }
+
+    /**
+     * Returns the ingredients of the cached recipe
+     *
+     * @return The ingredients of the cached recipe as IDAmountStruct objects
+     */
+    public List&lt;IDAmountStruct&gt; getIngredients() {
+<span class="nc" id="L752">      return new ArrayList&lt;&gt;(cachedRecipe.getIngredients());</span>
+    }
+
+    /**
+     * Returns the instructions of the cached recipe
+     *
+     * @return The instructions of the cached recipe
+     */
+    public String getInstructions() {
+<span class="nc" id="L761">      return cachedRecipe.getInstructions();</span>
+    }
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

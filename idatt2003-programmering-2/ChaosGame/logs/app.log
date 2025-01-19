@@ -1,0 +1,139 @@
+2024-05-21 20:38:51 [main] ERROR e.n.s.c.GameDescriptionFactory - No enum constant edu.ntnu.stud.controller.GameDescriptionFactory.TransformationName.EISENHOWER
+2024-05-21 20:38:51 [main] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. Number is not greater than zero
+2024-05-21 20:38:51 [main] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-05-21 20:38:51 [main] ERROR e.n.s.c.ChaosGameFileHandler - For input string: "String with no doubles"
+2024-05-21 20:38:51 [main] ERROR e.n.s.c.ChaosGameFileHandler - The array is either null or empty
+2024-05-21 20:38:51 [main] WARN  e.n.s.c.ChaosGameFileHandler - File not found at path: FileHandlerTestMaterial/UnstructuredFileTest.txt
+2024-05-21 20:38:51 [main] WARN  e.n.s.c.ChaosGameFileHandler - File not found at path: nonExistentFile.txt
+2024-05-21 20:38:51 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 2 elements
+2024-05-21 20:38:51 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 6 elements 
+2024-05-21 20:38:51 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 2 elements
+2024-05-22 11:20:59 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:20:59 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:20:59 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:20:59 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:21:14 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:21:14 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:23:49 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:24:05 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:24:05 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:24:06 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-05-22 11:24:06 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - bound must be positive
+2024-06-01 14:20:54 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:20:54 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:20:55 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:20:55 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:04 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:04 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:10 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:10 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:16 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:16 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:39 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:39 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:44 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:44 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:51 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:21:51 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:01 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:01 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:03 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:03 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:04 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:04 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:12 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:12 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:17 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:17 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:18 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:18 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:18 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:18 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:18 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:18 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:19 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:19 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:19 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:19 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:26 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:26 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:27 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:27 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:27 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:27 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:27 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:27 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:29 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:29 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:29 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:29 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:29 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:29 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:29 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:29 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:30 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:30 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:30 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:30 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:30 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:30 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:30 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:30 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:31 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:32 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:33 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:33 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:33 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:33 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:33 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:33 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:33 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:33 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:37 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:37 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:41 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:22:41 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-06-01 14:23:07 [JavaFX Application Thread] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-06-01 14:23:07 [JavaFX Application Thread] ERROR edu.ntnu.stud.controller.Controller - Illegal argument. First number is not greater than the second
+2024-11-04 13:38:06 [main] ERROR e.n.s.c.GameDescriptionFactory - No enum constant edu.ntnu.stud.controller.GameDescriptionFactory.TransformationName.EISENHOWER
+2024-11-04 13:38:07 [main] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. Number is not greater than zero
+2024-11-04 13:38:07 [main] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-11-04 13:38:07 [main] ERROR e.n.s.c.ChaosGameFileHandler - For input string: "String with no doubles"
+2024-11-04 13:38:07 [main] ERROR e.n.s.c.ChaosGameFileHandler - The array is either null or empty
+2024-11-04 13:38:07 [main] WARN  e.n.s.c.ChaosGameFileHandler - File not found at path: FileHandlerTestMaterial/UnstructuredFileTest.txt
+2024-11-04 13:38:07 [main] WARN  e.n.s.c.ChaosGameFileHandler - File not found at path: nonExistentFile.txt
+2024-11-04 13:38:07 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 2 elements
+2024-11-04 13:38:07 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 6 elements 
+2024-11-04 13:38:07 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 2 elements
+2024-11-04 13:38:11 [main] ERROR e.n.s.c.GameDescriptionFactory - No enum constant edu.ntnu.stud.controller.GameDescriptionFactory.TransformationName.EISENHOWER
+2024-11-04 13:38:11 [main] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. Number is not greater than zero
+2024-11-04 13:38:11 [main] ERROR e.ntnu.stud.model.engine.ChaosCanvas - Illegal argument. First number is not greater than the second
+2024-11-04 13:38:11 [main] ERROR e.n.s.c.ChaosGameFileHandler - For input string: "String with no doubles"
+2024-11-04 13:38:11 [main] ERROR e.n.s.c.ChaosGameFileHandler - The array is either null or empty
+2024-11-04 13:38:11 [main] WARN  e.n.s.c.ChaosGameFileHandler - File not found at path: FileHandlerTestMaterial/UnstructuredFileTest.txt
+2024-11-04 13:38:11 [main] WARN  e.n.s.c.ChaosGameFileHandler - File not found at path: nonExistentFile.txt
+2024-11-04 13:38:11 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 2 elements
+2024-11-04 13:38:11 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 6 elements 
+2024-11-04 13:38:11 [main] ERROR e.n.s.c.ChaosGameFileHandler - The input array must contain 2 elements

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Region?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0"
+      prefWidth="1600.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="no.ntnu.idatt1005.controller.PageLoader" stylesheets="@../styles/style.css">
+   <children>
+      <HBox prefHeight="9.0" prefWidth="1600.0">
+         <children>
+            <Button mnemonicParsing="false" text="Gourmet gone wild!" />
+            <Button mnemonicParsing="false" onAction="#loadFridgePane" text="Fridge" />
+            <Button mnemonicParsing="false" onAction="#loadIngredientsPane" text="Ingredients" />
+            <Button mnemonicParsing="false" onAction="#loadRecipePane" text="Recipes" />
+         </children>
+      </HBox>
+      <HBox id="content-hbox" alignment="TOP_RIGHT" prefHeight="871.0" prefWidth="1600.0" VBox.vgrow="ALWAYS">
+         <children>
+            <ScrollPane prefHeight="788.0" prefWidth="1539.0" HBox.hgrow="ALWAYS">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" fx:id="subSceneRoot" />
+              </content>
+            </ScrollPane>
+            <VBox fx:id="purchasePlanVBox"  nodeOrientation="LEFT_TO_RIGHT" prefHeight="755.0" prefWidth="15.0" >
+               <children>
+                  <HBox fx:id="purchasePlanHeader">
+                     <!-- Button to toggle purchase plan -->
+                     <Button id="toggleBtn" mnemonicParsing="false" text="=" onAction="#togglePurchasePlan" prefWidth="25.0" />
+
+                     <!-- Bold label for Purchase Plan -->
+                     <Label  fx:id="purchasePlanHeaderText" text="    Purchase Plan:" visible="false" />
+                  </HBox>
+                  <!-- Inner VBox for headers and information (initially hidden) -->
+                  <VBox  fx:id="purchasePlanInfoVBox" visible="false" prefWidth="30.0">
+
+                     <Label styleClass="subHeader" text="ingredients:" />
+                     <!-- Placeholder for dynamically created labels -->
+                     <VBox styleClass="backgroundInfo" fx:id="ingredientsBox" />
+
+                     <Label fx:id="greenStrip"/>
+
+                     <Label styleClass="subHeader" text="Recipes:" />
+                     <VBox styleClass="backgroundInfo" fx:id="recipesBox" />
+                  </VBox>
+                  <HBox fx:id="purchasePlanFooter">
+                     <!-- add event listener to buttons -->
+
+                     <Button id="shoppingListBtn" mnemonicParsing="false" text="Generate shopping list" prefWidth="150.0" onAction="#generateShoppingList"/>
+                     <Button id="addFridgeBtn" mnemonicParsing="false" text="Add to fridge"  prefWidth="100.0" onAction="#addPurchasePlanToFridge"/>
+
+                  </HBox>
+               </children>
+            </VBox>
+
+
+         </children>
+      </HBox>
+      <HBox alignment="BOTTOM_LEFT" prefHeight="0.0" prefWidth="1600.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Button alignment="BASELINE_LEFT" mnemonicParsing="false" text="Edit" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

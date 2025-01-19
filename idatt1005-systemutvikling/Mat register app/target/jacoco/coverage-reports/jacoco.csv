@@ -1,0 +1,36 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Food Management System,no.ntnu.idatt1005,Main,60,3,0,0,14,1,2,1,2,1
+Food Management System,no.ntnu.idatt1005.model.utils,InputValidator,9,27,0,4,5,12,1,6,1,4
+Food Management System,no.ntnu.idatt1005.model.utils,EntityValidator,8,88,5,29,2,20,6,19,1,7
+Food Management System,no.ntnu.idatt1005.controller,MainController.RecipeCache,72,9,4,0,14,3,8,1,6,1
+Food Management System,no.ntnu.idatt1005.controller,GenerateTestData,2882,0,2,0,352,0,8,0,7,0
+Food Management System,no.ntnu.idatt1005.controller,PageLoader,1534,0,20,0,355,0,74,0,64,0
+Food Management System,no.ntnu.idatt1005.controller,GenerateTestData.new ArrayList() {...},51,0,0,0,8,0,1,0,1,0
+Food Management System,no.ntnu.idatt1005.controller,GenerateTestData.new ArrayList() {...},75,0,0,0,11,0,1,0,1,0
+Food Management System,no.ntnu.idatt1005.controller,GenerateTestData.new ArrayList() {...},75,0,0,0,11,0,1,0,1,0
+Food Management System,no.ntnu.idatt1005.controller,GenerateTestData.new ArrayList() {...},59,0,0,0,9,0,1,0,1,0
+Food Management System,no.ntnu.idatt1005.controller,MainController.IngredientCache,65,9,4,0,13,3,7,1,5,1
+Food Management System,no.ntnu.idatt1005.controller,MainController,1059,32,62,0,267,9,68,1,37,1
+Food Management System,no.ntnu.idatt1005.model.services,FridgeService,30,154,4,12,4,29,5,12,1,8
+Food Management System,no.ntnu.idatt1005.model.services,TagService,30,154,4,12,4,29,5,12,1,8
+Food Management System,no.ntnu.idatt1005.model.services,IngredientService,49,244,4,22,6,48,4,18,0,9
+Food Management System,no.ntnu.idatt1005.model.services,RecipeService,104,185,3,13,15,42,3,14,0,9
+Food Management System,no.ntnu.idatt1005.model.services,PurchasePlanService,169,6,16,0,29,3,15,1,7,1
+Food Management System,no.ntnu.idatt1005.model.services,RecipeIngredientElementService,182,35,15,3,32,9,14,4,6,3
+Food Management System,no.ntnu.idatt1005.view,PurchasePlanView.Detail,15,0,0,0,5,0,1,0,1,0
+Food Management System,no.ntnu.idatt1005.view,PurchasePlanView,76,0,0,0,16,0,6,0,6,0
+Food Management System,no.ntnu.idatt1005.view,AlertViewBuilder,70,0,0,0,16,0,3,0,3,0
+Food Management System,no.ntnu.idatt1005.view,RecipeViewBuilder,777,0,10,0,160,0,24,0,19,0
+Food Management System,no.ntnu.idatt1005.view,FridgeViewBuilder,314,0,0,0,60,0,7,0,7,0
+Food Management System,no.ntnu.idatt1005.view,IngredientViewBuilder,375,0,0,0,73,0,4,0,4,0
+Food Management System,no.ntnu.idatt1005.model.exceptions,ErrorCode,0,152,0,0,0,23,0,5,0,5
+Food Management System,no.ntnu.idatt1005.model.exceptions,ServiceException,14,93,0,8,4,18,4,7,4,3
+Food Management System,no.ntnu.idatt1005.model.data.entities,FridgeElement,21,34,3,3,8,10,4,5,1,5
+Food Management System,no.ntnu.idatt1005.model.data.entities,Recipe,4,116,3,7,2,34,3,15,0,13
+Food Management System,no.ntnu.idatt1005.model.data.entities,Ingredient,24,58,3,5,3,18,4,8,1,7
+Food Management System,no.ntnu.idatt1005.model.data.entities,PurchasePlan,35,3,6,0,10,2,7,1,4,1
+Food Management System,no.ntnu.idatt1005.model.data.entities,Tag,4,84,3,7,2,23,3,11,0,9
+Food Management System,no.ntnu.idatt1005.model.data.entities,RecipeIngredientElement,7,48,3,3,3,15,4,5,1,5
+Food Management System,no.ntnu.idatt1005.model.data,IDAmountStruct,6,28,0,0,3,13,1,5,1,5
+Food Management System,no.ntnu.idatt1005.model.data,Item,9,103,2,4,3,28,3,10,1,9
+Food Management System,no.ntnu.idatt1005.logging,LoggingAspect,26,137,2,8,9,26,3,8,1,5

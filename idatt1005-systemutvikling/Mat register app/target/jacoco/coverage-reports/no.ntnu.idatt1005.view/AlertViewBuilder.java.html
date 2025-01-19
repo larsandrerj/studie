@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AlertViewBuilder.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Food Management System</a> &gt; <a href="index.source.html" class="el_package">no.ntnu.idatt1005.view</a> &gt; <span class="el_source">AlertViewBuilder.java</span></div><h1>AlertViewBuilder.java</h1><pre class="source lang-java linenums">package no.ntnu.idatt1005.view;
+
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+/**
+ * Class responsible for creating an alert window popup
+ */
+<span class="nc" id="L13">public class AlertViewBuilder {</span>
+
+    /**
+     * Creates and shows an alert window popup with given message s.
+     *
+     * @param s String that will be shown as a message
+     */
+    public void showAlert(String s) {
+        //Alert message
+<span class="nc" id="L22">        Text message = new Text(s);</span>
+<span class="nc" id="L23">        message.setId(&quot;alert-message&quot;);</span>
+
+        //OK-button, which closes the alert window
+<span class="nc" id="L26">        Button okButton = new Button(&quot;Ok&quot;);</span>
+<span class="nc" id="L27">        okButton.setOnAction(</span>
+                e -&gt; {
+<span class="nc" id="L29">                    Stage stage = (Stage) okButton.getScene().getWindow();</span>
+<span class="nc" id="L30">                    stage.close();</span>
+<span class="nc" id="L31">                }</span>
+        );
+
+        //Vbox which contains the message and OK-button
+<span class="nc" id="L35">        VBox vbox = new VBox(</span>
+                message,
+                okButton
+        );
+
+<span class="nc" id="L40">        AnchorPane root = new AnchorPane(vbox);</span>
+
+
+        //Shows the stage
+<span class="nc" id="L44">        Stage stage = new Stage();</span>
+<span class="nc" id="L45">        stage.setTitle(&quot;New message!&quot;);</span>
+<span class="nc" id="L46">        Scene rootScene = new Scene(root);</span>
+<span class="nc" id="L47">        stage.setScene(rootScene);</span>
+<span class="nc" id="L48">        stage.show();</span>
+
+<span class="nc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
