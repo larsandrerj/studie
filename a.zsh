@@ -11,3 +11,5 @@ git commit -m "$(date)"
 
 echo "git push"
 git push
+
+clear
