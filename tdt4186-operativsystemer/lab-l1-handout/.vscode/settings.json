@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "types.h": "c",
+        "new": "cpp",
+        "user.h": "c"
+    }
+}
