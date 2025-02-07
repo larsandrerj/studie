@@ -12,4 +12,5 @@ git commit -m "$(date)"
 echo "git push"
 git push
 
+echo "repo synced"
 clear
