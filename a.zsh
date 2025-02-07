@@ -13,4 +13,4 @@ echo "git push"
 git push
 
 clear
-echo "repo synced"
+echo "git repository synchronised"
