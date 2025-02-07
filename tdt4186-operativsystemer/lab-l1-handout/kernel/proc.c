@@ -690,47 +690,10 @@ writeProcs(void)
   {
     if (proc[i].state != UNUSED)
     {
-      //write(1, proc[i].name, strlen(proc[i].name));
-      //write(1, " (", 2);
       printf("%s", proc[i].name);
       printf(" (%d)", proc[i].pid);
       printf(": %d\n", proc[i].state);
-
-      ////int intAsStringLength;
-      //int foundLength = 0;
-      //int i = 1;
-      //int power = 1;
-      //int piddern = proc[i].pid;
-      //while (foundLength == 0)
-      //{
-        //if (piddern % power == piddern)
-        //{
-          //foundLength = 1;
-        //}
-        //else
-        //{
-          //power*= 10;
-          //i++;
-        //}
-      //}
-
-
-      //write(1, proc[i].pid + "", i);
-      //write(1, "): ", 3);
-      //write(1, proc[i].state + "", 1);
     }
   }
   return 0;
 }
-
-
-//struct proc*
-//getProcs()
-//{
-  //return &procs;
-//}
-//uint64
-//sys_ps(void)
-//{
-  //return writeProcs();
-//}
