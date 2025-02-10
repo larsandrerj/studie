@@ -6930,8 +6930,6 @@ writeProcs(void)
     80003888:	4f9c                	lw	a5,24(a5)
     8000388a:	c3d1                	beqz	a5,8000390e <writeProcs+0xaa>
     {
-      //write(1, proc[i].name, strlen(proc[i].name));
-      //write(1, " (", 2);
       printf("%s", proc[i].name);
     8000388c:	fec42703          	lw	a4,-20(s0)
     80003890:	16800793          	li	a5,360
@@ -6980,9 +6978,6 @@ writeProcs(void)
     8000391c:	0007871b          	sext.w	a4,a5
     80003920:	03f00793          	li	a5,63
     80003924:	f4e7d7e3          	bge	a5,a4,80003872 <writeProcs+0xe>
-      //write(1, proc[i].pid + "", i);
-      //write(1, "): ", 3);
-      //write(1, proc[i].state + "", 1);
     }
   }
   return 0;
